@@ -7,7 +7,7 @@ email: "[REDACTED]"
 date: "2024-01-10 00:12:04"
 project_name: "Zcash Wallet Community Developer 2024"
 summary: "A “floating” wallet developer that contributes to different Zcash wallet teams and supports ZCG to articulate community-funded efforts"
-total_grant_value: "45200.0"
+total_grant_value: "50200.0"
 submitter_last_name: "[REDACTED]"
 original_title: "Zcash Wallet Community Developer 2024"
 labels:
