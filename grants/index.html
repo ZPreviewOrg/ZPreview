@@ -1,0 +1,14 @@
+---
+layout: page
+title: Grants
+heading: Grants
+subtitle: List of Grant Applications
+---
+{% assign grants = site.grants %}
+<section class="diagonal">
+	<div class="text-container">
+		<ul class="grants">
+			{% include list-grants.html grants=site.grants %}
+		</ul>
+	</div>
+</section>

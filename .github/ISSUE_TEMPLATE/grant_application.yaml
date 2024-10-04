@@ -1,0 +1,200 @@
+name: Grant Application
+description: Submit a new grant application
+title: "[GRANT] Your Project Name"
+labels:
+  - application
+# assignees: ""
+body:
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: "Terms and Conditions"
+      description: |
+        Please confirm that you agree to the following:
+        - [Grant Agreement]() terms if funded
+        - [Provide KYC information]() if funded above $50,000
+        - Disclose conflicts of interest
+        - Adhere to [Code of Conduct]()
+        - Post request details on [Community Forum]()
+      options:
+        - label: "I agree"
+          required: true
+        - label: "Link to this issue on forum - _do after application has been submitted_"
+
+  - type: input
+    id: project-name
+    attributes:
+      label: Project Name
+      placeholder: Enter your project name
+    validations:
+      required: true
+
+  - type: textarea
+    id: project-summary
+    attributes:
+      label: Project Summary
+      description: Provide a brief summary of your project (1-2 paragraphs)
+    validations:
+      required: true
+
+  - type: textarea
+    id: project-description
+    attributes:
+      label: Project Description
+      description: Provide a detailed description of your project
+      value: |-
+        - Project overview:
+          - Brief summary of the project
+          - Main objectives
+        - Problem statement:
+          - Description of the issue you're addressing
+          - Why it's important
+        - Proposed solution:
+          - How your project will solve the problem
+          - Key features or innovations
+        - Technical approach:
+          - Technologies or methodologies you'll use
+          - Any unique technical aspects
+        - Timeline:
+          - Estimated duration of the project
+          - Key phases or stages
+    validations:
+      required: true
+
+  - type: input
+    id: requested-grant-amount
+    attributes:
+      label: Requested Grant Amount (USD)
+      placeholder: Enter the total amount in USD
+    validations:
+      required: true
+
+  - type: textarea
+    id: team-members
+    attributes:
+      label: Team Members
+      description: List the team members involved in this project
+      value: |-
+        - [Name 1]:
+          - Role: [e.g., Project Lead]
+          - Background: [Brief description of relevant experience and skills]
+          - Responsibilities: [Main tasks in the project]
+        - [Name 2]:
+          - Role: [e.g., Developer]
+          - Background: [Brief description of relevant experience and skills]
+          - Responsibilities: [Main tasks in the project]
+
+        (Add more team members as needed)
+    validations:
+      required: true
+
+  - type: input
+    id: project-start-date
+    attributes:
+      label: Project Start Date
+      description: Enter the expected start date of your project (ISO 8601 format, YYYY-MM-DD)
+      placeholder: e.g., 2023-09-01
+    validations:
+      required: true
+
+  - type: textarea
+    id: funding-and-milestones
+    attributes:
+      label: Project Milestones
+      description: |
+        List all project milestones, their amounts, deliverables, and detailed descriptions. If startup funding is required, specify it first. Include the expected completion date for each milestone in ISO 8601 format (YYYY-MM-DD).
+      value: |-
+        - ### Startup Funding (delete this section if not applicable):
+          - **Amount:** $XXX USD
+          - **Initial Activities:**
+            - Set up project infrastructure
+          - **Details:**
+            - Describe in more detail what the startup funding will be used for and how it will help kick off the project.
+          - **Expected Completion Date:** YYYY-MM-DD
+        - ### Milestone 1:
+          - **Amount:** $XXX USD
+          - **Deliverables:**
+            - Complete first prototype
+            - Conduct user testing
+          - **Details:**
+            - Provide a more comprehensive explanation of the first milestone, including the approach to developing the prototype and the methodology for user testing.
+          - **Expected Completion Date:** YYYY-MM-DD
+        - ### Milestone 2:
+          - **Amount:** $XXX USD
+          - **Deliverables:**
+            - Refine product based on user feedback
+            - Launch beta version
+          - **Details:**
+            - Elaborate on how you plan to incorporate user feedback, what refinements are expected, and the strategy for launching the beta version.
+          - **Expected Completion Date:** YYYY-MM-DD
+
+        (Add more milestones as needed)
+    validations:
+      required: true
+      
+  - type: input
+    id: total-grant-amount
+    attributes:
+      label: Total Grant Amount
+      placeholder: Enter the total amount in USD (sum of all milestone amounts)
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-outcomes
+    attributes:
+      label: Expected Outcomes
+      description: Describe the expected outcomes of your project
+      value: |-
+        - Short-term outcomes:
+          - [List immediate results expected upon project completion]
+        - Long-term impact:
+          - [Describe the broader, lasting effects of your project]
+        - Metrics for success:
+          - [List specific, measurable indicators that will show project success]
+        - Potential challenges:
+          - [Identify possible obstacles and how you plan to address them]
+        - Sustainability:
+          - [Explain how the project or its impact will be sustained beyond the grant period]
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional Information
+      description: Provide any additional relevant information
+      value: |-
+        - Previous work:
+          - [Describe any related projects or research you've done]
+        - Partnerships or collaborations:
+          - [List any organizations or individuals you'll be working with]
+        - Community engagement:
+          - [Explain how you plan to involve or benefit the community]
+        - Future plans:
+          - [Outline any plans for expanding or continuing the project]
+        - Other funding sources:
+          - [List any other grants or funding you've secured or applied for]
+    validations:
+      required: false
+
+  - type: textarea
+    id: file-attachments
+    attributes:
+      label: File Attachments
+      description: Drag and drop any file attachments relevant to this application
+      value: |-
+        - [File Name 1]: Brief description of the file contents
+        - [File Name 2]: Brief description of the file contents
+        (Add more files as needed)
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Validation Results
+        
+        ```
+        Validation results will appear here after submission.
+        ```

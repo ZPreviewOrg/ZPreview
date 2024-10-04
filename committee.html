@@ -1,0 +1,40 @@
+---
+ title: Grants Committee
+ heading: Grants Committee
+ subtitle: Meet the community elected committee members who are approving grant
+---
+
+{% assign committee_members = site.staff_members | where: "position", "Committee Member" %}
+{% for member in committee_members %}
+<section class="diagonal {% cycle 'patterned', '' %}">
+    <div class="container">
+        {% assign index_modulo = forloop.index0 | modulo: 2 %}
+        <div data-aos="{% cycle 'fade-right', 'fade-left' %}" class="container halves {% if index_modulo == 1 %}even{% endif %}">
+            {% if index_modulo == 0 %}
+            <div style="text-align: center;">
+                <h4>{{ member.name }}</h4>
+                <p>
+                    <a href="https://twitter.com/{{ member.twitter }}">
+                        <img src="{{ member.image_path }}" alt="{{ member.name }}">
+                    </a>
+                </p>
+            </div>
+            <div>
+                <p class="subtext editable">{{ member.content }}</p>
+            </div>
+            {% else %}
+            <div>
+                <p class="subtext editable">{{ member.content }}</p>
+            </div>
+            <div style="text-align: center;">
+                <h4 style="color:grey">{{ member.name }}</h4>
+                <p>
+                <a href="https://twitter.com/{{ member.twitter }}">
+                        <img src="{{ member.image_path }}">
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endfor %}

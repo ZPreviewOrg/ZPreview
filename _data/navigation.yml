@@ -1,0 +1,13 @@
+links:
+- name: Home
+  link: /
+- name: Grants
+  link: /grants/
+- name: Grant Process
+  link: /process/
+- name: Grant Committee
+  link: /committee/
+- name: Blog
+  link: /blog/
+- name: Contact
+  link: /contact/

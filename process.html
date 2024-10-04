@@ -1,0 +1,33 @@
+---
+title: Grant Process
+heading: Grant Process
+subtitle: This page covers the essentials of how to submit a grant and what to expect throughout the approval process.
+---
+
+<section class="diagonal patterned">
+	<div class="container">
+        <p>As a democratically-elected body entrusted with allocating community resources, ZCG aims to be as transparent as possible. <span style="color:#f8a600">We follow a process that enables the Zcash community and ecosystem stakeholders to review and comment on grant applications before approval.</span> This page describes our grant application and selection process, and will be updated as the process evolves.</p>
+    </div>
+
+	<div class="container">
+    <div class="accordion-body">
+    <div class="accordion">
+        {% assign sorted_process = site.process %}
+        {% for item in sorted_process %}
+        {% if item.content != blank %}
+        <div class="container">
+            <div class="label">{{ item.title }}</div>
+            <div class="content">
+                {{ item.content | markdownify }}
+            </div>
+        </div>
+        {% unless forloop.last %}<hr>{% endunless %}
+        {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+    </div>
+    
+    <script src="/accordian.js" type="text/javascript"></script>
+
+</section>

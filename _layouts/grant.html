@@ -1,0 +1,24 @@
+---
+layout: page
+---
+<section class="diagonal">
+	<div class="grant text-container">
+		{% include grant-title.html post=page %}
+		<div class="grant-content">
+			{{ content }}
+		</div>
+	</div>
+</section>
+
+<section class="diagonal alternate">
+	<div class="text-container">
+		<h2>Next Grant</h2>
+		<div class="grant">
+			{% if page.next %}
+				{% include grant-summary.html grant=page.next %}
+			{% elsif page.previous %}
+				{% include grant-summary.html grant=page.previous %}
+			{% endif %}
+		</div>
+	</div>
+</section>

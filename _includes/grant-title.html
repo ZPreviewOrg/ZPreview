@@ -1,0 +1,8 @@
+<p class="grant-details">
+	{% for category in include.grant.categories %}
+		<span class="grant-filter">
+			<a href="{{ site.baseurl }}/category/{{ category | slugify }}/">{{ category | capitalize }}</a>
+		</span>
+	{% endfor %}
+	<span class="grant-date">{{ include.grant.date | date: "%B %d, %Y" }}</span>
+</p>
