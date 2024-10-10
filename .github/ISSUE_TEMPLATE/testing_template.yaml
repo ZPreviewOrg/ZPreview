@@ -1,6 +1,6 @@
 name: Testing
 description: Please fill out this form to apply for a grant.
-title: "[Grant Application]: {{project_name}}"
+title: "Grant Application: project_name"
 labels: grant-application
 
 body:
