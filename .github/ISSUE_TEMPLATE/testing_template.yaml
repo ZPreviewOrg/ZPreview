@@ -243,7 +243,7 @@ body:
     attributes:
       label: Team Members
       description: List the team members, their roles, backgrounds, and responsibilities
-      placeholder: |
+      value: |
         ### Project Lead
         - Name:
         - Background:
@@ -332,7 +332,7 @@ body:
     attributes:
       label: Milestones
       description: List your project milestones, including title, amount, expected dates, and deliverables
-      placeholder: |
+      value: |
         ### Milestone 1
         - Title:
         - Amount: $
