@@ -10,15 +10,22 @@ body:
         # Grant Application Template
 
         Please fill out all the sections below to apply for a grant.
-
-  - type: input
-    id: project_name
+  - type: checkboxes
+    id: terms_and_conditions
     attributes:
-      label: Project Name
-      description: Enter the name of your project
-      placeholder: e.g., Zcash Wallet Improvement
-    validations:
-      required: true
+      label: Terms and Conditions
+      description: Please agree to the terms and conditions
+      options:
+        - label: I agree to the [Grant Agreement]() terms if funded
+          required: true
+        - label: I agree to [Provide KYC information]() if funded above $50,000
+          required: true
+        - label: I agree to disclose conflicts of interest
+          required: true
+        - label: I agree to adhere to the [Code of Conduct]()
+          required: true
+        - label: I agree to post request details on the [Community Forum]()
+          required: true
 
   - type: input
     id: application_owners
@@ -29,15 +36,15 @@ body:
     validations:
       required: true
 
-  - type: textarea
-    id: project_summary
+  - type: input
+    id: project_name
     attributes:
-      label: Project Summary
-      description: Provide a brief summary of your project in 1-2 sentences
-      placeholder: Write your summary here...
+      label: Project Name
+      description: Enter the name of your project
+      placeholder: e.g., Zcash Wallet Improvement
     validations:
       required: true
-
+  
   - type: dropdown
     id: category
     attributes:
@@ -56,6 +63,15 @@ body:
         - Dedicated Resource
         - Event Sponsorships
         - Wallets & Infrastructure
+    validations:
+      required: true
+      
+  - type: textarea
+    id: project_summary
+    attributes:
+      label: Project Summary
+      description: Provide a brief summary of your project in 1-2 sentences
+      placeholder: Write your summary here...
     validations:
       required: true
 
@@ -148,23 +164,6 @@ body:
     validations:
       required: true
 
-  - type: checkboxes
-    id: terms_and_conditions
-    attributes:
-      label: Terms and Conditions
-      description: Please agree to the terms and conditions
-      options:
-        - label: I agree to the [Grant Agreement]() terms if funded
-          required: true
-        - label: I agree to [Provide KYC information]() if funded above $50,000
-          required: true
-        - label: I agree to disclose conflicts of interest
-          required: true
-        - label: I agree to adhere to the [Code of Conduct]()
-          required: true
-        - label: I agree to post request details on the [Community Forum]()
-          required: true
-
   - type: textarea
     id: referral_source
     attributes:
@@ -180,8 +179,8 @@ body:
       label: Previous Funding
       description: Have you received previous funding?
       options:
-        - Yes
-        - No
+        - "Yes"
+        - "No"
     validations:
       required: true
 
@@ -200,8 +199,8 @@ body:
       label: Other Funding Sources
       description: Are there other funding sources?
       options:
-        - Yes
-        - No
+        - "Yes"
+        - "No"
     validations:
       required: true
 
