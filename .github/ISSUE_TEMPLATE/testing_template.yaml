@@ -44,7 +44,7 @@ body:
       placeholder: e.g., Zcash Wallet Improvement
     validations:
       required: true
-  
+
   - type: dropdown
     id: category
     attributes:
@@ -65,7 +65,7 @@ body:
         - Wallets & Infrastructure
     validations:
       required: true
-      
+
   - type: textarea
     id: project_summary
     attributes:
@@ -85,10 +85,19 @@ body:
       required: true
 
   - type: textarea
+    id: project_overview
+    attributes:
+      label: Project Overview
+      description: Provide an overview of your project, covering your proposed problem, solution, and format
+      placeholder: Write your overview here...
+    validations:
+      required: true
+
+  - type: textarea
     id: project_description
     attributes:
       label: Project Description
-      description: Provide an overview of your project, including the proposed problem, solution, and technical approach
+      description: Provide a detailed description of your project, including technical approach and any dependencies
       placeholder: Write your project description here...
     validations:
       required: true
@@ -97,25 +106,52 @@ body:
     id: technical_approach
     attributes:
       label: Technical Approach
-      description: Describe your technical approach
+      description: Describe your technical approach, including methods, technologies, and processes you will use
       placeholder: Write your technical approach here...
     validations:
       required: true
 
   - type: textarea
-    id: budget_breakdown
+    id: hardware_software_budget
     attributes:
-      label: Budget Breakdown
-      description: Provide a detailed breakdown of your budget
-      placeholder: Include hardware/software, services, compensation, etc.
+      label: Hardware/Software Budget
+      description: Provide a breakdown of your hardware and software costs
+      placeholder: Include details of hardware/software costs here...
     validations:
-      required: true
+      required: false
+
+  - type: textarea
+    id: services_budget
+    attributes:
+      label: Services Budget
+      description: Provide a breakdown of service-related costs
+      placeholder: Include details of services costs here...
+    validations:
+      required: false
+
+  - type: textarea
+    id: compensation_budget
+    attributes:
+      label: Compensation Budget
+      description: Provide a breakdown of compensation costs
+      placeholder: Include compensation breakdown here...
+    validations:
+      required: false
+
+  - type: textarea
+    id: startup_funding
+    attributes:
+      label: Startup Funding
+      description: Indicate if startup funding is required, and provide details if applicable
+      placeholder: Specify if startup funding is needed, and add justification if yes...
+    validations:
+      required: false
 
   - type: textarea
     id: project_timeline
     attributes:
       label: Project Timeline
-      description: Provide a detailed project timeline
+      description: Provide a detailed project timeline with stages and key dates
       placeholder: Outline your project timeline here...
     validations:
       required: true
