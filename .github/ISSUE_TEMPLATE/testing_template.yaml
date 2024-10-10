@@ -10,6 +10,7 @@ body:
         # Grant Application Template
 
         Please fill out all the sections below to apply for a grant.
+
   - type: checkboxes
     id: terms_and_conditions
     attributes:
@@ -36,6 +37,15 @@ body:
     validations:
       required: true
 
+  - type: textarea
+    id: referral_source
+    attributes:
+      label: How did you learn about Zcash Community Grants?
+      description: Please let us know how you learned about us
+      placeholder: Share your referral source here...
+    validations:
+      required: true
+
   - type: input
     id: project_name
     attributes:
@@ -44,6 +54,15 @@ body:
       placeholder: e.g., Zcash Wallet Improvement
     validations:
       required: true
+
+  - type: input
+    id: last_updated
+    attributes:
+      label: Last Updated
+      description: Enter the date of the last update (YYYY-MM-DD)
+      placeholder: e.g., 2023-10-15
+    validations:
+      required: false
 
   - type: dropdown
     id: category
@@ -66,6 +85,42 @@ body:
     validations:
       required: true
 
+  - type: dropdown
+    id: status
+    attributes:
+      label: Project Status
+      description: Select the current status of your project
+      options:
+        - "New"
+        - "Under Review"
+        - "Approved"
+        - "In Progress"
+        - "Rejected"
+        - "Complete"
+        - "Cancelled"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sponsorship_request
+    attributes:
+      label: Sponsorship Request
+      description: Is this a sponsorship request?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+
+  - type: input
+    id: project_image
+    attributes:
+      label: Project Image
+      description: Provide a link to your project image (e.g., project_logo.png)
+      placeholder: e.g., https://example.com/project_logo.png
+    validations:
+      required: false
+
   - type: textarea
     id: project_summary
     attributes:
@@ -75,32 +130,50 @@ body:
     validations:
       required: true
 
-  - type: input
-    id: requested_amount
-    attributes:
-      label: Requested Grant Amount (USD)
-      description: Enter the total amount you are requesting in USD
-      placeholder: e.g., 50000
-    validations:
-      required: true
-
   - type: textarea
-    id: project_overview
+    id: overview
     attributes:
-      label: Project Overview
-      description: Provide an overview of your project, covering your proposed problem, solution, and format
+      label: Overview
+      description: Provide a brief overview of your project
       placeholder: Write your overview here...
     validations:
       required: true
 
   - type: textarea
-    id: project_description
+    id: proposed_problem
     attributes:
-      label: Project Description
-      description: Provide a detailed description of your project, including technical approach and any dependencies
-      placeholder: Write your project description here...
+      label: Proposed Problem
+      description: Describe the problem your project addresses
+      placeholder: Describe the problem here...
     validations:
       required: true
+
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your proposed solution
+      placeholder: Describe your solution here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution_format
+    attributes:
+      label: Solution Format
+      description: Explain the format of your solution
+      placeholder: Explain the format here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: List any dependencies for your project
+      placeholder: List your dependencies here...
+    validations:
+      required: false
 
   - type: textarea
     id: technical_approach
@@ -108,6 +181,24 @@ body:
       label: Technical Approach
       description: Describe your technical approach, including methods, technologies, and processes you will use
       placeholder: Write your technical approach here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: collaboration_and_upstream_dependencies
+    attributes:
+      label: Collaboration and Upstream Dependencies
+      description: Describe any collaborations or upstream dependencies
+      placeholder: Describe collaborations and dependencies here...
+    validations:
+      required: false
+
+  - type: input
+    id: requested_amount
+    attributes:
+      label: Requested Grant Amount (USD)
+      description: Enter the total amount you are requesting in USD
+      placeholder: e.g., 50000
     validations:
       required: true
 
@@ -148,37 +239,6 @@ body:
       required: false
 
   - type: textarea
-    id: project_timeline
-    attributes:
-      label: Project Timeline
-      description: Provide a detailed project timeline with stages and key dates
-      placeholder: Outline your project timeline here...
-    validations:
-      required: true
-
-  - type: textarea
-    id: milestones
-    attributes:
-      label: Milestones
-      description: List your project milestones, including title, amount, expected dates, and deliverables
-      placeholder: |
-        ### Milestone 1
-        - Title:
-        - Amount: $
-        - Expected Start Date: YYYY-MM-DD
-        - Expected Completion Date: YYYY-MM-DD
-        - Deliverables:
-
-        ### Milestone 2
-        - Title:
-        - Amount: $
-        - Expected Start Date: YYYY-MM-DD
-        - Expected Completion Date: YYYY-MM-DD
-        - Deliverables:
-    validations:
-      required: true
-
-  - type: textarea
     id: team_members
     attributes:
       label: Team Members
@@ -197,15 +257,6 @@ body:
            - Role:
            - Background:
            - Responsibilities:
-    validations:
-      required: true
-
-  - type: textarea
-    id: referral_source
-    attributes:
-      label: How did you learn about Zcash Community Grants?
-      description: Please let us know how you learned about us
-      placeholder: Share your referral source here...
     validations:
       required: true
 
@@ -241,11 +292,62 @@ body:
       required: true
 
   - type: textarea
-    id: risks_and_evaluation
+    id: execution_risks
     attributes:
-      label: Risks and Evaluation
-      description: Describe potential execution risks, unintended consequences, and your evaluation plan
-      placeholder: Outline risks and evaluation plan here...
+      label: Execution Risks
+      description: Describe potential execution risks
+      placeholder: Outline execution risks here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: unintended_consequences
+    attributes:
+      label: Unintended Consequences
+      description: Describe potential unintended consequences
+      placeholder: Describe unintended consequences here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: evaluation_plan
+    attributes:
+      label: Evaluation Plan
+      description: Outline your evaluation plan
+      placeholder: Outline your evaluation plan here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: project_timeline
+    attributes:
+      label: Project Timeline
+      description: Provide a detailed project timeline with stages and key dates
+      placeholder: Outline your project timeline here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: milestones
+    attributes:
+      label: Milestones
+      description: List your project milestones, including title, amount, expected dates, and deliverables
+      placeholder: |
+        ### Milestone 1
+        - Title:
+        - Amount: $
+        - Expected Start Date: YYYY-MM-DD
+        - Expected Completion Date: YYYY-MM-DD
+        - Estimated Hours:
+        - Deliverables:
+
+        ### Milestone 2
+        - Title:
+        - Amount: $
+        - Expected Start Date: YYYY-MM-DD
+        - Expected Completion Date: YYYY-MM-DD
+        - Estimated Hours:
+        - Deliverables:
     validations:
       required: true
 
