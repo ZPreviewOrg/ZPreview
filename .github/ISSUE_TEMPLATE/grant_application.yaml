@@ -130,13 +130,6 @@ body:
   attributes:
     value: '## Team Members'
 
-- type: textarea
-  id: team_members
-  attributes:
-    label: Team Members
-  validations:
-    required: true
-
 - type: input
   id: project_lead_name
   attributes:
@@ -152,14 +145,13 @@ body:
     required: true
 
 - type: textarea
-  id: additional_team_members
+  id: team_members
   attributes:
-    label: Additional Team Members
+    label: Team Members
     value: "1. Name:\n   - Role: \n   - Background: \n   - Responsibilities: \n2.\
       \ Name:\n   - Role: \n   - Background: \n   - Responsibilities: \n..."
-    description: 'Enter additional team members details in the following format:'
   validations:
-    required: false
+    required: true
 
 - type: markdown
   attributes:
@@ -250,7 +242,7 @@ body:
     required: true
 
 - type: input
-  id: budget_breakdown_hardware_software_budget_total_requested_grant_amount_(usd):_total_amount
+  id: budget_breakdown_hardware_software_budget_total_requested_grant_amount_total_amount
   attributes:
     label: Total Amount
     description: $
@@ -319,20 +311,12 @@ body:
 
 - type: markdown
   attributes:
-    value: '## Milestones'
+    value: '## Milestones (Include startup funding as the first milestone if applicable)'
 
 - type: textarea
   id: milestones
   attributes:
     label: Milestones
-    description: Include startup funding as the first milestone if applicable
-  validations:
-    required: true
-
-- type: textarea
-  id: ''
-  attributes:
-    label: ''
     value: "### Milestone 1\n- Title: \n- Amount (USD): $\n- Expected Start Date:\
       \ (YYYY-MM-DD)\n- Expected Completion Date: (YYYY-MM-DD)\n- Estimated Hours:\
       \ HHHH\n- Deliverables: (Provide a brief summary)\n- _Status: (\"\", \"In Progress\"\
@@ -340,30 +324,23 @@ body:
       - Expected Start Date: (YYYY-MM-DD)\n- Expected Completion Date: (YYYY-MM-DD)\n\
       - Estimated Hours: HHHH\n- Deliverables: (Provide a brief summary)\n- _Status:\
       \ (\"\", \"In Progress\", \"Complete\", \"Cancelled\")\n..."
-    description: 'Enter  details in the following format:'
+    description: Include startup funding as the first milestone if applicable
   validations:
-    required: false
+    required: true
 
 - type: markdown
   attributes:
-    value: '## File Attachments'
+    value: '## File Attachments (Drag and drop any file attachment relevant to this
+      application into this box and provide a brief description)'
 
 - type: textarea
   id: file_attachments
   attributes:
     label: File Attachments
+    value: '- File Name 1: Brief description of the file contents
+      - File Name 2: Brief description of the file contents
+      ...'
     description: Drag and drop any file attachment relevant to this application into
       this box and provide a brief description
   validations:
     required: true
-
-- type: textarea
-  id: ''
-  attributes:
-    label: ''
-    value: '- File Name 1: Brief description of the file contents
-      - File Name 2: Brief description of the file contents
-      ...'
-    description: 'Enter  details in the following format:'
-  validations:
-    required: false
