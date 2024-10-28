@@ -9,6 +9,13 @@ body:
   attributes:
     value: '## Terms and Conditions'
 
+- type: textarea
+  id: terms_and_conditions
+  attributes:
+    label: Terms and Conditions
+  validations:
+    required: true
+
 - type: checkboxes
   id: select_options
   attributes:
@@ -24,6 +31,13 @@ body:
 - type: markdown
   attributes:
     value: '## Applicant Information'
+
+- type: textarea
+  id: applicant_information
+  attributes:
+    label: Applicant Information
+  validations:
+    required: true
 
 - type: input
   id: organization_name
@@ -50,6 +64,13 @@ body:
 - type: markdown
   attributes:
     value: '## Project Details'
+
+- type: textarea
+  id: project_details
+  attributes:
+    label: Project Details
+  validations:
+    required: true
 
 - type: input
   id: project_name
@@ -109,27 +130,34 @@ body:
   attributes:
     value: '## Team Members'
 
+- type: textarea
+  id: team_members
+  attributes:
+    label: Team Members
+  validations:
+    required: true
+
 - type: input
-  id: name
+  id: project_lead_name
   attributes:
     label: Name
   validations:
     required: true
 
 - type: input
-  id: background
+  id: project_lead_background
   attributes:
     label: Background
   validations:
     required: true
 
 - type: textarea
-  id: team_members
+  id: additional_team_members
   attributes:
-    label: Team Members
-    description: 'Enter team members details in the following format:'
+    label: Additional Team Members
     value: "1. Name:\n   - Role: \n   - Background: \n   - Responsibilities: \n2.\
       \ Name:\n   - Role: \n   - Background: \n   - Responsibilities: \n..."
+    description: 'Enter additional team members details in the following format:'
   validations:
     required: false
 
@@ -137,16 +165,44 @@ body:
   attributes:
     value: '## Project Summary'
 
+- type: textarea
+  id: project_summary
+  attributes:
+    label: Project Summary
+    description: Provide a brief summary/elevator pitch of your project in 1-2 sentences
+  validations:
+    required: true
+
 - type: markdown
   attributes:
     value: '## Project Description'
+
+- type: textarea
+  id: project_description
+  attributes:
+    label: Project Description
+    description: (Provide a brief overview of the project) (Describe your proposed
+      problem) (Describe your proposed solution) (Explain the format of your solution)
+      (List any dependencies for your project) (Describe your technical approach)
+      (Describe any dependencies or collaborations with other individuals, teams,
+      or organizations that are required to successfully integrate, maintain, or upstream
+      your changes)
+  validations:
+    required: true
 
 - type: markdown
   attributes:
     value: '## Budget'
 
+- type: textarea
+  id: budget
+  attributes:
+    label: Budget
+  validations:
+    required: true
+
 - type: input
-  id: amount
+  id: budget_breakdown_hardware_software_budget_amount
   attributes:
     label: Amount
     description: $
@@ -154,7 +210,7 @@ body:
     required: true
 
 - type: textarea
-  id: justification
+  id: budget_breakdown_hardware_software_budget_justification
   attributes:
     label: Justification
     description: (Provide a brief summary)
@@ -162,7 +218,7 @@ body:
     required: true
 
 - type: input
-  id: amount
+  id: budget_breakdown_hardware_software_budget_services_budget_amount
   attributes:
     label: Amount
     description: $
@@ -170,7 +226,7 @@ body:
     required: true
 
 - type: textarea
-  id: justification
+  id: budget_breakdown_hardware_software_budget_services_budget_justification
   attributes:
     label: Justification
     description: (Provide a brief summary)
@@ -178,7 +234,7 @@ body:
     required: true
 
 - type: input
-  id: amount
+  id: budget_breakdown_hardware_software_budget_compensation_budget_amount
   attributes:
     label: Amount
     description: $
@@ -186,7 +242,7 @@ body:
     required: true
 
 - type: textarea
-  id: justification
+  id: budget_breakdown_hardware_software_budget_compensation_budget_justification
   attributes:
     label: Justification
     description: (Provide a brief summary)
@@ -194,7 +250,7 @@ body:
     required: true
 
 - type: input
-  id: total_amount
+  id: budget_breakdown_hardware_software_budget_total_requested_grant_amount_(usd):_total_amount
   attributes:
     label: Total Amount
     description: $
@@ -204,6 +260,13 @@ body:
 - type: markdown
   attributes:
     value: '## Funding'
+
+- type: textarea
+  id: funding
+  attributes:
+    label: Funding
+  validations:
+    required: true
 
 - type: textarea
   id: previous_funding
@@ -233,9 +296,26 @@ body:
   attributes:
     value: '## Risks and Evaluation'
 
+- type: textarea
+  id: risks_and_evaluation
+  attributes:
+    label: Risks and Evaluation
+    description: (Describe potential execution risks) (Describe potential unintended
+      consequences)
+  validations:
+    required: true
+
 - type: markdown
   attributes:
     value: '## Project Timeline'
+
+- type: textarea
+  id: project_timeline
+  attributes:
+    label: Project Timeline
+    description: Provide a detailed project timeline
+  validations:
+    required: true
 
 - type: markdown
   attributes:
@@ -245,7 +325,14 @@ body:
   id: milestones
   attributes:
     label: Milestones
-    description: 'Enter milestones details in the following format:'
+    description: Include startup funding as the first milestone if applicable
+  validations:
+    required: true
+
+- type: textarea
+  id: ''
+  attributes:
+    label: ''
     value: "### Milestone 1\n- Title: \n- Amount (USD): $\n- Expected Start Date:\
       \ (YYYY-MM-DD)\n- Expected Completion Date: (YYYY-MM-DD)\n- Estimated Hours:\
       \ HHHH\n- Deliverables: (Provide a brief summary)\n- _Status: (\"\", \"In Progress\"\
@@ -253,6 +340,7 @@ body:
       - Expected Start Date: (YYYY-MM-DD)\n- Expected Completion Date: (YYYY-MM-DD)\n\
       - Estimated Hours: HHHH\n- Deliverables: (Provide a brief summary)\n- _Status:\
       \ (\"\", \"In Progress\", \"Complete\", \"Cancelled\")\n..."
+    description: 'Enter  details in the following format:'
   validations:
     required: false
 
@@ -264,9 +352,18 @@ body:
   id: file_attachments
   attributes:
     label: File Attachments
-    description: 'Enter file attachments details in the following format:'
+    description: Drag and drop any file attachment relevant to this application into
+      this box and provide a brief description
+  validations:
+    required: true
+
+- type: textarea
+  id: ''
+  attributes:
+    label: ''
     value: '- File Name 1: Brief description of the file contents
       - File Name 2: Brief description of the file contents
       ...'
+    description: 'Enter  details in the following format:'
   validations:
     required: false
