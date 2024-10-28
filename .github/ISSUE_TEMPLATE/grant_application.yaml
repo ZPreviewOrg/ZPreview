@@ -9,47 +9,17 @@ body:
   attributes:
     value: '## Terms and Conditions'
 
-- type: checkbox
-  id: i_agree_to_the_[grant_agreement]()_terms_if_funded
+- type: checkboxes
+  id: select_options
   attributes:
-    label: I agree to the [Grant Agreement]() terms if funded
-  validations:
-    required: true
-
-- type: checkbox
-  id: i_agree_to_[provide_kyc_information]()_if_funded_above_$50,000_usd
-  attributes:
-    label: I agree to [Provide KYC information]() if funded above $50,000 USD
-  validations:
-    required: true
-
-- type: checkbox
-  id: i_agree_to_disclose_conflicts_of_interest
-  attributes:
-    label: I agree to disclose conflicts of interest
-  validations:
-    required: true
-
-- type: checkbox
-  id: i_agree_to_adhere_to_the_[code_of_conduct]()
-  attributes:
-    label: I agree to adhere to the [Code of Conduct]()
-  validations:
-    required: true
-
-- type: checkbox
-  id: i_agree_to_post_request_details_on_the_[community_forum]()
-  attributes:
-    label: I agree to post request details on the [Community Forum]()
-  validations:
-    required: true
-
-- type: checkbox
-  id: _link_to_this_issue_on_forum_(do_after_application_has_been_submitted)
-  attributes:
-    label: _Link to this issue on forum (do after application has been submitted)
-  validations:
-    required: true
+    label: Select options
+    options:
+    - label: I agree to the [Grant Agreement]() terms if funded
+    - label: I agree to [Provide KYC information]() if funded above $50,000 USD
+    - label: I agree to disclose conflicts of interest
+    - label: I agree to adhere to the [Code of Conduct]()
+    - label: I agree to post request details on the [Community Forum]()
+    - label: _Link to this issue on forum (do after application has been submitted)
 
 - type: markdown
   attributes:
@@ -59,15 +29,14 @@ body:
   id: organization_name
   attributes:
     label: Organization Name
-    description: ''
   validations:
     required: true
 
 - type: input
-  id: application_owners_(github_@usernames)
+  id: application_owners
   attributes:
-    label: Application Owners (GitHub @Usernames)
-    description: ''
+    label: Application Owners
+    description: GitHub @Usernames
   validations:
     required: true
 
@@ -75,7 +44,6 @@ body:
   id: how_did_you_learn_about_zcash_community_grants
   attributes:
     label: How did you learn about Zcash Community Grants
-    description: ''
   validations:
     required: true
 
@@ -87,14 +55,13 @@ body:
   id: project_name
   attributes:
     label: Project Name
-    description: ''
   validations:
     required: true
 
-- type: number
-  id: requested_grant_amount_(usd)
+- type: input
+  id: requested_grant_amount
   attributes:
-    label: Requested Grant Amount (USD)
+    label: Requested Grant Amount
     description: $
   validations:
     required: true
@@ -103,7 +70,6 @@ body:
   id: category
   attributes:
     label: Category
-    description: '[See Category Definitions](https://zcashcommunitygrants.org/categories)'
     options:
     - label: Infrastructure
       value: Infrastructure
@@ -127,6 +93,7 @@ body:
       value: Dedicated Resource
     - label: Event Sponsorships
       value: Event Sponsorships
+    description: '[See Category Definitions](https://zcashcommunitygrants.org/categories)'
   validations:
     required: true
 
@@ -146,7 +113,6 @@ body:
   id: name
   attributes:
     label: Name
-    description: ''
   validations:
     required: true
 
@@ -154,7 +120,6 @@ body:
   id: background
   attributes:
     label: Background
-    description: ''
   validations:
     required: true
 
@@ -180,10 +145,10 @@ body:
   attributes:
     value: '## Budget'
 
-- type: number
-  id: amount_(usd)
+- type: input
+  id: amount
   attributes:
-    label: Amount (USD)
+    label: Amount
     description: $
   validations:
     required: true
@@ -196,10 +161,10 @@ body:
   validations:
     required: true
 
-- type: number
-  id: amount_(usd)
+- type: input
+  id: amount
   attributes:
-    label: Amount (USD)
+    label: Amount
     description: $
   validations:
     required: true
@@ -212,10 +177,10 @@ body:
   validations:
     required: true
 
-- type: number
-  id: amount_(usd)
+- type: input
+  id: amount
   attributes:
-    label: Amount (USD)
+    label: Amount
     description: $
   validations:
     required: true
@@ -228,10 +193,10 @@ body:
   validations:
     required: true
 
-- type: number
-  id: total_amount_(usd)
+- type: input
+  id: total_amount
   attributes:
-    label: Total Amount (USD)
+    label: Total Amount
     description: $
   validations:
     required: true
