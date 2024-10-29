@@ -1,3 +1,7 @@
+permissions:
+  pull-requests: write
+  contents: write
+
 name: Issue SaveAs Workflow
 on:
   issues:
