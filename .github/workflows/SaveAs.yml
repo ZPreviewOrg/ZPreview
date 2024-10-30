@@ -38,9 +38,9 @@ jobs:
         run: |
           mkdir -p docs
           
-          FILENAME=$(echo "$ISSUE_TITLE" | tr ' ' '-' | tr -cd '[:alnum:]-' | tr '[:upper:]' '[:lower:]').md
+          FILENAME=$(echo "100$ISSUE_NUMBER-$ISSUE_TITLE" | tr ' ' '-' | tr -cd '[:alnum:]-' | tr '[:upper:]' '[:lower:]').md
           
-          cat > "docs/$FILENAME" << EOL
+          cat > "_grants/$FILENAME" << EOL
           ---
           title: "$ISSUE_TITLE"
           issue_number: $ISSUE_NUMBER
