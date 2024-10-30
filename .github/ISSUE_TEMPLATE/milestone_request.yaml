@@ -23,3 +23,21 @@ body:
     - label: _Link to this issue on forum (do after application has been submitted)
   validations:
     required: true
+
+
+
+- type: input
+  id: organization_details_name
+  attributes:
+    label: Grant Title or Issue #
+    description: Enter the Grant Title or Issue #
+  validations:
+    required: true
+
+  - type: input
+  id: organization_details_name1
+  attributes:
+    label: Milestone Name
+    description: Enter the Grant Milestone name
+  validations:
+    required: true
