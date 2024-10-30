@@ -1,0 +1,25 @@
+name: Milestone Request
+description: Milestone Request
+title: Milestone Request
+labels:
+- Milestone Request
+body:
+
+- type: markdown
+  attributes:
+    value: '## Milestone request'
+
+- type: checkboxes
+  id: terms_and_conditions_checkboxes
+  attributes:
+    label: Terms and Conditions
+    description: Please review and accept all terms and conditions before proceeding
+    options:
+    - label: I agree to the [Grant Agreement]() terms if funded
+    - label: I agree to [Provide KYC information]() if funded above $50,000 USD
+    - label: I agree to disclose conflicts of interest
+    - label: I agree to adhere to the [Code of Conduct]()
+    - label: I agree to post request details on the [Community Forum]()
+    - label: _Link to this issue on forum (do after application has been submitted)
+  validations:
+    required: true
