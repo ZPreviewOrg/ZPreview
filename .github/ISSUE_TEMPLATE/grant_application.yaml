@@ -88,8 +88,8 @@ body:
   attributes:
     label: Sponsorship Request
     options:
-    - Yes
-    - No
+    - 'Yes'
+    - 'No'
   validations:
     required: true
 
@@ -190,8 +190,8 @@ body:
   attributes:
     label: Previous Funding
     options:
-    - Yes
-    - No
+    - 'Yes'
+    - 'No'
   validations:
     required: true
 
@@ -207,8 +207,8 @@ body:
   attributes:
     label: Other Funding Sources
     options:
-    - Yes
-    - No
+    - 'Yes'
+    - 'No'
   validations:
     required: true
 
