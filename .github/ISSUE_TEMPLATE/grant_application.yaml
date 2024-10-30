@@ -9,13 +9,6 @@ body:
   attributes:
     value: '## Terms and Conditions'
 
-- type: textarea
-  id: terms_and_conditions
-  attributes:
-    label: Terms and Conditions
-  validations:
-    required: true
-
 - type: markdown
   attributes:
     value: '## Terms and Conditions'
