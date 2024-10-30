@@ -1,7 +1,7 @@
 ---
 title: "Grant Application - (123, abc)"
 issue_number: 11
-created_at: 2024-10-30T20:19:58Z
+created_at: 2024-10-30T20:49:07Z
 author: "NerdGGuy"
 protected: true
 ---
@@ -69,7 +69,7 @@ Responsibilities:123
 
 ### Project Description
 
-123
+123 this is a better description
 
 ### Proposed Problem
 
