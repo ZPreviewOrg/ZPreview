@@ -3,6 +3,7 @@ description: Submit a grant application to Zcash Community Grants
 title: Grant Application - (ID, Project Name)
 labels:
 - Grant Application
+body:
 
 - type: markdown
   attributes:
