@@ -29,8 +29,8 @@ body:
 - type: input
   id: organization_details_name
   attributes:
-    label: Grant Title or Issue #
-    description: Enter the Grant Title or Issue #
+    label: Grant Title or Issue
+    description: Enter the Grant Title or Issue
   validations:
     required: true
 
