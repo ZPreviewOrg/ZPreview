@@ -1,43 +1,28 @@
-name: Grant Application
-description: Submit a grant application to Zcash Community Grants
-title: Grant Application - (ID, Project Name)
-labels:
-- Grant Application
+name: Grant Application - (ID, Project Name)
+description: Zcash Community Grants Application Form
 body:
 
 - type: markdown
   attributes:
     value: '## Terms and Conditions'
 
-- type: textarea
-  id: terms_and_conditions
+- type: checkboxes
+  id: terms_and_conditions_checkboxes
   attributes:
     label: Terms and Conditions
+    options:
+    - I agree to the [Grant Agreement]() terms if funded
+    - I agree to [Provide KYC information]() if funded above $50,000 USD
+    - I agree to disclose conflicts of interest
+    - I agree to adhere to the [Code of Conduct]()
+    - I agree to post request details on the [Community Forum]()
+    - _Link to this issue on forum (do after application has been submitted)
   validations:
     required: true
-
-- type: checkboxes
-  id: select_options
-  attributes:
-    label: Select options
-    options:
-    - label: I agree to the [Grant Agreement]() terms if funded
-    - label: I agree to [Provide KYC information]() if funded above $50,000 USD
-    - label: I agree to disclose conflicts of interest
-    - label: I agree to adhere to the [Code of Conduct]()
-    - label: I agree to post request details on the [Community Forum]()
-    - label: _Link to this issue on forum (do after application has been submitted)
 
 - type: markdown
   attributes:
     value: '## Applicant Information'
-
-- type: textarea
-  id: applicant_information
-  attributes:
-    label: Applicant Information
-  validations:
-    required: true
 
 - type: input
   id: organization_name
@@ -47,10 +32,9 @@ body:
     required: true
 
 - type: input
-  id: application_owners
+  id: application_owners_(github_@usernames)
   attributes:
-    label: Application Owners
-    description: GitHub @Usernames
+    label: Application Owners (GitHub @Usernames)
   validations:
     required: true
 
@@ -65,13 +49,6 @@ body:
   attributes:
     value: '## Project Details'
 
-- type: textarea
-  id: project_details
-  attributes:
-    label: Project Details
-  validations:
-    required: true
-
 - type: input
   id: project_name
   attributes:
@@ -80,10 +57,9 @@ body:
     required: true
 
 - type: input
-  id: requested_grant_amount
+  id: requested_grant_amount_(usd)
   attributes:
-    label: Requested Grant Amount
-    description: $
+    label: Requested Grant Amount (USD)
   validations:
     required: true
 
@@ -91,38 +67,28 @@ body:
   id: category
   attributes:
     label: Category
-    options:
-    - label: Infrastructure
-      value: Infrastructure
-    - label: Community
-      value: Community
-    - label: Education
-      value: Education
-    - label: Non-Wallet Applications
-      value: Non-Wallet Applications
-    - label: Integration
-      value: Integration
-    - label: Wallets
-      value: Wallets
-    - label: Research & Development
-      value: Research & Development
-    - label: Media
-      value: Media
-    - label: Zcash Protocol Extension
-      value: Zcash Protocol Extension
-    - label: Dedicated Resource
-      value: Dedicated Resource
-    - label: Event Sponsorships
-      value: Event Sponsorships
     description: '[See Category Definitions](https://zcashcommunitygrants.org/categories)'
+    options:
+    - Infrastructure
+    - Community
+    - Education
+    - Non-Wallet Applications
+    - Integration
+    - Wallets
+    - Research & Development
+    - Media
+    - Zcash Protocol Extension
+    - Dedicated Resource
+    - Event Sponsorships
   validations:
     required: true
 
-- type: textarea
+- type: dropdown
   id: sponsorship_request
   attributes:
     label: Sponsorship Request
-    description: (Yes/No)
+    options:
+    - Yes/No
   validations:
     required: true
 
@@ -131,14 +97,14 @@ body:
     value: '## Team Members'
 
 - type: input
-  id: project_lead_name
+  id: name
   attributes:
     label: Name
   validations:
     required: true
 
 - type: input
-  id: project_lead_background
+  id: background
   attributes:
     label: Background
   validations:
@@ -157,95 +123,66 @@ body:
   attributes:
     value: '## Project Summary'
 
-- type: textarea
-  id: project_summary
-  attributes:
-    label: Project Summary
-    description: Provide a brief summary/elevator pitch of your project in 1-2 sentences
-  validations:
-    required: true
-
 - type: markdown
   attributes:
     value: '## Project Description'
-
-- type: textarea
-  id: project_description
-  attributes:
-    label: Project Description
-    description: (Provide a brief overview of the project) (Describe your proposed
-      problem) (Describe your proposed solution) (Explain the format of your solution)
-      (List any dependencies for your project) (Describe your technical approach)
-      (Describe any dependencies or collaborations with other individuals, teams,
-      or organizations that are required to successfully integrate, maintain, or upstream
-      your changes)
-  validations:
-    required: true
 
 - type: markdown
   attributes:
     value: '## Budget'
 
-- type: textarea
-  id: budget
-  attributes:
-    label: Budget
-  validations:
-    required: true
-
 - type: input
-  id: budget_breakdown_hardware_software_budget_amount
+  id: amount_(usd)
   attributes:
-    label: Amount
-    description: $
+    label: Amount (USD)
   validations:
     required: true
 
-- type: textarea
-  id: budget_breakdown_hardware_software_budget_justification
+- type: dropdown
+  id: justification
   attributes:
     label: Justification
-    description: (Provide a brief summary)
+    options:
+    - Provide a brief summary
   validations:
     required: true
 
 - type: input
-  id: budget_breakdown_hardware_software_budget_services_budget_amount
+  id: amount_(usd)
   attributes:
-    label: Amount
-    description: $
+    label: Amount (USD)
   validations:
     required: true
 
-- type: textarea
-  id: budget_breakdown_hardware_software_budget_services_budget_justification
+- type: dropdown
+  id: justification
   attributes:
     label: Justification
-    description: (Provide a brief summary)
+    options:
+    - Provide a brief summary
   validations:
     required: true
 
 - type: input
-  id: budget_breakdown_hardware_software_budget_compensation_budget_amount
+  id: amount_(usd)
   attributes:
-    label: Amount
-    description: $
+    label: Amount (USD)
   validations:
     required: true
 
-- type: textarea
-  id: budget_breakdown_hardware_software_budget_compensation_budget_justification
+- type: dropdown
+  id: justification
   attributes:
     label: Justification
-    description: (Provide a brief summary)
+    options:
+    - Provide a brief summary
   validations:
     required: true
 
 - type: input
-  id: budget_breakdown_hardware_software_budget_total_requested_grant_amount_total_amount
+  id: total_amount_(usd)
   attributes:
-    label: Total Amount
-    description: $
+    label: Total Amount (USD)
   validations:
     required: true
 
@@ -253,34 +190,30 @@ body:
   attributes:
     value: '## Funding'
 
-- type: textarea
-  id: funding
-  attributes:
-    label: Funding
-  validations:
-    required: true
-
-- type: textarea
+- type: dropdown
   id: previous_funding
   attributes:
     label: Previous Funding
-    description: (Yes/No)
+    options:
+    - Yes/No
   validations:
     required: true
 
-- type: textarea
+- type: dropdown
   id: previous_funding_details
   attributes:
     label: Previous Funding Details
-    description: (If applicable)
+    options:
+    - If applicable
   validations:
     required: true
 
-- type: textarea
+- type: dropdown
   id: other_funding_sources
   attributes:
     label: Other Funding Sources
-    description: (Yes/No)
+    options:
+    - Yes/No
   validations:
     required: true
 
@@ -288,30 +221,13 @@ body:
   attributes:
     value: '## Risks and Evaluation'
 
-- type: textarea
-  id: risks_and_evaluation
-  attributes:
-    label: Risks and Evaluation
-    description: (Describe potential execution risks) (Describe potential unintended
-      consequences)
-  validations:
-    required: true
-
 - type: markdown
   attributes:
     value: '## Project Timeline'
 
-- type: textarea
-  id: project_timeline
-  attributes:
-    label: Project Timeline
-    description: Provide a detailed project timeline
-  validations:
-    required: true
-
 - type: markdown
   attributes:
-    value: '## Milestones (Include startup funding as the first milestone if applicable)'
+    value: '## Milestones'
 
 - type: textarea
   id: milestones
@@ -320,27 +236,26 @@ body:
     value: "### Milestone 1\n- Title: \n- Amount (USD): $\n- Expected Start Date:\
       \ (YYYY-MM-DD)\n- Expected Completion Date: (YYYY-MM-DD)\n- Estimated Hours:\
       \ HHHH\n- Deliverables: (Provide a brief summary)\n- _Status: (\"\", \"In Progress\"\
-      , \"Complete\", \"Cancelled\")\n### Milestone 2\n- Title:\n- Amount (USD): $\n\
-      - Expected Start Date: (YYYY-MM-DD)\n- Expected Completion Date: (YYYY-MM-DD)\n\
+      , \"Complete\", \"Cancelled\")\n\n### Milestone 2\n- Title:\n- Amount (USD):\
+      \ $\n- Expected Start Date: (YYYY-MM-DD)\n- Expected Completion Date: (YYYY-MM-DD)\n\
       - Estimated Hours: HHHH\n- Deliverables: (Provide a brief summary)\n- _Status:\
       \ (\"\", \"In Progress\", \"Complete\", \"Cancelled\")\n..."
-    description: Include startup funding as the first milestone if applicable
   validations:
     required: true
 
 - type: markdown
   attributes:
-    value: '## File Attachments (Drag and drop any file attachment relevant to this
-      application into this box and provide a brief description)'
+    value: '## File Attachments'
 
 - type: textarea
   id: file_attachments
   attributes:
     label: File Attachments
     value: '- File Name 1: Brief description of the file contents
+
       - File Name 2: Brief description of the file contents
+
       ...'
-    description: Drag and drop any file attachment relevant to this application into
-      this box and provide a brief description
   validations:
     required: true
+
