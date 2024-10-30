@@ -54,7 +54,7 @@ jobs:
           
       - name: Commit and push changes
         run: |
-          git add docs/
+          git add _grants/
           git commit -m "Save content from issue #${{ github.event.issue.number }}"
           git push -f origin $BRANCH_NAME
           
