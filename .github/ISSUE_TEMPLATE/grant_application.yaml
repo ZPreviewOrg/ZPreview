@@ -3,11 +3,6 @@ description: Submit a grant application to Zcash Community Grants
 title: Grant Application - (ID, Project Name)
 labels:
 - Grant Application
-body:
-
-- type: markdown
-  attributes:
-    value: '## Terms and Conditions'
 
 - type: markdown
   attributes:
@@ -29,24 +24,24 @@ body:
 
 - type: markdown
   attributes:
-    value: '## Applicant Information'
+    value: '## Organization Details'
 
 - type: input
-  id: applicant_information_organization_name
+  id: organization_details_name
   attributes:
     label: Organization Name
   validations:
     required: true
 
 - type: input
-  id: applicant_information_application_owners
+  id: organization_details_owners
   attributes:
     label: Application Owners (GitHub @Usernames)
   validations:
     required: true
 
 - type: input
-  id: applicant_information_how_did_you_learn_about_zcash_community_grants
+  id: organization_details_discovery
   attributes:
     label: How did you learn about Zcash Community Grants
   validations:
@@ -54,24 +49,24 @@ body:
 
 - type: markdown
   attributes:
-    value: '## Project Details'
+    value: '## Project Overview'
 
 - type: input
-  id: project_details_project_name
+  id: project_overview_name
   attributes:
     label: Project Name
   validations:
     required: true
 
 - type: input
-  id: project_details_requested_grant_amount
+  id: project_overview_amount
   attributes:
     label: Requested Grant Amount (USD)
   validations:
     required: true
 
 - type: dropdown
-  id: project_details_category
+  id: project_overview_category
   attributes:
     label: Category
     description: '[See Category Definitions](https://zcashcommunitygrants.org/categories)'
@@ -91,7 +86,7 @@ body:
     required: true
 
 - type: dropdown
-  id: project_details_sponsorship_request
+  id: project_overview_sponsorship
   attributes:
     label: Sponsorship Request
     options:
@@ -102,98 +97,159 @@ body:
 
 - type: markdown
   attributes:
-    value: '## Team Members'
+    value: '## Team Information'
 
-- type: input
-  id: team_members_name
+- type: textarea
+  id: team_information_project_lead
   attributes:
-    label: Name
-  validations:
-    required: true
-
-- type: input
-  id: team_members_background
-  attributes:
-    label: Background
+    label: Project Lead
+    value: |
+      Name:
+      Role:
+      Background:
+      Responsibilities:
   validations:
     required: true
 
 - type: textarea
-  id: team_members_team_members
+  id: team_information_members
   attributes:
-    label: Team Members
-    value: "1. Name:\n   - Role: \n   - Background: \n   - Responsibilities: \n2.\
-      \ Name:\n   - Role: \n   - Background: \n   - Responsibilities: \n..."
+    label: Additional Team Members
+    value: |
+      1. Name:
+         Role:
+         Background:
+         Responsibilities:
+      2. Name:
+         Role:
+         Background:
+         Responsibilities:
   validations:
     required: true
 
 - type: markdown
   attributes:
-    value: '## Project Summary'
+    value: '## Project Details'
 
-- type: markdown
+- type: textarea
+  id: project_details_summary
   attributes:
-    value: '## Project Description'
+    label: Project Summary
+    description: Provide a brief summary/elevator pitch of your project in 1-2 sentences
+  validations:
+    required: true
+
+- type: textarea
+  id: project_details_description
+  attributes:
+    label: Project Description
+    description: Provide a brief overview of the project
+  validations:
+    required: true
+
+- type: textarea
+  id: project_details_problem
+  attributes:
+    label: Proposed Problem
+    description: Describe your proposed problem
+  validations:
+    required: true
+
+- type: textarea
+  id: project_details_solution
+  attributes:
+    label: Proposed Solution
+    description: Describe your proposed solution
+  validations:
+    required: true
+
+- type: textarea
+  id: project_details_format
+  attributes:
+    label: Solution Format
+    description: Explain the format of your solution
+  validations:
+    required: true
+
+- type: textarea
+  id: project_details_dependencies
+  attributes:
+    label: Dependencies
+    description: List any dependencies for your project
+  validations:
+    required: true
+
+- type: textarea
+  id: project_details_technical
+  attributes:
+    label: Technical Approach
+    description: Describe your technical approach
+  validations:
+    required: true
+
+- type: textarea
+  id: project_details_collaboration
+  attributes:
+    label: Collaboration and Upstream Dependencies
+    description: Describe any dependencies or collaborations required
+  validations:
+    required: true
 
 - type: markdown
   attributes:
     value: '## Budget'
 
 - type: input
-  id: budget_amount1
+  id: budget_hardware
   attributes:
-    label: Amount (USD)
+    label: Hardware/Software Costs (USD)
   validations:
     required: true
 
 - type: textarea
-  id: budget_justification1
+  id: budget_hardware_justification
   attributes:
-    label: Justification
+    label: Hardware/Software Justification
   validations:
     required: true
 
 - type: input
-  id: budget_amount2
+  id: budget_service
   attributes:
-    label: Amount (USD)
+    label: Service Costs (USD)
   validations:
     required: true
 
 - type: textarea
-  id: budget_justification2
+  id: budget_service_justification
   attributes:
-    label: Justification
+    label: Service Costs Justification
   validations:
     required: true
 
 - type: input
-  id: budget_amount3
+  id: budget_compensation
   attributes:
-    label: Amount (USD)
+    label: Compensation Costs (USD)
   validations:
     required: true
 
 - type: textarea
-  id: budget_justification3
+  id: budget_compensation_justification
   attributes:
-    label: Justification
+    label: Compensation Costs Justification
   validations:
     required: true
 
 - type: input
-  id: budget_total_amount
+  id: budget_total
   attributes:
-    label: Total Amount (USD)
+    label: Total Budget (USD)
   validations:
     required: true
-
-- type: markdown
-  attributes:
-    value: '## Funding'
 
 - type: dropdown
-  id: funding_previous_funding
+  id: budget_previous_funding
   attributes:
     label: Previous Funding
     options:
@@ -203,14 +259,14 @@ body:
     required: true
 
 - type: textarea
-  id: funding_previous_funding_details
+  id: budget_previous_details
   attributes:
     label: Previous Funding Details
   validations:
     required: true
 
 - type: dropdown
-  id: funding_other_funding_sources
+  id: budget_other_sources
   attributes:
     label: Other Funding Sources
     options:
@@ -221,43 +277,90 @@ body:
 
 - type: markdown
   attributes:
-    value: '## Risks and Evaluation'
-
-- type: markdown
-  attributes:
-    value: '## Project Timeline'
-
-- type: markdown
-  attributes:
-    value: '## Milestones'
+    value: '## Risk Assessment'
 
 - type: textarea
-  id: milestones_milestones
+  id: risk_implementation
   attributes:
-    label: Milestones
-    value: "### Milestone 1\n- Title: \n- Amount (USD): $\n- Expected Start Date:\
-      \ (YYYY-MM-DD)\n- Expected Completion Date: (YYYY-MM-DD)\n- Estimated Hours:\
-      \ HHHH\n- Deliverables: (Provide a brief summary)\n- _Status: (\"\", \"In Progress\"\
-      , \"Complete\", \"Cancelled\")\n\n### Milestone 2\n- Title:\n- Amount (USD):\
-      \ $\n- Expected Start Date: (YYYY-MM-DD)\n- Expected Completion Date: (YYYY-MM-DD)\n\
-      - Estimated Hours: HHHH\n- Deliverables: (Provide a brief summary)\n- _Status:\
-      \ (\"\", \"In Progress\", \"Complete\", \"Cancelled\")\n..."
+    label: Implementation Risks
+    description: Describe potential execution risks
+  validations:
+    required: true
+
+- type: textarea
+  id: risk_side_effects
+  attributes:
+    label: Potential Side Effects
+    description: Describe potential unintended consequences
+  validations:
+    required: true
+
+- type: textarea
+  id: risk_metrics
+  attributes:
+    label: Success Metrics
+    description: Outline your evaluation plan
   validations:
     required: true
 
 - type: markdown
   attributes:
-    value: '## File Attachments'
+    value: '## Project Schedule'
 
 - type: textarea
-  id: file_attachments_file_attachments
+  id: schedule_timeline
   attributes:
-    label: File Attachments
-    value: '- File Name 1: Brief description of the file contents
+    label: Timeline Overview
+    description: Provide a detailed project timeline
+  validations:
+    required: true
 
+- type: input
+  id: schedule_startup
+  attributes:
+    label: Startup Funding (USD)
+  validations:
+    required: true
+
+- type: textarea
+  id: schedule_startup_justification
+  attributes:
+    label: Startup Funding Justification
+  validations:
+    required: true
+
+- type: textarea
+  id: schedule_milestones
+  attributes:
+    label: Milestone Details
+    value: |
+      1. Milestone 1
+      - Title:
+      - Amount (USD): $
+      - Expected Start Date: (YYYY-MM-DD)
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Estimated Hours: HHHH
+      - Deliverables: (Provide a brief summary)
+      - _Status: ("", "In Progress", "Complete", "Cancelled")
+
+      2. Milestone 2
+      - Title:
+      - Amount (USD): $
+      - Expected Start Date: (YYYY-MM-DD)
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Estimated Hours: HHHH
+      - Deliverables: (Provide a brief summary)
+      - _Status: ("", "In Progress", "Complete", "Cancelled")
+  validations:
+    required: true
+
+- type: textarea
+  id: supporting_documents
+  attributes:
+    label: Supporting Documents
+    description: List and describe any file attachments relevant to this application
+    value: |
+      - File Name 1: Brief description of the file contents
       - File Name 2: Brief description of the file contents
-
-      ...'
   validations:
     required: true
-
