@@ -88,7 +88,8 @@ body:
   attributes:
     label: Sponsorship Request
     options:
-    - Yes/No
+    - Yes
+    - No
   validations:
     required: true
 
@@ -132,50 +133,44 @@ body:
     value: '## Budget'
 
 - type: input
-  id: budget_amount
+  id: budget_amount1
   attributes:
     label: Amount (USD)
   validations:
     required: true
 
-- type: dropdown
-  id: budget_justification
+- type: textarea
+  id: budget_justification1
   attributes:
     label: Justification
-    options:
-    - Provide a brief summary
   validations:
     required: true
 
 - type: input
-  id: budget_amount
+  id: budget_amount2
   attributes:
     label: Amount (USD)
   validations:
     required: true
 
-- type: dropdown
-  id: budget_justification
+- type: textarea
+  id: budget_justification2
   attributes:
     label: Justification
-    options:
-    - Provide a brief summary
   validations:
     required: true
 
 - type: input
-  id: budget_amount
+  id: budget_amount3
   attributes:
     label: Amount (USD)
   validations:
     required: true
 
 - type: dropdown
-  id: budget_justification
+  id: budget_justification3
   attributes:
     label: Justification
-    options:
-    - Provide a brief summary
   validations:
     required: true
 
@@ -195,16 +190,15 @@ body:
   attributes:
     label: Previous Funding
     options:
-    - Yes/No
+    - Yes
+    - No
   validations:
     required: true
 
-- type: dropdown
+- type: textarea
   id: funding_previous_funding_details
   attributes:
     label: Previous Funding Details
-    options:
-    - If applicable
   validations:
     required: true
 
@@ -213,7 +207,8 @@ body:
   attributes:
     label: Other Funding Sources
     options:
-    - Yes/No
+    - Yes
+    - No
   validations:
     required: true
 
