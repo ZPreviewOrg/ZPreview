@@ -25,21 +25,21 @@ body:
     value: '## Applicant Information'
 
 - type: input
-  id: organization_name
+  id: applicant_information_organization_name
   attributes:
     label: Organization Name
   validations:
     required: true
 
 - type: input
-  id: application_owners_(github_@usernames)
+  id: applicant_information_application_owners
   attributes:
     label: Application Owners (GitHub @Usernames)
   validations:
     required: true
 
 - type: input
-  id: how_did_you_learn_about_zcash_community_grants
+  id: applicant_information_how_did_you_learn_about_zcash_community_grants
   attributes:
     label: How did you learn about Zcash Community Grants
   validations:
@@ -50,21 +50,21 @@ body:
     value: '## Project Details'
 
 - type: input
-  id: project_name
+  id: project_details_project_name
   attributes:
     label: Project Name
   validations:
     required: true
 
 - type: input
-  id: requested_grant_amount_(usd)
+  id: project_details_requested_grant_amount
   attributes:
     label: Requested Grant Amount (USD)
   validations:
     required: true
 
 - type: dropdown
-  id: category
+  id: project_details_category
   attributes:
     label: Category
     description: '[See Category Definitions](https://zcashcommunitygrants.org/categories)'
@@ -84,7 +84,7 @@ body:
     required: true
 
 - type: dropdown
-  id: sponsorship_request
+  id: project_details_sponsorship_request
   attributes:
     label: Sponsorship Request
     options:
@@ -97,21 +97,21 @@ body:
     value: '## Team Members'
 
 - type: input
-  id: name
+  id: team_members_name
   attributes:
     label: Name
   validations:
     required: true
 
 - type: input
-  id: background
+  id: team_members_background
   attributes:
     label: Background
   validations:
     required: true
 
 - type: textarea
-  id: team_members
+  id: team_members_team_members
   attributes:
     label: Team Members
     value: "1. Name:\n   - Role: \n   - Background: \n   - Responsibilities: \n2.\
@@ -132,14 +132,14 @@ body:
     value: '## Budget'
 
 - type: input
-  id: amount_(usd)
+  id: budget_amount
   attributes:
     label: Amount (USD)
   validations:
     required: true
 
 - type: dropdown
-  id: justification
+  id: budget_justification
   attributes:
     label: Justification
     options:
@@ -148,14 +148,14 @@ body:
     required: true
 
 - type: input
-  id: amount_(usd)
+  id: budget_amount
   attributes:
     label: Amount (USD)
   validations:
     required: true
 
 - type: dropdown
-  id: justification
+  id: budget_justification
   attributes:
     label: Justification
     options:
@@ -164,14 +164,14 @@ body:
     required: true
 
 - type: input
-  id: amount_(usd)
+  id: budget_amount
   attributes:
     label: Amount (USD)
   validations:
     required: true
 
 - type: dropdown
-  id: justification
+  id: budget_justification
   attributes:
     label: Justification
     options:
@@ -180,7 +180,7 @@ body:
     required: true
 
 - type: input
-  id: total_amount_(usd)
+  id: budget_total_amount
   attributes:
     label: Total Amount (USD)
   validations:
@@ -191,7 +191,7 @@ body:
     value: '## Funding'
 
 - type: dropdown
-  id: previous_funding
+  id: funding_previous_funding
   attributes:
     label: Previous Funding
     options:
@@ -200,7 +200,7 @@ body:
     required: true
 
 - type: dropdown
-  id: previous_funding_details
+  id: funding_previous_funding_details
   attributes:
     label: Previous Funding Details
     options:
@@ -209,7 +209,7 @@ body:
     required: true
 
 - type: dropdown
-  id: other_funding_sources
+  id: funding_other_funding_sources
   attributes:
     label: Other Funding Sources
     options:
@@ -230,7 +230,7 @@ body:
     value: '## Milestones'
 
 - type: textarea
-  id: milestones
+  id: milestones_milestones
   attributes:
     label: Milestones
     value: "### Milestone 1\n- Title: \n- Amount (USD): $\n- Expected Start Date:\
@@ -248,7 +248,7 @@ body:
     value: '## File Attachments'
 
 - type: textarea
-  id: file_attachments
+  id: file_attachments_file_attachments
   attributes:
     label: File Attachments
     value: '- File Name 1: Brief description of the file contents
