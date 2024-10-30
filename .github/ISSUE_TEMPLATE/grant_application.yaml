@@ -181,7 +181,7 @@ body:
   validations:
     required: true
 
-- type: dropdown
+- type: textarea
   id: budget_justification3
   attributes:
     label: Justification
