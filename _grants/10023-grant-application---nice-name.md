@@ -1,7 +1,7 @@
 ---
 title: "Grant Application - nice name"
 issue_number: 23
-created_at: 2024-11-08T21:18:30Z
+created_at: 2024-11-08T21:23:43Z
 author: "NerdGGuy"
 protected: true
 ---
@@ -29,7 +29,7 @@ protected: true
 
 ### Requested Grant Amount (USD)
 
-123
+1234
 
 ### Category
 
