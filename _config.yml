@@ -27,8 +27,9 @@ collections:
     output: true
   process:
     output: true
-    order: descending
   grants:
+    output: true
+  categories:
     output: true
 
 paginate: 10
@@ -86,6 +87,11 @@ defaults:
         image_path:
           width: 600
           height: 600
+  - scope:
+      path: ""
+      type: "categories"
+    values:
+      layout: "page"
   - scope:
       path: ""
       type: "process"

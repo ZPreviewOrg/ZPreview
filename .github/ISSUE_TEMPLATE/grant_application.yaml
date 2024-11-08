@@ -1,6 +1,6 @@
-name: Grant Application
+name: ZCG Grant Application
 description: Submit a grant application to Zcash Community Grants
-title: Grant Application - (ID, Project Name)
+title: Grant Application - {Application Name}
 labels:
 - Grant Application
 body:
@@ -15,12 +15,12 @@ body:
     label: Terms and Conditions
     description: Please review and accept all terms and conditions before proceeding
     options:
-    - label: I agree to the [Grant Agreement]() terms if funded
-    - label: I agree to [Provide KYC information]() if funded above $50,000 USD
+    - label: I agree to the [Grant Agreement](https://9ba4718c-5c73-47c3-a024-4fc4e5278803.usrfiles.com/ugd/9ba471_f81ef4e4b5f040038350270590eb2e42.pdf) terms if funded
+    - label: I agree to [Provide KYC information](https://9ba4718c-5c73-47c3-a024-4fc4e5278803.usrfiles.com/ugd/9ba471_7d9e73d16b584a61bae92282b208efc4.pdf) if funded above $50,000 USD
     - label: I agree to disclose conflicts of interest
-    - label: I agree to adhere to the [Code of Conduct]()
-    - label: I agree to post request details on the [Community Forum]()
-    - label: _Link to this issue on forum (do after application has been submitted)
+    - label: I agree to adhere to the [Code of Conduct](https://forum.zcashcommunity.com/t/zcg-code-of-conduct/41787) and [Communication Guidelines](https://forum.zcashcommunity.com/t/zcg-communication-guidelines/44284)
+    - label: I agree to post request details on the [Community Forum](https://forum.zcashcommunity.com/c/grants/33)
+    - label: I understand it is my responsibility to post a link to this issue on the [Zcash Community Forums](https://forum.zcashcommunity.com/c/grants/33) after this application has been submitted so the community can give input. I understand this is required in order for ZCG to discuss and vote on this grant application.
   validations:
     required: true
 
@@ -39,7 +39,7 @@ body:
 - type: input
   id: organization_details_owners
   attributes:
-    label: Application Owners (GitHub @Usernames)
+    label: Application Owners (@Octocat, @Octocat1)
     description: GitHub usernames of all individuals responsible for this application
   validations:
     required: true
@@ -55,14 +55,6 @@ body:
 - type: markdown
   attributes:
     value: '## Project Overview'
-
-- type: input
-  id: project_overview_name
-  attributes:
-    label: Project Name
-    description: A brief, descriptive name for your project
-  validations:
-    required: true
 
 - type: input
   id: project_overview_amount
@@ -93,17 +85,6 @@ body:
   validations:
     required: true
 
-- type: dropdown
-  id: project_overview_sponsorship
-  attributes:
-    label: Sponsorship Request
-    description: Indicate if this is a sponsorship request rather than a standard grant application
-    options:
-    - 'Yes'
-    - 'No'
-  validations:
-    required: true
-
 - type: markdown
   attributes:
     value: '## Team Information'
@@ -125,13 +106,29 @@ body:
   id: team_information_members
   attributes:
     label: Additional Team Members
-    description: List all other team members and their roles in the project
+    description: List all other team members and their roles in the project. Please delete the additional pre-filled text after you have listed all your team members. E.g. if you only have 2 additional members you can delete the prefilled text for 3-6. If you are the only individual for the project please write “None or N/A.
     value: |
       1. Name:
          Role:
          Background:
          Responsibilities:
       2. Name:
+         Role:
+         Background:
+         Responsibilities:
+      3. Name:
+         Role:
+         Background:
+         Responsibilities:
+      4. Name:
+         Role:
+         Background:
+         Responsibilities:
+      5. Name:
+         Role:
+         Background:
+         Responsibilities:
+      6. Name:
          Role:
          Background:
          Responsibilities:
@@ -186,7 +183,7 @@ body:
   id: project_details_dependencies
   attributes:
     label: Dependencies
-    description: List any technical, resource, or other dependencies required for your project
+    description: List any dependencies required for your project including technical, resource, and collaborations with other individuals, teams, or organizations.
   validations:
     required: true
 
@@ -199,10 +196,16 @@ body:
     required: true
 
 - type: textarea
-  id: project_details_collaboration
+  id: project_details_merge
   attributes:
-    label: Collaboration and Upstream Dependencies
-    description: Describe any dependencies or collaborations with other individuals, teams, or organizations required for success
+    label: Upstream Merge Opportunities
+    description: |
+      If your project involves forking or modifying existing Zcash software, please describe:
+      - Which upstream Zcash repositories you plan to fork/modify
+      - What changes you plan to make
+      - Whether these changes could benefit the wider Zcash ecosystem if merged upstream
+      - Any coordination needed with upstream maintainers
+      - Timeline considerations for potential upstream merges
   validations:
     required: true
 
@@ -295,8 +298,16 @@ body:
     label: Other Funding Sources
     description: Indicate if you have or plan to receive funding from other sources
     options:
-    - 'Yes'
     - 'No'
+    - 'Yes'
+  validations:
+    required: true
+
+- type: textarea
+  id: budget_other_sources Details
+  attributes:
+    label: Other Funding Sources Details
+    description: If you have of plan to recieve funding from other sources, provide details
   validations:
     required: true
 
@@ -332,19 +343,11 @@ body:
   attributes:
     value: '## Project Schedule'
 
-- type: textarea
-  id: schedule_timeline
-  attributes:
-    label: Timeline Overview
-    description: Provide a detailed timeline showing major project phases and deadlines
-  validations:
-    required: true
-
 - type: input
   id: schedule_startup
   attributes:
     label: Startup Funding (USD)
-    description: Amount needed to begin the project (if different from total amount)
+    description: Amount needed to begin the project
     placeholder: ex. $10,000
   validations:
     required: true
@@ -361,25 +364,56 @@ body:
   id: schedule_milestones
   attributes:
     label: Milestone Details
-    description: Break down the project into specific milestones with associated deliverables and timelines
+    description: Break down the project into specific milestones with associated deliverables and timelines. Please complete the details for all milestones of your grant and leave the text after your last milestone. E.g. if you only have 3 milestones in your grant, complete the details for 3 milestones and then delete the prefilled text for milestones 4-12.
     value: |
       1. Milestone 1
-      - Title:
       - Amount (USD): $
-      - Expected Start Date: (YYYY-MM-DD)
       - Expected Completion Date: (YYYY-MM-DD)
-      - Estimated Hours: HHHH
       - Deliverables: (Provide a brief summary)
-      - _Status: ("", "In Progress", "Complete", "Cancelled")
-
       2. Milestone 2
-      - Title:
       - Amount (USD): $
-      - Expected Start Date: (YYYY-MM-DD)
       - Expected Completion Date: (YYYY-MM-DD)
-      - Estimated Hours: HHHH
       - Deliverables: (Provide a brief summary)
-      - _Status: ("", "In Progress", "Complete", "Cancelled")
+      3. Milestone 3
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
+      4. Milestone 4
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
+      5. Milestone 5
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
+      6. Milestone 6
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
+      7. Milestone 7
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
+      8. Milestone 8
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
+      9. Milestone 9
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
+      10. Milestone 10
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
+      11. Milestone 11
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
+      12. Milestone 12
+      - Amount (USD): $
+      - Expected Completion Date: (YYYY-MM-DD)
+      - Deliverables: (Provide a brief summary)
   validations:
     required: true
 
@@ -387,9 +421,9 @@ body:
   id: supporting_documents
   attributes:
     label: Supporting Documents
-    description: Upload and describe any additional documents that support your application
+    description: To add a document, click in the text box then select “Paste, drop, or Click to add files. You can also add a link to a file (please give anyone with the link viewing access).
     value: |
       - File Name 1: Brief description of the file contents
       - File Name 2: Brief description of the file contents
   validations:
-    required: true
+    required: false

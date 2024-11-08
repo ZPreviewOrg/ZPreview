@@ -1,0 +1,16 @@
+---
+layout: page
+title: Grant Categories
+description: The Zcash Community Grants program accepts applications in the following categories. Each category serves different needs within the Zcash ecosystem. Click on a category to learn more about it.
+---
+
+{% for category in site.categories %}
+<section class="diagonal {% cycle 'patterned', '' %}">
+    <div class="container">
+        <div data-aos="{% cycle 'fade-right', 'fade-left' %}" class="category-card {% cycle '', 'even' %}">
+            <h2>{{ category.title }}</h2>
+            {{ category.content }}
+        </div>
+    </div>
+</section>
+{% endfor %}

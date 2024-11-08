@@ -4,11 +4,12 @@ title: Grants
 heading: Grants
 subtitle: List of Grant Applications
 ---
-{% assign grants = site.grants %}
-<section class="diagonal">
-	<div class="text-container">
-		<ul class="grants">
-			{% include list-grants.html grants=site.grants %}
-		</ul>
-	</div>
+{% for grant in site.grants reversed %}
+<section class="diagonal {% cycle 'patterned', '' %}">
+    <div class="container">
+        <div data-aos="{% cycle 'fade-right', 'fade-left' %}" class="grant">
+            {% include grant-summary.html grant=grant %}
+        </div>
+    </div>
 </section>
+{% endfor %}
