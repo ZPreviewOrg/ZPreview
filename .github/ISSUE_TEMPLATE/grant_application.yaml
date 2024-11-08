@@ -304,7 +304,7 @@ body:
     required: true
 
 - type: textarea
-  id: budget_other_sources Details
+  id: budget_other_sources_details
   attributes:
     label: Other Funding Sources Details
     description: If you have of plan to recieve funding from other sources, provide details
