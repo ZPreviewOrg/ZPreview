@@ -46,6 +46,9 @@ plugins:
   - "jekyll-paginate"
   - "jekyll-archives"
 
+include:
+  - "*.js"    # Include all JS files from root
+
 exclude:
   - Gemfile
   - Gemfile.lock
