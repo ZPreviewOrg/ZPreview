@@ -1,0 +1,45 @@
+name: 'PR Management'
+description: 'Manages pull requests for content changes'
+
+inputs:
+  github-token:
+    description: 'GitHub token for API access'
+    required: true
+  branch-name:
+    description: 'Branch name for the PR'
+    required: true
+  issue-number:
+    description: 'Issue number related to the PR'
+    required: true
+  issue-title:
+    description: 'Title of the related issue'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check for existing PR and update or create new one
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        BRANCH_NAME: ${{ inputs.branch-name }}
+        ISSUE_NUMBER: ${{ inputs.issue-number }}
+        ISSUE_TITLE: ${{ inputs.issue-title }}
+      run: |
+        PR_TITLE="Save content from issue #${ISSUE_NUMBER}"
+        PR_BODY="This PR was automatically generated to save content from issue #${ISSUE_NUMBER} - ${ISSUE_TITLE}"
+        
+        # Check for existing PR
+        EXISTING_PR=$(gh pr list --head "${BRANCH_NAME}" --json number --jq '.[0].number')
+        
+        if [ -n "$EXISTING_PR" ]; then
+          echo "Existing PR found: #$EXISTING_PR"
+          git push -f origin "${BRANCH_NAME}"
+        else
+          echo "Creating new PR"
+          gh pr create \
+            --title "$PR_TITLE" \
+            --body "$PR_BODY" \
+            --base main \
+            --head "${BRANCH_NAME}"
+        fi
