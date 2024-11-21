@@ -1,0 +1,92 @@
+name: 'Protection Labels and Notice'
+description: 'Applies protection labels and creates notices for protected content'
+
+inputs:
+  token:
+    description: 'GitHub token'
+    required: true
+  issue-number:
+    description: 'Issue number'
+    required: true
+  repo-owner:
+    description: 'Repository owner'
+    required: true
+  repo-name:
+    description: 'Repository name'
+    required: true
+  pr-number:
+    description: 'Pull request number'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check and Apply Protection Labels
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ inputs.token }}
+        script: |
+          const issue = await github.rest.issues.get({
+            owner: inputs.repo-owner,
+            repo: inputs.repo-name,
+            issue_number: inputs.issue-number
+          });
+          
+          const hasProtectionLabel = issue.data.labels.some(label => 
+            label.name === 'content-protected'
+          );
+          
+          if (!hasProtectionLabel) {
+            await github.rest.issues.addLabels({
+              owner: inputs.repo-owner,
+              repo: inputs.repo-name,
+              issue_number: inputs.issue-number,
+              labels: ['content-protected']
+            });
+
+            const protectionMessage = `# 🔒 Content Protection Notice
+
+            This issue's content has been saved and is now protected. A snapshot has been created in PR #${inputs.pr-number}.
+
+            ## What this means:
+            - The original content is preserved in the repository
+            - While the content can still be edited, changes will be monitored
+            - Each edit will trigger a new snapshot PR
+            
+            ## To make changes:
+            1. Edit the issue content as needed
+            2. A new PR will automatically be created with your changes
+            3. Maintainers will review the changes
+
+            💬 Comments remain open for discussion.
+            
+            If you need to make substantial changes, please discuss with maintainers first.`;
+
+            await github.rest.issues.createComment({
+              owner: inputs.repo-owner,
+              repo: inputs.repo-name,
+              issue_number: inputs.issue-number,
+              body: protectionMessage
+            });
+          }
+
+    - name: Create Change Notice
+      if: github.event_name == 'issues' && github.event.action == 'edited'
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ inputs.token }}
+        script: |
+          const changeNotice = `## ⚠️ Content Change Detected
+
+          The protected content of this issue has been modified.
+          - The existing snapshot PR has been updated
+          - Maintainers will review these changes
+          
+          @${inputs.repo-owner} Please review these changes.`;
+
+          await github.rest.issues.createComment({
+            owner: inputs.repo-owner,
+            repo: inputs.repo-name,
+            issue_number: inputs.issue-number,
+            body: changeNotice
+          });
