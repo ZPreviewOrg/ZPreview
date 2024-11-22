@@ -14,6 +14,9 @@ inputs:
   repo-name:
     description: 'Repository name'
     required: true
+  notice-message:
+    description: 'Grant notice message'
+    required: true
 
 runs:
   using: "composite"
@@ -23,11 +26,9 @@ runs:
       with:
         github-token: ${{ inputs.token }}
         script: |
-          const noticeMessage = process.env.GRANT_NOTICE_MESSAGE;
-
           await github.rest.issues.createComment({
             owner: inputs.repo-owner,
             repo: inputs.repo-name,
             issue_number: inputs.issue-number,
-            body: noticeMessage
+            body: inputs.notice-message
           });
