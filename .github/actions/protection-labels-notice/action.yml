@@ -17,6 +17,9 @@ inputs:
   pr-number:
     description: 'Pull request number'
     required: true
+  grant-notice-message:
+    description: 'Grant notice message to display'
+    required: true
 
 runs:
   using: "composite"
@@ -55,7 +58,7 @@ runs:
     - name: Post ZCG Grant Notice
       uses: ./.github/actions/zcg-grant-notice
       env:
-        GRANT_NOTICE_MESSAGE: ${{ vars.GRANT_NOTICE_MESSAGE }}
+        GRANT_NOTICE_MESSAGE: ${{ inputs.grant-notice-message }}
       with:
         token: ${{ inputs.token }}
         issue-number: ${{ inputs.issue-number }}
