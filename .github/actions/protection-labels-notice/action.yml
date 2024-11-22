@@ -51,14 +51,19 @@ runs:
               labels: ['content-protected']
             });
 
-            // Post ZCG Grant Notice
-            const { GRANT_NOTICE_MESSAGE } = require('../../../.github/env.yml').env;
-            
-            await github.rest.issues.createComment({
+            // Trigger ZCG Grant Notice action
+            await github.rest.actions.createWorkflowDispatch({
               owner: REPO_OWNER,
               repo: REPO_NAME,
-              issue_number: ISSUE_NUMBER,
-              body: GRANT_NOTICE_MESSAGE
+              workflow_id: '.github/actions/zcg-grant-notice/action.yml',
+              ref: 'main',
+              inputs: {
+                token: process.env.GITHUB_TOKEN,
+                'issue-number': ISSUE_NUMBER,
+                'repo-owner': REPO_OWNER,
+                'repo-name': REPO_NAME,
+                'notice-message': require('../../../.github/env.yml').env.GRANT_NOTICE_MESSAGE
+              }
             });
           }
 
