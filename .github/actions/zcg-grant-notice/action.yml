@@ -27,5 +27,5 @@ runs:
             owner: inputs.repo-owner,
             repo: inputs.repo-name,
             issue_number: inputs.issue-number,
-            body: process.env.GRANT_NOTICE_MESSAGE
+            body: vars.GRANT_NOTICE_MESSAGE
           });
