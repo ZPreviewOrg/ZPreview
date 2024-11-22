@@ -23,11 +23,7 @@ runs:
       with:
         github-token: ${{ inputs.token }}
         script: |
-          const noticeMessage = `Thank you for submitting a ZCG grant application. Please [post a link to this issue on the Zcash Community Forums](https://forum.zcashcommunity.com/c/Grants/Applications/) for community feedback and to answer questions from the community and Zcash Community Grants committee. A forum post is required for the committee to review your proposal. If you are new to the Zcash Forum and are unable to make a forum post please send a DM to moderators on the forum to ask them to give you posting access.
-
-          The committee reviews grant applications on an ongoing basis and may request proposal revisions for incomplete applications or proposals that do not adhere to the [Code of Conduct](https://forum.zcashcommunity.com/faq). You can expect to hear from the committee in 2-4 weeks from the date you submit your application via the forum thread for your grant.
-
-          Please contact grants@financialprivacyfoundation.org at any time with questions.`;
+          const noticeMessage = process.env.GRANT_NOTICE_MESSAGE;
 
           await github.rest.issues.createComment({
             owner: inputs.repo-owner,
