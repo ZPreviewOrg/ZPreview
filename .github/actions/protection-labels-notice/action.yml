@@ -23,13 +23,20 @@ runs:
   steps:
     - name: Check and Apply Protection Labels
       uses: actions/github-script@v7
+      env:
+        REPO_OWNER: ${{ inputs.repo-owner }}
+        REPO_NAME: ${{ inputs.repo-name }}
+        ISSUE_NUMBER: ${{ inputs.issue-number }}
+        PR_NUMBER: ${{ inputs.pr-number }}
       with:
         github-token: ${{ inputs.token }}
         script: |
+          const { REPO_OWNER, REPO_NAME, ISSUE_NUMBER } = process.env
+          
           const issue = await github.rest.issues.get({
-            owner: inputs.repo-owner,
-            repo: inputs.repo-name,
-            issue_number: inputs.issue-number
+            owner: REPO_OWNER,
+            repo: REPO_NAME, 
+            issue_number: ISSUE_NUMBER
           });
           
           const hasProtectionLabel = issue.data.labels.some(label => 
@@ -38,15 +45,15 @@ runs:
           
           if (!hasProtectionLabel) {
             await github.rest.issues.addLabels({
-              owner: inputs.repo-owner,
-              repo: inputs.repo-name,
-              issue_number: inputs.issue-number,
+              owner: REPO_OWNER,
+              repo: REPO_NAME,
+              issue_number: ISSUE_NUMBER,
               labels: ['content-protected']
             });
 
             const protectionMessage = `# 🔒 Content Protection Notice
 
-            This issue's content has been saved and is now protected. A snapshot has been created in PR #${inputs.pr-number}.
+            This issue's content has been saved and is now protected. A snapshot has been created in PR #${PR_NUMBER}.
 
             ## What this means:
             - The original content is preserved in the repository
@@ -63,9 +70,9 @@ runs:
             If you need to make substantial changes, please discuss with maintainers first.`;
 
             await github.rest.issues.createComment({
-              owner: inputs.repo-owner,
-              repo: inputs.repo-name,
-              issue_number: inputs.issue-number,
+              owner: REPO_OWNER,
+              repo: REPO_NAME,
+              issue_number: ISSUE_NUMBER,
               body: protectionMessage
             });
           }
@@ -82,11 +89,11 @@ runs:
           - The existing snapshot PR has been updated
           - Maintainers will review these changes
           
-          @${inputs.repo-owner} Please review these changes.`;
+          @${REPO_OWNER} Please review these changes.`;
 
           await github.rest.issues.createComment({
-            owner: inputs.repo-owner,
-            repo: inputs.repo-name,
-            issue_number: inputs.issue-number,
+            owner: REPO_OWNER,
+            repo: REPO_NAME,
+            issue_number: ISSUE_NUMBER,
             body: changeNotice
           });
