@@ -62,7 +62,6 @@ runs:
                 'issue-number': ISSUE_NUMBER,
                 'repo-owner': REPO_OWNER,
                 'repo-name': REPO_NAME,
-                'notice-message': require('../../../.github/env.yml').env.GRANT_NOTICE_MESSAGE
               }
             });
           }
