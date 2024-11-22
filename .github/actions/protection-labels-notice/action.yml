@@ -51,29 +51,14 @@ runs:
               labels: ['content-protected']
             });
 
-            const protectionMessage = `# 🔒 Content Protection Notice
-
-            This issue's content has been saved and is now protected. A snapshot has been created in PR #${PR_NUMBER}.
-
-            ## What this means:
-            - The original content is preserved in the repository
-            - While the content can still be edited, changes will be monitored
-            - Each edit will trigger a new snapshot PR
+            // Post ZCG Grant Notice
+            const { GRANT_NOTICE_MESSAGE } = require('../../../.github/env.yml').env;
             
-            ## To make changes:
-            1. Edit the issue content as needed
-            2. A new PR will automatically be created with your changes
-            3. Maintainers will review the changes
-
-            💬 Comments remain open for discussion.
-            
-            If you need to make substantial changes, please discuss with maintainers first.`;
-
             await github.rest.issues.createComment({
               owner: REPO_OWNER,
               repo: REPO_NAME,
               issue_number: ISSUE_NUMBER,
-              body: protectionMessage
+              body: GRANT_NOTICE_MESSAGE
             });
           }
 
