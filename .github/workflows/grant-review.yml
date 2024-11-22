@@ -135,14 +135,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Final status update
+      # Final status update - only on errors
       - name: Update Status
-        if: always()
+        if: failure()
         run: |
-          STATUS="✅ Grant processing completed successfully"
-          if [ "${{ job.status }}" != "success" ]; then
-            STATUS="❌ Grant processing encountered errors"
-          fi
-          gh issue comment ${{ steps.validate.outputs.issue_number }} --body "$STATUS"
+          gh issue comment ${{ steps.validate.outputs.issue_number }} --body "❌ Grant processing encountered errors"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
