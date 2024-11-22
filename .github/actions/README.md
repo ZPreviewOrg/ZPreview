@@ -53,6 +53,5 @@ When modifying these actions:
 5. Document any breaking changes clearly
 
 ### Testing
-- Use GitHub's [act](https://github.com/nektos/act) tool for local testing
 - Create test issues/PRs in a development environment
 - Verify all error conditions are handled properly
