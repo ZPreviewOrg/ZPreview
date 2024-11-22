@@ -49,10 +49,9 @@ Handles the automated parts of the grant review process:
 
 When modifying workflows:
 1. Test changes in a feature branch
-2. Use [act](https://github.com/nektos/act) for local testing if possible
-3. Update documentation when changing triggers or adding new steps
-4. Verify error handling for all failure scenarios
-5. Test concurrency controls with simultaneous submissions
+2. Update documentation when changing triggers or adding new steps
+3. Verify error handling for all failure scenarios
+4. Test concurrency controls with simultaneous submissions
 
 ### Best Practices
 - Keep workflows focused and single-purpose
