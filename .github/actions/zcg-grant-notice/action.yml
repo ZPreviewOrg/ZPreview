@@ -29,5 +29,3 @@ runs:
             issue_number: inputs.issue-number,
             body: process.env.GRANT_NOTICE_MESSAGE
           });
-      env:
-        GRANT_NOTICE_MESSAGE: ${{ vars.GRANT_NOTICE_MESSAGE }}
