@@ -1,63 +1,81 @@
-# Custom GitHub Actions
+# Zcash Community Grants GitHub Actions
 
-This directory contains custom actions used in the grant application and review process. These actions work together to automate the grant submission, review, and management workflow.
+This directory contains specialized GitHub Actions that automate the ZCG grant application and review process. These actions streamline workflow management and ensure consistent handling of grant submissions.
 
-## Available Actions
-
-### [pr-management](./pr-management)
-- Creates and updates pull requests for grant applications
-- Handles branch management and PR synchronization
-- Ensures proper PR titles and descriptions
-- Manages PR labels and reviewers
-
-### [save-content](./save-content)
-- Converts issue content to properly formatted markdown files
-- Validates grant application format and required fields
-- Generates unique grant IDs and filenames
-- Saves files to the `_grants` directory with correct metadata
-
-### [protection-labels-notice](./protection-labels-notice)
-- Applies standardized protection labels to issues and PRs
-- Creates automated notices about content protection
-- Ensures compliance with grant review policies
-- Manages access control labels
+## Core Actions
 
 ### [zcg-grant-notice](./zcg-grant-notice)
-- Posts ZCG grant application instructions
-- Provides forum posting requirements
-- Includes timeline expectations
-- Lists contact information for questions
+Primary action for new grant applications that:
+- Posts standardized application instructions
+- Provides forum posting requirements and links
+- Sets clear timeline expectations (2-4 weeks review)
+- Includes contact information for support
+- Ensures compliance with community guidelines
 
-### [monitor-changes](./monitor-changes)
-- Tracks modifications to protected grant content
-- Reports unauthorized changes to administrators
-- Maintains audit trail of content modifications
-- Triggers notifications for review team
+### [save-content](./save-content)
+Handles grant application content management:
+- Converts issue content to markdown format
+- Validates required application fields
+- Generates unique grant identifiers
+- Manages file storage in `_grants` directory
+- Maintains proper metadata structure
 
-## Usage
+### [protection-labels-notice](./protection-labels-notice)
+Manages content protection through:
+- Automated label application
+- Protection notices on issues/PRs
+- Policy compliance enforcement
+- Access control management
 
-These actions are primarily used by the grant review workflow. See [workflows documentation](../workflows) for more details.
+## Setup Requirements
 
-### Prerequisites
-- GitHub repository with issues enabled
-- Proper permissions configured for GitHub Actions
-- Labels created for grant workflow (`Ready for ZCG Review`, etc.)
+### Repository Configuration
+- Issues must be enabled
+- Proper GitHub Actions permissions
+- Required labels configured:
+  - `Ready for ZCG Review`
+  - `Grant Application`
+  - `Under Review`
+  - `Approved`
+  - `Needs Revision`
 
-### Error Handling
-Each action includes built-in error handling and will:
-- Provide detailed error messages in action logs
-- Comment on relevant issues when problems occur
-- Fail gracefully without breaking the workflow
+### Authentication
+- GitHub token with appropriate permissions
+- Repository secrets properly configured
+- Action permissions validated
 
-## Development
+## Error Handling & Logging
 
-When modifying these actions:
-1. Update the `action.yml` file with any new inputs/outputs
-2. Update the corresponding README.md in the action's directory
-3. Test changes in a feature branch before merging to main
-4. Follow semantic versioning for action releases
-5. Document any breaking changes clearly
+Each action implements robust error management:
+- Detailed error logging
+- Issue/PR status updates
+- Graceful failure handling
+- Admin notifications for critical errors
 
-### Testing
-- Create test issues/PRs in a development environment
-- Verify all error conditions are handled properly
+## Development Guidelines
+
+### Action Modifications
+1. Update `action.yml` configurations
+2. Maintain action-specific documentation
+3. Follow semantic versioning
+4. Test in isolation before integration
+5. Document all breaking changes
+
+### Quality Assurance
+- Test with sample applications
+- Verify error scenarios
+- Check permission boundaries
+- Validate workflow integration
+
+### Best Practices
+- Keep actions focused and single-purpose
+- Maintain comprehensive logging
+- Handle edge cases gracefully
+- Follow GitHub Actions security guidelines
+
+## Support
+
+For issues or questions:
+- Create an issue in this repository
+- Contact grants@financialprivacyfoundation.org
+- Check existing documentation first
