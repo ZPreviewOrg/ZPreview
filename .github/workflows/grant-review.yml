@@ -117,16 +117,16 @@ jobs:
           repository-owner: ${{ github.repository_owner }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Auto-merge with validation
-      - name: Auto-merge if new grant
+      # Normal merge for new grants
+      - name: Merge if new grant
         if: github.event.action == 'labeled'
-        id: automerge
+        id: merge
         run: |
-          echo "Processing auto-merge for grant PR..."
+          echo "Processing merge for grant PR..."
           PR_NUMBER=$(gh pr list --head "grant-${{ steps.validate.outputs.issue_number }}" --json number --jq '.[0].number')
           if [ -n "$PR_NUMBER" ]; then
             echo "Found PR #$PR_NUMBER - attempting merge"
-            gh pr merge $PR_NUMBER --auto --merge
+            gh pr merge $PR_NUMBER --merge
             echo "pr_merged=true" >> $GITHUB_OUTPUT
           else
             echo "No PR found to merge"
