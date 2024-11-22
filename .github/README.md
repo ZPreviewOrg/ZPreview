@@ -19,6 +19,17 @@ This directory contains GitHub configurations, actions, and workflows that autom
   - `Approved`
   - `Needs Revision`
 
+### Required Variables
+The following GitHub Actions variables must be configured in the repository settings:
+
+- `GRANT_PROJECT_NUMBER`: The GitHub Project number used for tracking grant milestones
+- `GRANT_NOTICE_MESSAGE`: Custom notice message displayed during grant review process
+
+To configure these:
+1. Go to Repository Settings > Secrets and variables > Actions
+2. Select the "Variables" tab
+3. Add each variable with its corresponding value
+
 ### Authentication
 - GitHub token with appropriate permissions
 - Repository secrets properly configured
