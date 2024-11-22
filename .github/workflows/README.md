@@ -4,6 +4,15 @@ This directory contains GitHub Actions workflows that automate the grant applica
 
 ## Available Workflows
 
+### [validate-milestones.yml](./validate-milestones.yml)
+Validates grant milestones against GitHub Project:
+- Triggered when new files are added to _grants
+- Parses milestone data from grant markdown
+- Verifies milestone entries in GitHub Project
+- Creates missing milestone items
+- Flags mismatched values with "Out of Sync" status
+- Comments results on associated issues
+
 ### [validate-project-fields.yml](./validate-project-fields.yml)
 Validates GitHub Project fields configuration:
 - Triggered when "Validate Project Fields" label is added
