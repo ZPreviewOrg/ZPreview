@@ -1,0 +1,54 @@
+name: Grant Review Process
+on:
+  issues:
+    types: [labeled, edited]
+
+jobs:
+  process-grant:
+    if: |
+      (github.event.action == 'labeled' && github.event.label.name == 'Ready for ZCG Review') ||
+      (github.event.action == 'edited' && contains(github.event.issue.labels.*.name, 'Ready for ZCG Review'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Save Content
+        uses: ./.github/actions/save-content
+        with:
+          issue-body: ${{ github.event.issue.body }}
+          issue-title: ${{ github.event.issue.title }}
+          issue-number: ${{ github.event.issue.number }}
+          author: ${{ github.event.issue.user.login }}
+
+      - name: Create Branch
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          BRANCH_NAME="grant-${{ github.event.issue.number }}"
+          git checkout -b $BRANCH_NAME
+          git add _grants/
+          git commit -m "Save grant application #${{ github.event.issue.number }}"
+          git push origin $BRANCH_NAME
+
+      - name: Manage PR
+        uses: ./.github/actions/pr-management
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          branch-name: "grant-${{ github.event.issue.number }}"
+          issue-number: ${{ github.event.issue.number }}
+          issue-title: ${{ github.event.issue.title }}
+
+      - name: Auto-merge if new grant
+        if: github.event.action == 'labeled'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=$(gh pr list --head "grant-${{ github.event.issue.number }}" --json number --jq '.[0].number')
+          if [ -n "$PR_NUMBER" ]; then
+            gh pr merge $PR_NUMBER --auto --merge
+          fi
