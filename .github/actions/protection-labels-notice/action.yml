@@ -51,10 +51,16 @@ runs:
               labels: ['content-protected']
             });
 
+            // Call the ZCG grant notice action directly if no protection label exists
+            await github.rest.issues.createComment({
+              owner: REPO_OWNER,
+              repo: REPO_NAME,
+              issue_number: ISSUE_NUMBER,
+              body: inputs.notice_message || 'Protected content notice'
+            });
           }
 
     - name: Post ZCG Grant Notice
-      if: ${{ !hasProtectionLabel }}
       uses: ./.github/actions/zcg-grant-notice
       with:
         token: ${{ inputs.token }}
