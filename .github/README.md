@@ -26,8 +26,8 @@ The following GitHub Actions variables must be configured in the repository sett
 - `GRANT_NOTICE_MESSAGE`: Custom notice message displayed during grant review process
 
 To configure these:
-1. Go to Repository Settings > Secrets and variables > Actions
-2. Select the "Variables" tab
+1. Go to [Repository Settings > Actions > Variables](../../settings/variables/actions)
+2. Select the "Variables" tab 
 3. Add each variable with its corresponding value
 
 ### Authentication
