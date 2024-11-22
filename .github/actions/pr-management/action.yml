@@ -29,11 +29,11 @@ runs:
         PR_TITLE="Grant Application: ${ISSUE_TITLE}"
         PR_BODY="This PR was automatically generated to save the grant application from issue #${ISSUE_NUMBER}.
 
-## Changes
-- Created/Updated grant application markdown file
-- Application is now ready for ZCG review
+        ## Changes
+        - Created/Updated grant application markdown file
+        - Application is now ready for ZCG review
 
-[View original issue #${ISSUE_NUMBER}](https://github.com/${GITHUB_REPOSITORY}/issues/${ISSUE_NUMBER})"
+        [View original issue #${ISSUE_NUMBER}](https://github.com/${GITHUB_REPOSITORY}/issues/${ISSUE_NUMBER})"
         
         # Setup git config
         git config --global user.name 'github-actions[bot]'
