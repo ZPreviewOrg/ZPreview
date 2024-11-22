@@ -51,20 +51,17 @@ runs:
               labels: ['content-protected']
             });
 
-            // Trigger ZCG Grant Notice action
-            await github.rest.actions.createWorkflowDispatch({
-              owner: REPO_OWNER,
-              repo: REPO_NAME,
-              workflow_id: '.github/actions/zcg-grant-notice/action.yml',
-              ref: 'main',
-              inputs: {
-                token: process.env.GITHUB_TOKEN,
-                'issue-number': ISSUE_NUMBER,
-                'repo-owner': REPO_OWNER,
-                'repo-name': REPO_NAME,
-              }
-            });
           }
+
+    - name: Post ZCG Grant Notice
+      if: ${{ !hasProtectionLabel }}
+      uses: ./.github/actions/zcg-grant-notice
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        repo-owner: ${{ inputs.repo-owner }}
+        repo-name: ${{ inputs.repo-name }}
+        notice-message: ${{ inputs.notice-message }}
 
     - name: Create Change Notice
       if: github.event_name == 'issues' && github.event.action == 'edited'
