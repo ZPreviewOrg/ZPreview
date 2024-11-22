@@ -73,6 +73,52 @@ Each action implements robust error management:
 - Handle edge cases gracefully
 - Follow GitHub Actions security guidelines
 
+## GitHub Project Integration
+
+The repository includes a GitHub Project that tracks milestones for all grants. Each milestone is represented as a project item with the following fields:
+
+### Milestone Fields
+- **Grant Title**: Official title of the grant
+- **Original Title**: Initial proposed title if different
+- **Grant Summary**: Brief description of the grant
+- **Grantee**: Organization/individual receiving the grant
+- **Author**: Primary contact/submitter
+- **Milestone Number**: Sequential number within the grant
+- **Deliverables**: Specific outputs expected
+- **Amount**: Funding allocated for milestone
+- **Expected Completion**: Target completion date
+- **Status**: Current state of the milestone
+  - New
+  - Under Review
+  - Approved
+  - In Progress
+  - Reject
+  - Complete
+  - Cancelled
+- **Category**: Grant classification
+  - Infrastructure
+  - Community
+  - Education
+  - Non-Wallet Applications
+  - Integration
+  - Wallets
+  - Research & Development
+  - Media
+  - Zcash Protocol Extension
+  - Dedicated Resource
+  - Event Sponsorships
+- **Amount USD**: Dollar value of grant
+- **Estimated Completion**: Projected completion date
+- **Paid Out**: Date of payment
+- **ZEC Disbursed**: Amount paid in ZEC
+- **USD Disbursed**: Amount paid in USD
+
+### Automation
+The GitHub Actions automatically create draft items in the project for each milestone when:
+- New grant applications are submitted
+- Existing grants are updated
+- Milestones are added or modified
+
 ## Support
 
 For issues or questions:
