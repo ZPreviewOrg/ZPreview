@@ -4,6 +4,13 @@ This directory contains GitHub Actions workflows that automate the grant applica
 
 ## Available Workflows
 
+### [validate-project-fields.yml](./validate-project-fields.yml)
+Validates GitHub Project fields configuration:
+- Triggered when "Validate Project Fields" label is added
+- Runs project field validation checks
+- Comments results on the triggering issue
+- Helps ensure project setup is correct
+
 ### [grant-review.yml](./grant-review.yml)
 Handles the automated parts of the grant review process:
 
