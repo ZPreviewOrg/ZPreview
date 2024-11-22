@@ -9,6 +9,8 @@ on:
 jobs:
   validate-milestones:
     runs-on: ubuntu-latest
+    env:
+      GRANT_PROJECT: ${{ fromYaml(readFile('.github/env.yml')).env.GRANT_PROJECT_NUMBER }}
     permissions:
       contents: read
       issues: write
