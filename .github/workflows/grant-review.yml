@@ -13,6 +13,7 @@ jobs:
       contents: write
       pull-requests: write
       issues: write
+      actions: write
 
     steps:
       - uses: actions/checkout@v4
@@ -36,12 +37,30 @@ jobs:
           git push origin $BRANCH_NAME
 
       - name: Manage PR
+        id: pr-management
         uses: ./.github/actions/pr-management
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           branch-name: "grant-${{ github.event.issue.number }}"
           issue-number: ${{ github.event.issue.number }}
           issue-title: ${{ github.event.issue.title }}
+
+      - name: Apply Protection Labels and Notice
+        uses: ./.github/actions/protection-labels-notice
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          repo-owner: ${{ github.repository_owner }}
+          repo-name: ${{ github.event.repository.name }}
+          pr-number: ${{ steps.pr-management.outputs.pr_number }}
+
+      - name: Monitor Changes
+        if: github.event.action == 'edited'
+        uses: ./.github/actions/monitor-changes
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          repository-owner: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Auto-merge if new grant
         if: github.event.action == 'labeled'
