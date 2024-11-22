@@ -106,7 +106,6 @@ jobs:
           repo-owner: ${{ github.repository_owner }}
           repo-name: ${{ github.event.repository.name }}
           pr-number: ${{ steps.pr-management.outputs.pr_number }}
-          notice-message: ${{ vars.GRANT_NOTICE_MESSAGE }}
         continue-on-error: false
 
       - name: Monitor Changes

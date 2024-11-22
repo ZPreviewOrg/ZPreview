@@ -67,7 +67,6 @@ runs:
         issue-number: ${{ inputs.issue-number }}
         repo-owner: ${{ inputs.repo-owner }}
         repo-name: ${{ inputs.repo-name }}
-        notice-message: ${{ inputs.notice-message }}
 
     - name: Create Change Notice
       if: github.event_name == 'issues' && github.event.action == 'edited'
