@@ -22,6 +22,12 @@ This directory contains custom actions used in the grant application and review 
 - Ensures compliance with grant review policies
 - Manages access control labels
 
+### [zcg-grant-notice](./zcg-grant-notice)
+- Posts ZCG grant application instructions
+- Provides forum posting requirements
+- Includes timeline expectations
+- Lists contact information for questions
+
 ### [monitor-changes](./monitor-changes)
 - Tracks modifications to protected grant content
 - Reports unauthorized changes to administrators
