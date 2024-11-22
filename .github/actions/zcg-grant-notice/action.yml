@@ -16,8 +16,7 @@ inputs:
     required: true
   body:
     description: 'Notice message to post'
-    required: false
-    default: ${{ vars.GRANT_NOTICE_MESSAGE }}
+    required: true
 
 runs:
   using: "composite"
