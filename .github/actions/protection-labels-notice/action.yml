@@ -54,6 +54,8 @@ runs:
 
     - name: Post ZCG Grant Notice
       uses: ./.github/actions/zcg-grant-notice
+      env:
+        GRANT_NOTICE_MESSAGE: ${{ vars.GRANT_NOTICE_MESSAGE }}
       with:
         token: ${{ inputs.token }}
         issue-number: ${{ inputs.issue-number }}
