@@ -8,6 +8,7 @@ This action validates that a GitHub Project has all the required custom fields c
 - uses: ./.github/actions/project-fields-validator
   with:
     project-number: 123 # Your project number
+    issue-number: ${{ github.event.issue.number }} # Issue to comment on
 ```
 
 ## Validation Checks

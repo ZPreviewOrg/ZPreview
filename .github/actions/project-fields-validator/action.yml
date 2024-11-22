@@ -5,6 +5,9 @@ inputs:
   project-number:
     description: 'The number of the GitHub Project to validate'
     required: true
+  issue-number:
+    description: 'The issue number to comment on if validation fails'
+    required: true
   
 runs:
   using: 'composite'
@@ -133,7 +136,7 @@ runs:
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number,
+              issue_number: parseInt(inputs.issue-number),
               body: message
             })
             
