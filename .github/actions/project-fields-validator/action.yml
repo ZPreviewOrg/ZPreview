@@ -54,6 +54,7 @@ runs:
             'Original Title': 'text', 
             'Grant Summary': 'text',
             'Grant Application Issue': 'text',
+            'Grant File': 'text',
             'Grantee': 'text',
             'Author': 'text',
             'Milestone Number': 'number',

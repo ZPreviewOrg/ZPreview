@@ -27,6 +27,7 @@ The action verifies:
 | Original Title | text | Initial proposed title if different |
 | Grant Summary | text | Brief description of the grant |
 | Grant Application Issue | text | Link to the original GitHub issue |
+| Grant File | text | Link to the grant markdown file |
 | Grantee | text | Organization/individual receiving the grant |
 | Author | text | Primary contact/submitter |
 | Milestone Number | number | Sequential number within the grant |

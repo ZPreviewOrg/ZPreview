@@ -33,6 +33,7 @@ The repository includes a GitHub Project that tracks milestones for all grants. 
 - **Original Title**: Initial proposed title if different
 - **Grant Summary**: Brief description of the grant
 - **Grant Application Issue**: Link to the original GitHub issue
+- **Grant File**: Link to the grant markdown file
 - **Grantee**: Organization/individual receiving the grant
 - **Author**: Primary contact/submitter
 - **Milestone Number**: Sequential number within the grant
