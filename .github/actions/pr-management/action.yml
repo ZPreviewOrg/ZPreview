@@ -53,11 +53,11 @@ runs:
           echo "::set-output name=pr_number::$EXISTING_PR"
         else
           echo "Creating new PR"
-          PR_NUM=$(gh pr create \
+          PR_URL=$(gh pr create \
             --title "$PR_TITLE" \
             --body "$PR_BODY" \
             --base main \
-            --head "${BRANCH_NAME}" \
-            --json number --jq '.number')
+            --head "${BRANCH_NAME}")
+          PR_NUM=$(echo "$PR_URL" | grep -o '[0-9]*$')
           echo "::set-output name=pr_number::$PR_NUM"
         fi
