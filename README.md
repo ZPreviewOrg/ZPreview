@@ -18,3 +18,13 @@ To approve a grant:
 2. If approved, move the issue to the "Approved" column on the project board.
 3. A pull request will be automatically created.
 4. Review and merge the pull request to publish the approved grant.
+
+## For Administrators & Committee Members
+
+For detailed information about:
+- Repository configuration requirements
+- GitHub Project integration and milestone tracking
+- Required variables and authentication
+- Automated workflows and actions
+
+Please refer to the [.github/README.md](.github/README.md) documentation.
