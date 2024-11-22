@@ -26,16 +26,6 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           author: ${{ github.event.issue.user.login }}
 
-      - name: Create Branch
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          BRANCH_NAME="grant-${{ github.event.issue.number }}"
-          git checkout -b $BRANCH_NAME
-          git add _grants/
-          git commit -m "Save grant application #${{ github.event.issue.number }}"
-          git push origin $BRANCH_NAME
-
       - name: Manage PR
         id: pr-management
         uses: ./.github/actions/pr-management
