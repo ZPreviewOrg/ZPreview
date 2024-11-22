@@ -40,6 +40,12 @@ jobs:
       issues: write     # For issue comments
 
     steps:
+      - name: Load Environment Variables
+        id: env
+        run: |
+          echo "Loading environment variables from env.yml"
+          VARS=$(yq eval -o=json .env .github/env.yml)
+          echo "vars=$VARS" >> $GITHUB_OUTPUT
       # Optimize checkout for single branch
       - uses: actions/checkout@v4
         with:
@@ -106,6 +112,7 @@ jobs:
           repo-owner: ${{ github.repository_owner }}
           repo-name: ${{ github.event.repository.name }}
           pr-number: ${{ steps.pr-management.outputs.pr_number }}
+          notice-message: ${{ fromJson(steps.env.outputs.vars).GRANT_NOTICE_MESSAGE }}
         continue-on-error: false
 
       - name: Monitor Changes
