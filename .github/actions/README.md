@@ -4,6 +4,14 @@ This directory contains specialized GitHub Actions that automate the ZCG grant a
 
 ## Core Actions
 
+### [project-fields-validator](./project-fields-validator)
+Validates GitHub Project configuration:
+- Checks for required custom fields
+- Verifies field data types
+- Validates select field options
+- Posts detailed error messages
+- Ensures consistent project setup
+
 ### [zcg-grant-notice](./zcg-grant-notice)
 Primary action for new grant applications that:
 - Posts standardized application instructions

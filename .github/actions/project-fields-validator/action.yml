@@ -1,0 +1,141 @@
+name: 'Project Fields Validator'
+description: 'Validates that GitHub Project has all required custom fields with correct configuration'
+
+inputs:
+  project-number:
+    description: 'The number of the GitHub Project to validate'
+    required: true
+  
+runs:
+  using: 'composite'
+  steps:
+    - uses: octokit/graphql-action@v2.x
+      id: project-fields
+      with:
+        query: |
+          query($organization:String!, $number:Int!) {
+            organization(login: $organization) {
+              projectV2(number: $number) {
+                fields(first:100) {
+                  nodes {
+                    ... on ProjectV2Field {
+                      name
+                      dataType
+                    }
+                    ... on ProjectV2SingleSelectField {
+                      name
+                      options {
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        variables: |
+          organization: ${{ github.repository_owner }}
+          number: ${{ inputs.project-number }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Validate Fields
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const response = ${{ steps.project-fields.outputs.data }}
+          const fields = response.organization.projectV2.fields.nodes
+          
+          const requiredFields = {
+            'Grant Title': 'text',
+            'Original Title': 'text', 
+            'Grant Summary': 'text',
+            'Grant Application Issue': 'text',
+            'Grantee': 'text',
+            'Author': 'text',
+            'Milestone Number': 'number',
+            'Deliverables': 'text',
+            'Amount': 'number',
+            'Expected Completion': 'date',
+            'Status': 'single_select',
+            'Category': 'single_select',
+            'Amount USD': 'number',
+            'Estimated Completion': 'date',
+            'Paid Out': 'date',
+            'ZEC Disbursed': 'number',
+            'USD Disbursed': 'number'
+          }
+
+          const statusOptions = [
+            'New', 'Under Review', 'Approved', 'In Progress',
+            'Reject', 'Complete', 'Cancelled'
+          ]
+
+          const categoryOptions = [
+            'Infrastructure', 'Community', 'Education',
+            'Non-Wallet Applications', 'Integration', 'Wallets',
+            'Research & Development', 'Media',
+            'Zcash Protocol Extension', 'Dedicated Resource',
+            'Event Sponsorships'
+          ]
+
+          const missingFields = []
+          const incorrectTypes = []
+          const missingOptions = []
+
+          // Check all required fields exist with correct type
+          for (const [fieldName, fieldType] of Object.entries(requiredFields)) {
+            const field = fields.find(f => f.name === fieldName)
+            if (!field) {
+              missingFields.push(fieldName)
+              continue
+            }
+            
+            if (field.dataType && field.dataType !== fieldType) {
+              incorrectTypes.push(`${fieldName} (expected: ${fieldType}, got: ${field.dataType})`)
+            }
+            
+            // Validate select field options
+            if (fieldType === 'single_select') {
+              const expectedOptions = fieldName === 'Status' ? statusOptions : categoryOptions
+              const fieldOptions = field.options.map(o => o.name)
+              const missing = expectedOptions.filter(o => !fieldOptions.includes(o))
+              if (missing.length > 0) {
+                missingOptions.push(`${fieldName} missing options: ${missing.join(', ')}`)
+              }
+            }
+          }
+
+          // Generate error message if needed
+          if (missingFields.length > 0 || incorrectTypes.length > 0 || missingOptions.length > 0) {
+            let message = '### Project Fields Validation Failed\n\n'
+            
+            if (missingFields.length > 0) {
+              message += '#### Missing Required Fields:\n'
+              missingFields.forEach(f => message += `- ${f}\n`)
+              message += '\nPlease add these fields to the project.\n\n'
+            }
+            
+            if (incorrectTypes.length > 0) {
+              message += '#### Incorrect Field Types:\n'
+              incorrectTypes.forEach(f => message += `- ${f}\n`)
+              message += '\nPlease correct the field types.\n\n'
+            }
+            
+            if (missingOptions.length > 0) {
+              message += '#### Missing Select Options:\n'
+              missingOptions.forEach(f => message += `- ${f}\n`)
+              message += '\nPlease add the missing options to these fields.\n\n'
+            }
+            
+            message += '\nRefer to the [action documentation](.github/actions/README.md#milestone-fields) for the required field configuration.'
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: message
+            })
+            
+            core.setFailed('Project fields validation failed')
+          }
