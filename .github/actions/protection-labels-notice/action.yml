@@ -23,20 +23,13 @@ runs:
   steps:
     - name: Check and Apply Protection Labels
       uses: actions/github-script@v7
-      env:
-        REPO_OWNER: ${{ inputs.repo-owner }}
-        REPO_NAME: ${{ inputs.repo-name }}
-        ISSUE_NUMBER: ${{ inputs.issue-number }}
-        PR_NUMBER: ${{ inputs.pr-number }}
       with:
         github-token: ${{ inputs.token }}
         script: |
-          const { REPO_OWNER, REPO_NAME, ISSUE_NUMBER, PR_NUMBER } = process.env
-          
           const issue = await github.rest.issues.get({
-            owner: REPO_OWNER,
-            repo: REPO_NAME, 
-            issue_number: ISSUE_NUMBER
+            owner: '${{ inputs.repo-owner }}',
+            repo: '${{ inputs.repo-name }}',
+            issue_number: ${{ inputs.issue-number }}
           });
           
           const hasProtectionLabel = issue.data.labels.some(label => 
@@ -45,9 +38,9 @@ runs:
           
           if (!hasProtectionLabel) {
             await github.rest.issues.addLabels({
-              owner: REPO_OWNER,
-              repo: REPO_NAME,
-              issue_number: ISSUE_NUMBER,
+              owner: '${{ inputs.repo-owner }}',
+              repo: '${{ inputs.repo-name }}',
+              issue_number: ${{ inputs.issue-number }},
               labels: ['content-protected']
             });
           }
@@ -75,8 +68,8 @@ runs:
           @${REPO_OWNER} Please review these changes.`;
 
           await github.rest.issues.createComment({
-            owner: REPO_OWNER,
-            repo: REPO_NAME,
-            issue_number: ISSUE_NUMBER,
+            owner: '${{ inputs.repo-owner }}',
+            repo: '${{ inputs.repo-name }}',
+            issue_number: ${{ inputs.issue-number }},
             body: changeNotice
           });
