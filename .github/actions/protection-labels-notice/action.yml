@@ -52,6 +52,15 @@ runs:
         issue-number: ${{ inputs.issue-number }}
         repo-owner: ${{ inputs.repo-owner }}
         repo-name: ${{ inputs.repo-name }}
+        body: |
+          ## 📝 Grant Application Notice
+          
+          Thank you for submitting your grant application. Your application is now being processed.
+          
+          Please note:
+          - The content of this issue is protected and any changes will be monitored
+          - A snapshot of your application has been created
+          - The ZCG committee will review your application
 
     - name: Create Change Notice
       if: github.event_name == 'issues' && github.event.action == 'edited'
