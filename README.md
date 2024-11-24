@@ -2,6 +2,13 @@
 
 This repository manages our grants program. Here's how it works:
 
+## Support & Contact
+
+For issues or questions:
+- Create an issue in this repository
+- Contact grants@financialprivacyfoundation.org
+- Check existing documentation first
+
 1. Applicants submit a grant application by creating a new issue using the provided template.
 2. Reviewers assess the applications and label approved ones with 'approved'.
 3. Approved applications are automatically converted into pull requests.
