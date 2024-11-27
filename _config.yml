@@ -50,6 +50,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - "**/README.md"
   - LICENCE
   - ".*"
   - node_modules
