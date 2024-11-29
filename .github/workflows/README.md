@@ -40,4 +40,4 @@ Each table row shows the workflow Type, triggering Event, Options, resulting Act
 | Grant Application | Issue Edited | "Grant Application" | Assign | +Grant Edited | Assigns to: Original Authors, ZCG Admin | Create PR and track changes |
 | Grant Application | PR Approved | "Grant Application" | Assign | +Grant Edited | Assigns to: Original Authors, ZCG Admin | Merge PR and update grant issue |
 | Grant Application | Issue Reopened | main | Label | ?* | No change | Ensure proper label state |
-| Grant Application | Issue Commented | - | No changes | No change | Comment | General communication |
+| Grant Application | Issue Commented | - | No change | Comment | No change | General communication |
