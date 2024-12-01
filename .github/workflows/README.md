@@ -13,9 +13,38 @@ When a change occurs on a grant application issue, the workflow system:
 
 Unless otherwise specific any changes made create a PR which created and merged to the corresponding grants file within the GitHub repository.
 
-## TODO: LIST OF LABELS
+## List of Labels
 
-## TODO: LIST OF STATUS
+- Pending Grant Application
+- Grant Application  
+- Ready For ZCG Review
+- Grant Approved
+- Grant Declined
+- KYC Required
+- KYC Verified
+- Forum Post Missing
+- Progress Update Required
+- Changes Pending Review
+- Approve_Changes
+- Milestone 1 Complete
+- Milestones Past Due
+- Does Not Meet Criteria
+- Pending Startup Payment Request
+- Pending Grant Milestone
+- Grant Milestone
+- Milestone Payment Approved
+- Milestone Payment Complete
+- Milestone Payment Requests
+
+## List of Status
+
+- New
+- Under Review 
+- Approved
+- In Progress
+- Declined
+- Cancelled
+- Complete
 
 ## "Pending Grant Application" Workflows
 
