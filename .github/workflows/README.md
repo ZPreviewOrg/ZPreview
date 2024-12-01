@@ -15,36 +15,46 @@ Unless otherwise specific any changes made create a PR which created and merged 
 
 ## List of Labels
 
-- Pending Grant Application
-- Grant Application  
-- Ready For ZCG Review
-- Grant Approved
-- Grant Declined
-- KYC Required
-- KYC Verified
-- Forum Post Missing
-- Progress Update Required
-- Changes Pending Review
-- Approve_Changes
-- Milestone 1 Complete
-- Milestones Past Due
-- Does Not Meet Criteria
-- Pending Startup Payment Request
-- Pending Grant Milestone
-- Grant Milestone
-- Milestone Payment Approved
-- Milestone Payment Complete
-- Milestone Payment Requests
+### Application Status Labels
+- Pending Grant Application - Initial state for new applications
+- Grant Application - Confirmed valid application
+- Ready For ZCG Review - Application ready for committee review
+- Grant Approved - Application has been approved
+- Grant Declined - Application has been declined
+- Does Not Meet Criteria - Application rejected for not meeting requirements
+
+### Verification Labels  
+- KYC Required - Identity verification needed
+- KYC Verified - Identity verification completed
+- Forum Post Missing - Required forum post not found
+- Changes Pending Review - Application changes need review
+- Approve_Changes - Changes have been approved
+
+### Progress Labels
+- Progress Update Required - Project update needed
+- Milestone 1 Complete - First milestone achieved
+- Milestones Past Due - Project milestones overdue
+
+### Payment Labels
+- Pending Startup Payment Request - Initial funding requested
+- Pending Grant Milestone - Milestone payment requested
+- Grant Milestone - Milestone payment in process
+- Milestone Payment Approved - Payment approved
+- Milestone Payment Complete - Payment completed
+- Milestone Payment Requests - Payment request submitted
 
 ## List of Status
 
-- New
-- Under Review 
-- Approved
-- In Progress
-- Declined
-- Cancelled
-- Complete
+### Active States
+- New - Just submitted, initial state
+- Under Review - Being evaluated by committee
+- In Progress - Work actively ongoing
+- Approved - Grant approved and active
+
+### Terminal States  
+- Declined - Application not approved
+- Cancelled - Grant terminated early
+- Complete - All milestones achieved
 
 ## "Pending Grant Application" Workflows
 
