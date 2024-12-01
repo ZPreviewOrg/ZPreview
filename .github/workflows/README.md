@@ -13,35 +13,53 @@ When a change occurs on a grant application issue, the workflow system:
 
 Unless otherwise specific any changes made create a PR which created and merged to the corresponding grants file within the GitHub repository.
 
-## List of Labels
+## Label Categories
 
-### Application Status Labels
-- Pending Grant Application - Initial state for new applications
-- Grant Application - Confirmed valid application
-- Ready For ZCG Review - Application ready for committee review
-- Grant Approved - Application has been approved
-- Grant Declined - Application has been declined
-- Does Not Meet Criteria - Application rejected for not meeting requirements
+The system uses the following categories of labels to track grant status:
 
-### Verification Labels  
-- KYC Required - Identity verification needed
-- KYC Verified - Identity verification completed
-- Forum Post Missing - Required forum post not found
-- Changes Pending Review - Application changes need review
-- Approve_Changes - Changes have been approved
+### 1. Application Status
+These labels indicate the current state of a grant application:
 
-### Progress Labels
-- Progress Update Required - Project update needed
-- Milestone 1 Complete - First milestone achieved
-- Milestones Past Due - Project milestones overdue
+| Label | Description |
+|-------|-------------|
+| Pending Grant Application | Initial state for new applications |
+| Grant Application | Confirmed valid application |
+| Ready For ZCG Review | Application ready for committee review |
+| Grant Approved | Application has been approved |
+| Grant Declined | Application has been declined |
+| Does Not Meet Criteria | Application rejected for not meeting requirements |
 
-### Payment Labels
-- Pending Startup Payment Request - Initial funding requested
-- Pending Grant Milestone - Milestone payment requested
-- Grant Milestone - Milestone payment in process
-- Milestone Payment Approved - Payment approved
-- Milestone Payment Complete - Payment completed
-- Milestone Payment Requests - Payment request submitted
+### 2. Verification Status  
+Labels related to verification requirements:
+
+| Label | Description |
+|-------|-------------|
+| KYC Required | Identity verification needed |
+| KYC Verified | Identity verification completed |
+| Forum Post Missing | Required forum post not found |
+| Changes Pending Review | Application changes need review |
+| Approve_Changes | Changes have been approved |
+
+### 3. Progress Tracking
+Labels that monitor project progress:
+
+| Label | Description |
+|-------|-------------|
+| Progress Update Required | Project update needed |
+| Milestone 1 Complete | First milestone achieved |
+| Milestones Past Due | Project milestones overdue |
+
+### 4. Payment Status
+Labels related to payment processing:
+
+| Label | Description |
+|-------|-------------|
+| Pending Startup Payment Request | Initial funding requested |
+| Pending Grant Milestone | Milestone payment requested |
+| Grant Milestone | Milestone payment in process |
+| Milestone Payment Approved | Payment approved |
+| Milestone Payment Complete | Payment completed |
+| Milestone Payment Requests | Payment request submitted |
 
 ## List of Status
 
