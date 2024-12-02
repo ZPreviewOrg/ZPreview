@@ -158,6 +158,7 @@ When the "Grant Application" label is added:
 The system processes applications differently based on their current status:
 
 ###### New Status Workflow
+
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
 |----------------|---------------|--------------------|-----------------|----------------|
 | +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_UNDER_REVIEW | Under Review |
@@ -166,6 +167,7 @@ The system processes applications differently based on their current status:
 | +Grant Declined | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_DECLINED | Declined |
 
 ###### Under Review Status Workflow
+
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
 |----------------|---------------|-------------------|-----------------|----------------|
 | +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_APPLICATION_APPLICATION_RECEIVED | - |
@@ -173,6 +175,7 @@ The system processes applications differently based on their current status:
 | +Grant Approved; !KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC | Approved |
 
 ###### Approved Status Workflow
+
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
 |----------------|---------------|-------------------|-----------------|----------------|
 | +KYC Required | - | - | NOTIFY_GRANT_APPLICATION_KYC_REQUEST | - |
@@ -180,6 +183,7 @@ The system processes applications differently based on their current status:
 | +Milestone 1 Complete | - | - | NOTIFY_GRANT_APPLICATION_MILESTONE_COMPLETE | - |
 
 ###### Terminal Status Workflows
+
 For Cancelled/Declined/Complete statuses, only label updates occur without notifications or status changes.
 
 ##### File Change Management
@@ -187,36 +191,6 @@ For Cancelled/Declined/Complete statuses, only label updates occur without notif
 - PRs and merges automated for _grants/{}.md files
 - Frontmatter, Issues, and Projects kept in sync
 - Label and value synchronization maintained
-
-#### 4.1.3 Status-Based Processing
-
-Applications progress through the following statuses:
-
-**New Status**
-- Ready for ZCG review triggers assignment to committee
-- Grant approval/decline decisions update status accordingly
-- KYC and forum post requirements are tracked
-
-**Under Review Status**
-- Committee evaluates application
-- System manages approval/decline notifications
-- Progress updates and changes are tracked
-
-**Approved Status**
-- KYC verification may be required
-- Milestone tracking begins
-- Progress updates are monitored
-- Changes require review and approval
-
-**In Progress Status**
-- Milestone completion is tracked
-- Overdue milestones trigger notifications
-- Changes continue to require review
-
-**Terminal Statuses (Cancelled/Declined/Complete)**
-- Limited label updates allowed
-- Notifications are suppressed
-- Status remains fixed
 
 ### 4.2 Grant Management Workflow
 
