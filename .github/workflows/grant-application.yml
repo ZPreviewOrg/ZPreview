@@ -60,6 +60,24 @@ jobs:
           label-name: ${{ github.event.label.name }}
           label-action: ${{ github.event.action }}
           current-labels: ${{ steps.get-labels.outputs.result }}
+          project-id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
+          status-field-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_ID }}
+          status-new-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_NEW_ID }}
+          status-under-review-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_UNDER_REVIEW_ID }}
+          status-approved-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_APPROVED_ID }}
+          status-declined-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_DECLINED_ID }}
+          status-cancelled-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_CANCELLED_ID }}
+          status-complete-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_COMPLETE_ID }}
+          status-in-progress-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_IN_PROGRESS_ID }}
+          notify-received: ${{ vars.NOTIFY_GRANT_APPLICATION_RECEIVED }}
+          notify-under-review: ${{ vars.NOTIFY_GRANT_APPLICATION_UNDER_REVIEW }}
+          notify-forum-missing: ${{ vars.NOTIFY_GRANT_APPLICATION_FORUM_POST_MISSING }}
+          notify-criteria-not-met: ${{ vars.NOTIFY_GRANT_APPLICATION_DOES_NOT_MEET_CRITERIA }}
+          notify-changes-review: ${{ vars.NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW }}
+          notify-changes-approved: ${{ vars.NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED }}
+          notify-kyc-request: ${{ vars.NOTIFY_GRANT_APPLICATION_KYC_REQUEST }}
+          notify-zcg-review: ${{ vars.NOTIFY_GRANT_APPLICATION_ZCG_REVIEW_REQUIRED }}
+          admin-notify-mismatch: ${{ vars.ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH }}
           
       - name: Process Under Review Status
         if: steps.get-status.outputs.result == 'Under Review' 
@@ -71,3 +89,26 @@ jobs:
           label-name: ${{ github.event.label.name }}
           label-action: ${{ github.event.action }}
           current-labels: ${{ steps.get-labels.outputs.result }}
+          project-id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
+          status-field-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_ID }}
+          status-new-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_NEW_ID }}
+          status-under-review-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_UNDER_REVIEW_ID }}
+          status-approved-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_APPROVED_ID }}
+          status-declined-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_DECLINED_ID }}
+          status-cancelled-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_CANCELLED_ID }}
+          status-complete-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_COMPLETE_ID }}
+          status-in-progress-id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_IN_PROGRESS_ID }}
+          notify-approved-kyc: ${{ vars.NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED }}
+          notify-approved-no-kyc: ${{ vars.NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC }}
+          notify-declined: ${{ vars.NOTIFY_GRANT_APPLICATION_DECLINED }}
+          notify-cancelled: ${{ vars.NOTIFY_GRANT_APPLICATION_CANCELLED }}
+          notify-milestone-overdue: ${{ vars.NOTIFY_GRANT_APPLICATION_MILESTONE_OVERDUE }}
+          notify-milestone-complete: ${{ vars.NOTIFY_GRANT_APPLICATION_MILESTONE_COMPLETE }}
+          notify-progress-update: ${{ vars.NOTIFY_GRANT_APPLICATION_PROGRESS_UPDATE_REQUIRED }}
+          notify-startup-payment-unauthorized: ${{ vars.NOTIFY_GRANT_STARTUP_PAYMENT_REQUEST_SENDER_NOT_AUTHORISED }}
+          notify-startup-payment-received: ${{ vars.NOTIFY_GRANT_STARTUP_PAYMENT_REQUEST_RECEIVED }}
+          notify-startup-payment-complete: ${{ vars.NOTIFY_GRANT_STARTUP_PAYMENT_COMPLETE }}
+          notify-milestone-payment-unauthorized: ${{ vars.NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_SENDER_NOT_AUTHORISED }}
+          notify-milestone-payment-complete: ${{ vars.NOTIFY_GRANT_MILESTONE_PAYMENT_COMPLETE }}
+          notify-milestone-payment-review: ${{ vars.NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_UNDER_REVIEW }}
+          notify-milestone-payment-approved: ${{ vars.NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_APPROVED }}
