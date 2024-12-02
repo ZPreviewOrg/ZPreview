@@ -158,7 +158,7 @@ The system uses the following Status of labels to track Milestones through their
 | Approved | Milestone Payment Approved |
 | In Progress | Payment Processing in Progress |
 
-#### Terminal Status
+#### 🔴 Terminal Status
 
 | Status | Description |
 |-------|-------------|
