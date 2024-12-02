@@ -1,0 +1,135 @@
+name: Process Under Review Grant Application
+description: Handles grant applications in Under Review status
+
+inputs:
+  token:
+    description: GitHub token
+    required: true
+  issue-number:
+    description: Issue number
+    required: true
+  issue-title:
+    description: Issue title
+    required: true  
+  label-name:
+    description: Label that triggered the action
+    required: true
+  label-action:
+    description: Whether label was added or removed
+    required: true
+  current-labels:
+    description: Current labels on the issue (JSON array)
+    required: true
+  vars:
+    description: Repository variables (JSON)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Process Ready For Review
+      if: inputs.label-name == 'Ready For ZCG Review' && inputs.label-action == 'added'
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        add-assignees: '["ZCG"]'
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_ZCG_REVIEW_REQUIRED }}
+
+    - name: Process Grant Approved with KYC
+      if: inputs.label-name == 'Grant Approved' && inputs.label-action == 'added' && contains(fromJSON(inputs.current-labels), 'KYC Required')
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        remove-labels: '["Ready For ZCG Review"]'
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED }}
+        status-update: 'Approved'
+        project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
+        status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
+
+    - name: Process Grant Approved without KYC
+      if: inputs.label-name == 'Grant Approved' && inputs.label-action == 'added' && !contains(fromJSON(inputs.current-labels), 'KYC Required')
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        remove-labels: '["Ready For ZCG Review"]'
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC }}
+        status-update: 'Approved'
+        project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
+        status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
+
+    - name: Process Grant Declined
+      if: inputs.label-name == 'Grant Declined' && inputs.label-action == 'added'
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        remove-labels: '["Ready For ZCG Review"]'
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_CANCELLED }}
+        status-update: 'Declined'
+        project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
+        status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
+
+    - name: Process Does Not Meet Criteria
+      if: inputs.label-name == 'Does Not Meet Criteria' && inputs.label-action == 'added'
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        remove-labels: '["Ready For ZCG Review"]'
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_DOES_NOT_MEET_CRITERIA }}
+        status-update: 'Declined'
+        project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
+        status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
+
+    - name: Process KYC Required
+      if: inputs.label-name == 'KYC Required' && inputs.label-action == 'added'
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_KYC_REQUEST }}
+
+    - name: Process Forum Post Missing
+      if: inputs.label-name == 'Forum Post Missing' && inputs.label-action == 'added'
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_FORUM_POST_MISSING }}
+
+    - name: Process Progress Update Required
+      if: inputs.label-name == 'Progress Update Required' && inputs.label-action == 'added'
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_PROGRESS_UPDATE_REQUIRED }}
+
+    - name: Process Changes Pending Review
+      if: inputs.label-name == 'Changes Pending Review' && inputs.label-action == 'added'
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW }}
+
+    - name: Process Changes Approved
+      if: inputs.label-name == 'Changes Approved' && inputs.label-action == 'added'
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        remove-labels: '["Changes Pending Review", "Changes Approved"]'
+        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED }}
+
+    - name: Process Changes Pending Review Removed
+      if: inputs.label-name == 'Changes Pending Review' && inputs.label-action == 'removed'
+      uses: ./.github/actions/grant-application/operations
+      with:
+        token: ${{ inputs.token }}
+        issue-number: ${{ inputs.issue-number }}
+        add-labels: '["Changes Pending Review"]'
+        comment: ${{ fromJSON(inputs.vars).ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH }}
