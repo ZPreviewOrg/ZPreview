@@ -145,7 +145,7 @@ The system uses the following project status to track grants through their lifec
 | Declined | Application not approved |
 | Cancelled | Grant terminated early |
 
-### Grant Milestone Payment Request Status
+### 💰 Grant Milestone Payment Request Status
 
 The system uses the following Status of labels to track Milestones through their lifecycle:
 
