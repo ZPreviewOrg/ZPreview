@@ -1,4 +1,4 @@
-# GitHub-based Grant Management System Workflow
+# 🔄 GitHub-based Grant Management System Workflow
 
 An automated workflow system for managing different types of grant applications and payments through GitHub, utilizing, issues, status, labels, and assignments. The system automatically responds to different combinations of an issue's current status and labels to maintain the grant lifecycle.
 
@@ -14,7 +14,7 @@ When a change occurs on a grant application issue, the workflow system:
 
 Unless otherwise specific any changes made create a PR which created and merged to the corresponding grants file within the GitHub repository.
 
-## Configuration
+## ⚙️ Configuration
 
 The system uses the following configuration variable to update the Grant Application Project.
 
@@ -34,7 +34,7 @@ To configure these:
 - PROJECT_GRANT_APPLICATION_STATUS_NEW_ID
 - PROJECT_GRANT_APPLICATION_STATUS_UNDER_REVIEW_ID
 
-## Notification Messages
+## 📢 Notification Messages
 
 The system uses the following notification messages to track grants through their lifecycle.
 
@@ -68,11 +68,11 @@ To configure these:
 - NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_UNDER_REVIEW
 - NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_APPROVED
 
-## Label Management
+## 🏷️ Label Management
 
 The system uses the following categories of labels to track grants through their lifecycle.
 
-### 1. Grant Review Status
+### 1. 📋 Grant Review Status
 
 ***The Grant Review system uses the following categories of labels to track grants through their lifecycle. Labels trigger the project status to move foward to the status listed in the table. The status will never automatically move backwards.***
 
@@ -86,7 +86,7 @@ The system uses the following categories of labels to track grants through their
 | Does Not Meet Criteria | Failed requirements check | Grant Application | Declined |
 | Grant Complete | Grant Complete | Grant Application | Complete |
 
-### 2. Verification Requirements
+### 2. ✅ Verification Requirements
 
 ***The Grant Review system requires Grantees are required to meet conditions set by ZCG and FPF. There labels are used to tracked the outstanding conditions not met by the grantee.***
 
@@ -98,7 +98,7 @@ The system uses the following categories of labels to track grants through their
 | Changes Pending Review | Modifications need review | Grant Application & Grant Milestone |
 | Changes Approved | Modifications accepted | Grant Application & Grant Milestone |
 
-### 3. Grant and Milestone Tracking
+### 3. 📊 Grant and Milestone Tracking
 
 ***Grants will be tracked using a combination of the Grant Application and the Grant Milestone. A Grant Milestone is a supertype of a Grant Milestone Payment Request and may be used for more features in the future. Currently it's only utilised for payment requests.***
 
@@ -108,7 +108,7 @@ The system uses the following categories of labels to track grants through their
 | Milestone 1 Complete | Milestone Complete | Grant Applciation |
 | Milestones Past Due | Deadlines missed | Grant Application |
 
-### 4. Grant Milestone Payment Request
+### 4. 💰 Grant Milestone Payment Request
 
 ***A Grant Milestone Payment Request is a subtype of a Grant Milestone. Currently a Grant Milestone is only utilised for payment requests.***
 
@@ -122,7 +122,7 @@ The system uses the following categories of labels to track grants through their
 | Milestone Payment Approved | Payment authorized | In Progress |
 | Milestone Payment Complete | Payment sent | Complete |
 
-## Status Management
+## 📈 Status Management
 
 The system uses the following project status to track grants through their lifecycle:
 
@@ -166,7 +166,7 @@ The system uses the following Status of labels to track Milestones through their
 | Declined | Payment Request Declined, No Payment Made |
 | Cancelled | Payment Request Cancelled, No Payment Made |
 
-## "Pending Grant Application" Workflows
+## 📝 "Pending Grant Application" Workflows
 
 ***PRs and merges will not occur for "Pending Grant Applications" as they are not official Grant Applications yet.***
 
@@ -200,7 +200,7 @@ The "Pending Grant Application" label is set when a Grant Application is submitt
 | +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
 | -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
-## "Grant Application" Workflows
+## 📄 "Grant Application" Workflows
 
 ***PRs and merges of changes will be automatically pushed into the _grants/{}.md file. PRs and merges will not occur for grants with "Changes Pending Review" label.***
 
@@ -330,7 +330,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 | Labels | Requires Label Sync | - | List of Frontmatter fields not in project | - |
 | Values | Requires Value Sync | - | List of Frontmatter values not matching | - |
 
-## "Pending Startup Payment Request" Workflows
+## 💸 "Pending Startup Payment Request" Workflows
 
 ***PRs and merges are currently not supported for "Pending Startup Payment Request".***
 
@@ -357,7 +357,7 @@ When the "Pending Startup Payment Request" label is added to an issue the system
 | +Milestone Payment Approved | +Grant Milestone; -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_APPROVED | - |
 | +Milestone Payment Complete | +Grant Milestone; -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_COMPLETE | +Milestone 1 Complete |
 
-## "Pending Grant Milestone" Workflows
+## 🎯 "Pending Grant Milestone" Workflows
 
 ***PRs and merges are currently not supported for "Pending Grant Milestone" or "Grant Milestones".***
 
