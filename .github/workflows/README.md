@@ -67,28 +67,44 @@ Labels specific to payment processing workflow:
 Note: Grant Milestone Payment Requests are a specialized type of Grant Milestone currently used exclusively for payment processing.
 
 ## 3. Status Management
+The system uses distinct status categories to track both grant applications and milestones through their complete lifecycle.
+
 ### 3.1 Grant Application Statuses
+Grant applications move through the following statuses as they progress:
+
 #### 3.1.1 Active Statuses
-- New
-- Under Review
-- In Progress
-- Approved
+| Status | Description |
+|--------|-------------|
+| New | Initial state after submission, pending initial review |
+| Under Review | Currently being evaluated by the grant committee |
+| In Progress | Grant work has begun and is actively ongoing |
+| Approved | Grant has been approved and is considered active |
 
 #### 3.1.2 Terminal Statuses
-- Declined
-- Cancelled
-- Complete
+| Status | Description |
+|--------|-------------|
+| Declined | Application was not approved by the committee |
+| Cancelled | Grant was terminated before completion |
+| Complete | All milestones successfully achieved and grant closed |
 
 ### 3.2 Grant Milestone Statuses
+Individual milestones within approved grants follow their own status progression:
+
 #### 3.2.1 Active Statuses
-- New
-- Under Review
-- In Progress
-- Approved
+| Status | Description |
+|--------|-------------|
+| New | Milestone newly created and awaiting start |
+| Under Review | Milestone completion being evaluated |
+| In Progress | Work on milestone actively underway |
+| Approved | Milestone completion verified and approved |
 
 #### 3.2.2 Terminal Statuses
-- Cancelled
-- Complete
+| Status | Description |
+|--------|-------------|
+| Cancelled | Milestone terminated before completion |
+| Complete | Milestone successfully completed and closed |
+
+Note: Status transitions generally move forward only - reverting to a previous status requires special administrative action.
 
 ## 4. Workflow Processes
 ### 4.1 Application Processing
