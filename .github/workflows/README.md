@@ -14,9 +14,9 @@ When a change occurs on a grant application issue, the workflow system:
 
 Unless otherwise specific any changes made create a PR which created and merged to the corresponding grants file within the GitHub repository.
 
-## ⚙️ Configuration
+## ⚙️ Configuration & Setup
 
-The system uses the following configuration variable to update the Grant Application Project.
+The system uses the following configuration variables to update the Grant Application Project. 🔧
 
 To configure these:
 
@@ -34,9 +34,9 @@ To configure these:
 - PROJECT_GRANT_APPLICATION_STATUS_NEW_ID
 - PROJECT_GRANT_APPLICATION_STATUS_UNDER_REVIEW_ID
 
-## 📢 Notification Messages
+## 📢 Notification Messages & Alerts 🔔
 
-The system uses the following notification messages to track grants through their lifecycle.
+The system uses the following notification messages to track grants through their lifecycle. 📨
 
 To configure these:
 
@@ -86,9 +86,9 @@ The system uses the following categories of labels to track grants through their
 | Does Not Meet Criteria | Failed requirements check | Grant Application | Declined |
 | Grant Complete | Grant Complete | Grant Application | Complete |
 
-### 2. ✅ Verification Requirements
+### 2. ✅ Verification Requirements 🔐
 
-***The Grant Review system requires Grantees are required to meet conditions set by ZCG and FPF. There labels are used to tracked the outstanding conditions not met by the grantee.***
+***The Grant Review system requires Grantees are required to meet conditions set by ZCG and FPF. These labels are used to track the outstanding conditions not met by the grantee. 📋***
 
 | Label | Description | Required For |
 |-------|-------------|--------------|
@@ -98,9 +98,9 @@ The system uses the following categories of labels to track grants through their
 | Changes Pending Review | Modifications need review | Grant Application & Grant Milestone |
 | Changes Approved | Modifications accepted | Grant Application & Grant Milestone |
 
-### 3. 📊 Grant and Milestone Tracking
+### 3. 📊 Grant and Milestone Tracking 📈
 
-***Grants will be tracked using a combination of the Grant Application and the Grant Milestone. A Grant Milestone is a supertype of a Grant Milestone Payment Request and may be used for more features in the future. Currently it's only utilised for payment requests.***
+***Grants will be tracked using a combination of the Grant Application and the Grant Milestone. 🎯 A Grant Milestone is a supertype of a Grant Milestone Payment Request and may be used for more features in the future. Currently it's only utilised for payment requests. ⏱️***
 
 | Label | Description | Required For |  |
 |-------|-------------|--------------|
@@ -108,9 +108,9 @@ The system uses the following categories of labels to track grants through their
 | Milestone 1 Complete | Milestone Complete | Grant Applciation |
 | Milestones Past Due | Deadlines missed | Grant Application |
 
-### 4. 💰 Grant Milestone Payment Request
+### 4. 💰 Grant Milestone Payment Request 💸
 
-***A Grant Milestone Payment Request is a subtype of a Grant Milestone. Currently a Grant Milestone is only utilised for payment requests.***
+***A Grant Milestone Payment Request is a subtype of a Grant Milestone. 📝 Currently a Grant Milestone is only utilised for payment requests. 💳***
 
 | Label | Description | Status |
 |-------|-------------|-------|
@@ -128,22 +128,22 @@ The system uses the following project status to track grants through their lifec
 
 ### 📝 Grant Application
 
-#### 🟢 Active Status
+#### 🟢 Active Status 
 
 | Status | Description |
 |-------|-------------|
-| New | Just submitted, initial state |
-| Under Review | Being evaluated by committee |
-| Approved | Grant approved and active |
-| In Progress | Work actively ongoing |
+| New ✨ | Just submitted, initial state |
+| Under Review 🔍 | Being evaluated by committee |
+| Approved ✅ | Grant approved and active |
+| In Progress 🚀 | Work actively ongoing |
 
 #### 🛑 Terminal Status
 
 | Label | Description | Status |
 |-------|-------------|-------|
-| Complete | All milestones achieved |
-| Declined | Application not approved |
-| Cancelled | Grant terminated early |
+| Complete ✨ | All milestones achieved |
+| Declined ❌ | Application not approved |
+| Cancelled 🚫 | Grant terminated early |
 
 ### 💰 Grant Milestone Payment Request Status
 
