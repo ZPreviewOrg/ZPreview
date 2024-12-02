@@ -40,7 +40,7 @@ jobs:
                 }
               }`;
               
-              const issueId = context.payload.issue.node_id;
+              const issueId = context.issue.node_id;
               const result = await github.graphql(query, { issueId });
               
               // Check if issue is in project
