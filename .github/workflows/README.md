@@ -110,13 +110,63 @@ Note: Status transitions generally move forward only - reverting to a previous s
 
 ### 4.1 Grant Application Workflow
 
-#### 4.1.1 Initial Submission Actions
+The system manages grant applications through two distinct phases: Pending Grant Applications and Official Grant Applications. Each phase has specific workflows and automated actions.
 
-- Validation checks
-- Automatic labeling
-- Assignee routing
+#### 4.1.1 Pending Grant Applications
+When a grant application is first submitted using the "Grant Application" form, it receives the "Pending Grant Application" label. During this phase:
 
-#### 4.1.2 Status-based Actions
+- No PRs or merges occur as these are not yet official applications
+- System automatically assigns an Admin
+- "Changes Pending Review" label is applied for initial review
+- Application undergoes initial validation checks
+
+#### 4.1.2 Official Grant Applications
+Once validated, applications receive the "Grant Application" label and enter the official workflow:
+
+- System creates grant file in _grants/ directory
+- PRs and merges of changes are automatically pushed to grant files
+- Changes are blocked while "Changes Pending Review" label is present
+
+#### 4.1.3 Status-Based Processing
+
+Applications progress through the following statuses:
+
+**New Status**
+- Ready for ZCG review triggers assignment to committee
+- Grant approval/decline decisions update status accordingly
+- KYC and forum post requirements are tracked
+
+**Under Review Status**
+- Committee evaluates application
+- System manages approval/decline notifications
+- Progress updates and changes are tracked
+
+**Approved Status**
+- KYC verification may be required
+- Milestone tracking begins
+- Progress updates are monitored
+- Changes require review and approval
+
+**In Progress Status**
+- Milestone completion is tracked
+- Overdue milestones trigger notifications
+- Changes continue to require review
+
+**Terminal Statuses (Cancelled/Declined/Complete)**
+- Limited label updates allowed
+- Notifications are suppressed
+- Status remains fixed
+
+#### 4.1.4 Automated Actions
+The system automatically handles:
+
+- Label management and synchronization
+- Assignment routing
+- Status transitions
+- Notification generation
+- File management and PRs
+- Project board updates
+- Frontmatter validation
 
 ### 4.2 Grant Management Workflow
 
