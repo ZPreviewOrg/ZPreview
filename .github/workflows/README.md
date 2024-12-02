@@ -157,17 +157,6 @@ Applications progress through the following statuses:
 - Notifications are suppressed
 - Status remains fixed
 
-#### 4.1.4 Automated Actions
-The system automatically handles:
-
-- Label management and synchronization
-- Assignment routing
-- Status transitions
-- Notification generation
-- File management and PRs
-- Project board updates
-- Frontmatter validation
-
 ### 4.2 Grant Management Workflow
 
 #### 4.2.1 Initial Submission Actions
