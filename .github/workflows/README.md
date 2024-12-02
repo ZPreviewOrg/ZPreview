@@ -137,7 +137,7 @@ The system uses the following project status to track grants through their lifec
 | Approved | Grant approved and active |
 | In Progress | Work actively ongoing |
 
-#### Terminal Status
+#### 🛑 Terminal Status
 
 | Label | Description | Status |
 |-------|-------------|-------|
