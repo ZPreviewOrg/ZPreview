@@ -22,7 +22,7 @@ The system uses the following categories of labels to track grant status:
 The system uses the following categories of labels to track grants through their lifecycle:
 
 ### 1. Application Status
-| Label | Description | Stage |
+| Label | Description | Status |
 |-------|-------------|-------|
 | Pending Grant Application | Initial submission state | Start |
 | Grant Application | Validated application | Processing |
@@ -48,7 +48,7 @@ The system uses the following categories of labels to track grants through their
 | Milestones Past Due | Deadlines missed | Review |
 
 ### 4. Payment Processing
-| Label | Description | Stage |
+| Label | Description | Status |
 |-------|-------------|-------|
 | Pending Startup Payment Request | Initial funding requested | Start |
 | Pending Grant Milestone | Milestone payment requested | Progress |
@@ -59,13 +59,13 @@ The system uses the following categories of labels to track grants through their
 
 ## Grant Application Status
 
-### Active States
+### Active Status
 - New - Just submitted, initial state
 - Under Review - Being evaluated by committee
 - In Progress - Work actively ongoing
 - Approved - Grant approved and active
 
-### Terminal States  
+### Terminal Status  
 - Declined - Application not approved
 - Cancelled - Grant terminated early
 - Complete - All milestones achieved
