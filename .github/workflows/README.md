@@ -116,7 +116,7 @@ The system manages grant applications through distinct phases with specific work
 
 ***PRs and merges will not occur for "Pending Grant Applications" as they are not official Grant Applications yet.***
 
-The "Pending Grant Application" label is set when a Grant Application is submitted using the "Grant Application" form. The following tables define how the system manages issues with a "Pending Grant Application" label.
+The "Pending Grant Application" label is set when a new Grant Application is submitted using the "Grant Application" form. The following tables define how the system manages issues with a "Pending Grant Application" label.
 
 ##### Initial "Pending Grant Application" Workflow
 
@@ -174,7 +174,7 @@ The system processes applications differently based on their current status:
 | +Grant Approved; KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED | Approved |
 | +Grant Approved; !KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC | Approved |
 
-###### Approved Status Workflow
+###### Approved & In Progress Status Workflow
 
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
 |----------------|---------------|-------------------|-----------------|----------------|
@@ -211,7 +211,7 @@ The system processes applications differently based on their current status:
 |---------------|
 | +Changes Pending Review |
 
-###### Grant File Push to Main
+###### Grant File Updated
 
 ***Check Frontmatter, Issues, and Projects are in sync***
 
@@ -222,47 +222,15 @@ The system processes applications differently based on their current status:
 | Labels | Requires Label Sync | - | List of Frontmatter fields not in project | - |
 | Values | Requires Value Sync | - | List of Frontmatter values not matching | - |
 
-### 4.2 Grant Management Workflow
-
-#### 4.2.1 Initial Submission Actions
-
-- Assignee routing
-
-#### 4.2.2 Status-based Actions
-
-- New grant actions
-- Review process actions
-- Approval workflows
-- Progress tracking
-- Closure procedures
-
-### 4.3 Payment Processing
-#### 4.3.1 Initial Grant Payment
+### 4.2 Payment Processing
+#### 4.2.1 Initial Grant Payment
 - Verification requirements
 - Approval workflow
 - Payment execution
 - Status updates
 
-#### 4.3.2 Milestone Payments
+#### 4.2.2 Milestone Payments
 - Progress verification
 - Documentation review
 - Payment approval
 - Distribution process
-
-## 5. System Administration
-### 5.1 Access Control
-- Role definitions
-- Permission levels
-- Authentication requirements
-
-### 5.2 Maintenance Procedures
-- Label management
-- Workflow updates
-- System backups
-- Performance monitoring
-
-### 5.3 Reporting and Analytics
-- Grant metrics
-- Payment tracking
-- Performance indicators
-- Compliance reporting
