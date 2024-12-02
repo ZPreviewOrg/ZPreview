@@ -181,7 +181,7 @@ The "Pending Grant Application" label is set when a Grant Application is submitt
 | - | - | NOTIFY_GRANT_APPLICATION_RECEIVED |
 | -Changes Pending Review | +Admin | - |
 
-### "Pending Grant Application" Workflow when Issue Labelled
+### 📝 "Pending Grant Application" Workflow when Issue Labelled
 
 ***PRs and merges will not occur for "Pending Grant Applications" as they are not official Grant Applications yet.***
 
