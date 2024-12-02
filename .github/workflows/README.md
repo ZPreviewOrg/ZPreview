@@ -17,49 +17,45 @@ Unless otherwise specific any changes made create a PR which created and merged 
 
 The system uses the following categories of labels to track grant status:
 
-### 1. Grant Application Status
-These labels indicate the current state of a grant application:
+## Label Categories
 
-| Label | Description |
-|-------|-------------|
-| Pending Grant Application | Initial state for new applications |
-| Grant Application | Confirmed valid application |
-| Ready For ZCG Review | Application ready for committee review |
-| Grant Approved | Application has been approved |
-| Grant Declined | Application has been declined |
-| Does Not Meet Criteria | Application rejected for not meeting requirements |
+The system uses the following categories of labels to track grants through their lifecycle:
 
-### 2. Grant Verification Status  
-Labels related to verification requirements:
+### 1. Application Status
+| Label | Description | Stage |
+|-------|-------------|-------|
+| Pending Grant Application | Initial submission state | Start |
+| Grant Application | Validated application | Processing |
+| Ready For ZCG Review | Ready for committee evaluation | Review |
+| Grant Approved | Application accepted | Approved |
+| Grant Declined | Application rejected | Terminal |
+| Does Not Meet Criteria | Failed requirements check | Terminal |
 
-| Label | Description |
-|-------|-------------|
-| KYC Required | Identity verification needed |
-| KYC Verified | Identity verification completed |
-| Forum Post Missing | Required forum post not found |
-| Changes Pending Review | Application changes need review |
-| Approve_Changes | Changes have been approved |
+### 2. Verification Requirements  
+| Label | Description | Required For |
+|-------|-------------|-------------|
+| KYC Required | Identity verification needed | Payment |
+| KYC Verified | Identity verification passed | Payment |
+| Forum Post Missing | Forum post requirement unfulfilled | Application |
+| Changes Pending Review | Modifications need review | Any Stage |
+| Approve_Changes | Modifications accepted | Any Stage |
 
-### 3. Grant Progress Tracking
-Labels that monitor project progress:
+### 3. Project Milestones
+| Label | Description | Impact |
+|-------|-------------|---------|
+| Progress Update Required | Status report needed | Monitoring |
+| Milestone 1 Complete | First milestone achieved | Payment |
+| Milestones Past Due | Deadlines missed | Review |
 
-| Label | Description |
-|-------|-------------|
-| Progress Update Required | Project update needed |
-| Milestone 1 Complete | First milestone achieved |
-| Milestones Past Due | Project milestones overdue |
-
-### 4. Grant Payment Status
-Labels related to payment processing:
-
-| Label | Description |
-|-------|-------------|
-| Pending Startup Payment Request | Initial funding requested |
-| Pending Grant Milestone | Milestone payment requested |
-| Grant Milestone | Milestone payment in process |
-| Milestone Payment Approved | Payment approved |
-| Milestone Payment Complete | Payment completed |
-| Milestone Payment Requests | Payment request submitted |
+### 4. Payment Processing
+| Label | Description | Stage |
+|-------|-------------|-------|
+| Pending Startup Payment Request | Initial funding requested | Start |
+| Pending Grant Milestone | Milestone payment requested | Progress |
+| Grant Milestone | Payment being processed | Active |
+| Milestone Payment Approved | Payment authorized | Processing |
+| Milestone Payment Complete | Payment sent | Complete |
+| Milestone Payment Requests | Payment request received | Queue |
 
 ## Grant Application Status
 
