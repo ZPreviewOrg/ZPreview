@@ -153,18 +153,18 @@ The system uses the following Status of labels to track Milestones through their
 
 | Status | Description |
 |-------|-------------|
-| New | Just submitted, initial state |
-| Under Review | Being evaluated |
-| Approved | Milestone Payment Approved |
-| In Progress | Payment Processing in Progress |
+| ✨ New | Just submitted, initial state |
+| 🔍 Under Review | Being evaluated |
+| ✅ Approved | Milestone Payment Approved |
+| 🚀 In Progress | Payment Processing in Progress |
 
 #### 🔴 Terminal Status
 
 | Status | Description |
 |-------|-------------|
-| Complete | Payment Complete |
-| Declined | Payment Request Declined, No Payment Made |
-| Cancelled | Payment Request Cancelled, No Payment Made |
+| ✔️ Complete | Payment Complete |
+| ❌ Declined | Payment Request Declined, No Payment Made |
+| 🚫 Cancelled | Payment Request Cancelled, No Payment Made |
 
 ## 📝 "Pending Grant Application" Workflows
 
