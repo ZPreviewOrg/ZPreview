@@ -1,0 +1,168 @@
+name: Execute Workflow Operations
+description: Executes label updates, assignment updates, issue comments and status updates
+
+inputs:
+  token:
+    description: GitHub token
+    required: true
+  issue-number:
+    description: Issue number
+    required: true
+  add-labels:
+    description: Labels to add (JSON array)
+    required: false
+    default: '[]'
+  remove-labels:
+    description: Labels to remove (JSON array)
+    required: false
+    default: '[]'
+  add-assignees:
+    description: Assignees to add (JSON array)
+    required: false
+    default: '[]'
+  remove-assignees:
+    description: Assignees to remove (JSON array)
+    required: false
+    default: '[]'
+  comment:
+    description: Comment to add to the issue
+    required: false
+    default: ''
+  status-update:
+    description: New status to set
+    required: false
+    default: ''
+  project-id:
+    description: Project ID for status updates
+    required: false
+    default: ''
+  status-field-id: 
+    description: Project status field ID
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Process Label Updates
+      if: inputs.add-labels != '[]' || inputs.remove-labels != '[]'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const addLabels = JSON.parse('${{ inputs.add-labels }}');
+          const removeLabels = JSON.parse('${{ inputs.remove-labels }}');
+          
+          // Add new labels
+          if (addLabels.length > 0) {
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ inputs.issue-number }},
+              labels: addLabels
+            });
+          }
+          
+          // Remove specified labels
+          for (const label of removeLabels) {
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ inputs.issue-number }},
+                name: label
+              });
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+              // Ignore 404 errors when trying to remove non-existent labels
+            }
+          }
+
+    - name: Process Assignment Updates
+      if: inputs.add-assignees != '[]' || inputs.remove-assignees != '[]'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const addAssignees = JSON.parse('${{ inputs.add-assignees }}');
+          const removeAssignees = JSON.parse('${{ inputs.remove-assignees }}');
+          
+          // Add new assignees
+          if (addAssignees.length > 0) {
+            await github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ inputs.issue-number }},
+              assignees: addAssignees
+            });
+          }
+          
+          // Remove assignees
+          if (removeAssignees.length > 0) {
+            await github.rest.issues.removeAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ inputs.issue-number }},
+              assignees: removeAssignees
+            });
+          }
+
+    - name: Add Issue Comment
+      if: inputs.comment != ''
+      uses: actions/github-script@v7
+      with:
+        script: |
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: ${{ inputs.issue-number }},
+            body: '${{ inputs.comment }}'
+          });
+
+    - name: Update Status
+      if: inputs.status-update != '' && inputs.project-id != '' && inputs.status-field-id != ''
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const query = `mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: String!) {
+            updateProjectV2ItemFieldValue(
+              input: {
+                projectId: $projectId
+                itemId: $itemId
+                fieldId: $fieldId
+                value: $value
+              }
+            ) {
+              projectV2Item {
+                id
+              }
+            }
+          }`;
+
+          // First get the project item ID
+          const itemQuery = `query($projectId: ID!, $issueNumber: Int!) {
+            organization(login: "${context.repo.owner}") {
+              projectV2(number: $projectId) {
+                items(first: 1, filter: {fieldValueEqual: [{field: "Number", value: "$issueNumber"}]}) {
+                  nodes {
+                    id
+                  }
+                }
+              }
+            }
+          }`;
+
+          const itemResult = await github.graphql(itemQuery, {
+            projectId: '${{ inputs.project-id }}',
+            issueNumber: ${{ inputs.issue-number }}
+          });
+
+          const itemId = itemResult.organization.projectV2.items.nodes[0].id;
+
+          // Update the status
+          await github.graphql(query, {
+            projectId: '${{ inputs.project-id }}',
+            itemId: itemId,
+            fieldId: '${{ inputs.status-field-id }}',
+            value: '${{ inputs.status-update }}'
+          });
