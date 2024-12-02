@@ -172,7 +172,7 @@ The system uses the following Status of labels to track Milestones through their
 
 The "Pending Grant Application" label is set when a Grant Application is submitted using the "Grant Application" form. The following tables define how the system manages issues with a "Pending Grant Application" label. Each row describes what automated actions the system will take based on the current state of an issue.
 
-### Initial "Pending Grant Application" Workflow
+### 📝 Initial "Pending Grant Application" Workflow
 
 ***PRs and merges will not occur for "Pending Grant Applications" as they are not official Grant Applications yet.***
 
