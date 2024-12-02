@@ -110,22 +110,83 @@ Note: Status transitions generally move forward only - reverting to a previous s
 
 ### 4.1 Grant Application Workflow
 
-The system manages grant applications through two distinct phases: Pending Grant Applications and Official Grant Applications. Each phase has specific workflows and automated actions.
+The system manages grant applications through distinct phases with specific workflows and automated actions.
 
-#### 4.1.1 Pending Grant Applications
-When a grant application is first submitted using the "Grant Application" form, it receives the "Pending Grant Application" label. During this phase:
+#### 4.1.1 Pending Grant Application Workflows
 
-- No PRs or merges occur as these are not yet official applications
-- System automatically assigns an Admin
-- "Changes Pending Review" label is applied for initial review
-- Application undergoes initial validation checks
+***PRs and merges will not occur for "Pending Grant Applications" as they are not official Grant Applications yet.***
 
-#### 4.1.2 Official Grant Applications
-Once validated, applications receive the "Grant Application" label and enter the official workflow:
+The "Pending Grant Application" label is set when a Grant Application is submitted using the "Grant Application" form. The following tables define how the system manages issues with a "Pending Grant Application" label.
 
-- System creates grant file in _grants/ directory
-- PRs and merges of changes are automatically pushed to grant files
-- Changes are blocked while "Changes Pending Review" label is present
+##### Initial "Pending Grant Application" Workflow
+
+| Label Updates | Assignment Updates |
+|---------------|--------------------|
+| -Changes Pending Review | +Admin |
+
+##### "Pending Grant Application" Workflow when Issue Labelled
+
+| Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
+|----------------|---------------|--------------------|-----------------|----------------|
+| +Ready For ZCG Review | +Grant Application | +ZCG | NOTIFY_GRANT_UNDER_REVIEW | Under Review |
+| +Grant Approved; KYC Required; | +Grant Application; -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED | Approved |
+| +Grant Approved; !KYC Required; | +Grant Application; -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC | Approved |
+| +Grant Declined | +Grant Application; -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_DECLINED | Declined |
+| +Does Not Meet Criteria | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_DOES_NOT_MEET_CRITERIA | Declined |
+| +KYC Required | - | - | - | - |
+| +Forum Post Missing | - | - | NOTIFY_GRANT_APPLICATION_FORUM_POST_MISSING | - |
+| +Progress Update Required | - | - | NOTIFY_GRANT_APPLICATION_PROGRESS_UPDATE_REQUIRED | - |
+| +Milestones Past Due | - | - | NOTIFY_GRANT_APPLICATION_MILESTONE_OVERDUE | - |
+| +Changes Pending Review | - | - | NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW | - |
+| +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
+| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_ISSUE_MISMATCH | - |
+
+#### 4.1.2 Grant Application Workflows
+
+***PRs and merges of changes will be automatically pushed into the _grants/{}.md file. PRs and merges will not occur for grants with "Changes Pending Review" label.***
+
+##### Initial "Grant Application" Workflow
+
+When the "Grant Application" label is added:
+
+| Label Updates | Assignment Updates | Project Updates |
+|---------------|--------------------|-----------------|
+| -Changes Pending Review; -Pending Grant Application; | +Admin | +_grants/a{issue_number:05d}+title[:50].md |
+
+##### Status-Based Workflows
+
+The system processes applications differently based on their current status:
+
+###### New Status Workflow
+| Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
+|----------------|---------------|--------------------|-----------------|----------------|
+| +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_UNDER_REVIEW | Under Review |
+| +Grant Approved; KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED | Approved |
+| +Grant Approved; !KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC | Approved |
+| +Grant Declined | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_DECLINED | Declined |
+
+###### Under Review Status Workflow
+| Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
+|----------------|---------------|-------------------|-----------------|----------------|
+| +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_APPLICATION_APPLICATION_RECEIVED | - |
+| +Grant Approved; KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED | Approved |
+| +Grant Approved; !KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC | Approved |
+
+###### Approved Status Workflow
+| Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
+|----------------|---------------|-------------------|-----------------|----------------|
+| +KYC Required | - | - | NOTIFY_GRANT_APPLICATION_KYC_REQUEST | - |
+| +Progress Update Required | - | - | NOTIFY_GRANT_APPLICATION_PROGRESS_UPDATE_REQUIRED | - |
+| +Milestone 1 Complete | - | - | NOTIFY_GRANT_APPLICATION_MILESTONE_COMPLETE | - |
+
+###### Terminal Status Workflows
+For Cancelled/Declined/Complete statuses, only label updates occur without notifications or status changes.
+
+##### File Change Management
+- Changes require review (+Changes Pending Review label)
+- PRs and merges automated for _grants/{}.md files
+- Frontmatter, Issues, and Projects kept in sync
+- Label and value synchronization maintained
 
 #### 4.1.3 Status-Based Processing
 
