@@ -107,25 +107,25 @@ Individual milestones within approved grants follow their own status progression
 Note: Status transitions generally move forward only - reverting to a previous status requires special administrative action.
 
 ## 4. Workflow Processes
-### 4.1 Application Processing
-#### 4.1.1 Initial Submission
+
+### 4.1 Grant Application Workflow
+
+#### 4.1.1 Initial Submission Actions
+
 - Validation checks
 - Automatic labeling
 - Assignee routing
 
-#### 4.1.2 Review Process
-- Technical review
-- Financial review
-- Compliance check
-- Final decision
+#### 4.1.2 Status-based Actions
 
-### 4.2 Grant Management
-#### 4.2.1 Setup Procedures
-- Repository creation
-- Permission setup
-- Milestone configuration
+### 4.2 Grant Management Workflow
+
+#### 4.2.1 Initial Submission Actions
+
+- Assignee routing
 
 #### 4.2.2 Status-based Actions
+
 - New grant actions
 - Review process actions
 - Approval workflows
