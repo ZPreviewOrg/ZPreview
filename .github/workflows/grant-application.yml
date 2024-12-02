@@ -36,7 +36,7 @@ jobs:
             const issueId = context.payload.issue.node_id;
             const result = await github.graphql(query, { issueId });
             const status = result.node.projectItems.nodes[0]?.fieldValues.nodes[0]?.name || 'New';
-            return status;
+            core.setOutput('result', status);
 
       - name: Get all current labels
         id: get-labels
