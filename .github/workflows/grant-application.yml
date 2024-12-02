@@ -44,7 +44,6 @@ jobs:
                 }
               }`;
               
-              const issueId = context.github.event.issue.node_id;
               const result = await github.graphql(query, { issueId });
               core.info('GraphQL query result: ' + JSON.stringify(result));
               if (!result.node.projectItems.nodes.length) {
