@@ -200,7 +200,7 @@ The "Pending Grant Application" label is set when a Grant Application is submitt
 | +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
 | -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
-## 📄 "Grant Application" Workflows
+## 📝 "Grant Application" Workflows
 
 ***PRs and merges of changes will be automatically pushed into the _grants/{}.md file. PRs and merges will not occur for grants with "Changes Pending Review" label.***
 
