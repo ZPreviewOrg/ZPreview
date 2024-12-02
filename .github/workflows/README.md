@@ -14,6 +14,60 @@ When a change occurs on a grant application issue, the workflow system:
 
 Unless otherwise specific any changes made create a PR which created and merged to the corresponding grants file within the GitHub repository.
 
+## Configuration
+
+The system uses the following configuration variable to update the Grant Application Project.
+
+To configure these:
+
+1. Go to Repository Settings > Actions > Variables
+2. Select the "Variables" tab
+3. Add each variable with its corresponding value
+
+- PROJECT_GRANT_APPLICATION_PROJECT_ID
+- PROJECT_GRANT_APPLICATION_STATUS_ID
+- PROJECT_GRANT_APPLICATION_STATUS_APPROVED_ID
+- PROJECT_GRANT_APPLICATION_STATUS_CANCELLED_ID
+- PROJECT_GRANT_APPLICATION_STATUS_COMPLETE_ID
+- PROJECT_GRANT_APPLICATION_STATUS_DECLINED_ID
+- PROJECT_GRANT_APPLICATION_STATUS_IN_PROGRESS_ID
+- PROJECT_GRANT_APPLICATION_STATUS_NEW_ID
+- PROJECT_GRANT_APPLICATION_STATUS_UNDER_REVIEW_ID
+
+## Notification Messages
+
+The system uses the following notification messages to track grants through their lifecycle.
+
+To configure these:
+
+1. Go to Repository Settings > Actions > Variables
+2. Select the "Variables" tab
+3. Add each variable with its corresponding value
+
+- ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH
+- NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED
+- NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC
+- NOTIFY_GRANT_APPLICATION_DECLINED
+- NOTIFY_GRANT_APPLICATION_DOES_NOT_MEET_CRITERIA
+- NOTIFY_GRANT_APPLICATION_FORUM_POST_MISSING
+- NOTIFY_GRANT_APPLICATION_MILESTONE_OVERDUE
+- NOTIFY_GRANT_APPLICATION_MILESTONE_COMPLETE
+- NOTIFY_GRANT_APPLICATION_PROGRESS_UPDATE_REQUIRED
+- NOTIFY_GRANT_APPLICATION_RECEIVED
+- NOTIFY_GRANT_APPLICATION_UNDER_REVIEW
+- NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW
+- NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED
+- NOTIFY_GRANT_APPLICATION_KYC_REQUEST
+- NOTIFY_GRANT_APPLICATION_ZCG_REVIEW_REQUIRED
+- NOTIFY_GRANT_APPLICATION_CANCELLED
+- NOTIFY_GRANT_STARTUP_PAYMENT_REQUEST_SENDER_NOT_AUTHORISED
+- NOTIFY_GRANT_STARTUP_PAYMENT_REQUEST_RECEIVED
+- NOTIFY_GRANT_STARTUP_PAYMENT_COMPLETE
+- NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_SENDER_NOT_AUTHORISED
+- NOTIFY_GRANT_MILESTONE_PAYMENT_COMPLETE
+- NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_UNDER_REVIEW
+- NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_APPROVED
+
 ## Label Management
 
 The system uses the following categories of labels to track grants through their lifecycle.
@@ -122,9 +176,10 @@ The "Pending Grant Application" label is set when a Grant Application is submitt
 
 ***PRs and merges will not occur for "Pending Grant Applications" as they are not official Grant Applications yet.***
 
-| Label Updates | Assignment Updates |
-|---------------|--------------------|
-| -Changes Pending Review | +Admin |
+| Label Updates | Assignment Updates | Issues Comments |
+|---------------|--------------------|-----------------|
+| - | - | NOTIFY_GRANT_APPLICATION_RECEIVED |
+| -Changes Pending Review | +Admin | - |
 
 ### "Pending Grant Application" Workflow when Issue Labelled
 
@@ -132,7 +187,7 @@ The "Pending Grant Application" label is set when a Grant Application is submitt
 
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
 |----------------|---------------|--------------------|-----------------|----------------|
-| +Ready For ZCG Review | +Grant Application | +ZCG | NOTIFY_GRANT_UNDER_REVIEW | Under Review |
+| +Ready For ZCG Review | +Grant Application | +ZCG | NOTIFY_GRANT_APPLICATION_UNDER_REVIEW | Under Review |
 | +Grant Approved; KYC Required; | +Grant Application; -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED | Approved |
 | +Grant Approved; !KYC Required; | +Grant Application; -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC | Approved |
 | +Grant Declined | +Grant Application; -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_DECLINED | Declined |
@@ -143,7 +198,7 @@ The "Pending Grant Application" label is set when a Grant Application is submitt
 | +Milestones Past Due | - | - | NOTIFY_GRANT_APPLICATION_MILESTONE_OVERDUE | - |
 | +Changes Pending Review | - | - | NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW | - |
 | +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
-| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_ISSUE_MISMATCH | - |
+| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
 ## "Grant Application" Workflows
 
@@ -167,7 +222,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
 |----------------|---------------|--------------------|-----------------|----------------|
-| +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_UNDER_REVIEW | Under Review |
+| +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_APPLICATION_UNDER_REVIEW | Under Review |
 | +Grant Approved; KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED | Approved |
 | +Grant Approved; !KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC | Approved |
 | +Grant Declined | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_DECLINED | Declined |
@@ -177,7 +232,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 | +Progress Update Required | - | - | NOTIFY_GRANT_APPLICATION_PROGRESS_UPDATE_REQUIRED | - |
 | +Changes Pending Review | - | - | NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW | - |
 | +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
-| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_ISSUE_MISMATCH | - |
+| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
 ### "Grant Application" Workflow with "Under Review" Status when Issue Labelled
 
@@ -185,7 +240,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
 |----------------|---------------|-------------------|-----------------|----------------|
-| +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_APPLICATION_APPLICATION_RECEIVED | - |
+| +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_APPLICATION_UNDER_REVIEW | - |
 | +Grant Approved; KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED | Approved |
 | +Grant Approved; !KYC Required; | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC | Approved |
 | +Grant Declined | -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_DECLINED | Declined |
@@ -195,7 +250,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 | +Progress Update Required | - | - | NOTIFY_GRANT_APPLICATION_PROGRESS_UPDATE_REQUIRED | - |
 | +Changes Pending Review | - | - | NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW | - |
 | +Changes Approved | -Changes Pending Review; - Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
-| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_ISSUE_MISMATCH | - |
+| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
 ### "Grant Application" Workflow with "Approved" Status when Issue Labelled
 
@@ -215,7 +270,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 | +Milestones Past Due | - | - | NOTIFY_GRANT_APPLICATION_MILESTONE_OVERDUE | - |
 | +Changes Pending Review | - | - | NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW | - |
 | +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
-| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_ISSUE_MISMATCH | - |
+| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
 ### "Grant Application" Workflow with "In Progress" Status when Issue Labelled
 
@@ -234,7 +289,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 | +Milestones Past Due | - | - | NOTIFY_GRANT_APPLICATION_MILESTONE_OVERDUE | - |
 | +Changes Pending Review | - | - | NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW | - |
 | +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
-| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_ISSUE_MISMATCH | - |
+| -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
 ### "Grant Application" with "Cancelled/Declined/Complete" Status when Issue Labelled
 
@@ -299,7 +354,7 @@ When the "Pending Startup Payment Request" label is added to an issue the system
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Grant Label Updates |
 |----------------|---------------|--------------------|-----------------|---------------------|
 | +Ready For ZCG Review | +Grant Milestone | +ZCG | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_UNDER_REVIEW | Milestone Payment Requests |
-| +Milestone Payment Approved | +Grant Milestone; -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_APPROVED | - |
+| +Milestone Payment Approved | +Grant Milestone; -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_APPROVED | - |
 | +Milestone Payment Complete | +Grant Milestone; -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_COMPLETE | +Milestone 1 Complete |
 
 ## "Pending Grant Milestone" Workflows
@@ -326,7 +381,7 @@ When the "Pending Grant Milestone" label is added to an issue the system does a 
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Grant Label Updates |
 |----------------|---------------|--------------------|-----------------|---------------------|
 | +Ready For ZCG Review | +Grant Milestone | +ZCG | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_UNDER_REVIEW | Milestone Payment Requests |
-| +Milestone Payment Approved | +Grant Milestone; -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_APPROVED | - |
+| +Milestone Payment Approved | +Grant Milestone; -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_APPROVED | - |
 | +Milestone Payment Complete | +Grant Milestone; -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_COMPLETE | +Milestone 1 Complete |
 
 ### Initial "Grant Milestone" + "Milestone Payment Request" Workflow
@@ -346,5 +401,5 @@ When the "Grant Milestone" label is added to an issue the system must does a few
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Grant Label Updates |
 |----------------|---------------|--------------------|-----------------|---------------------|
 | +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_UNDER_REVIEW | Milestone Payment Requests |
-| +Milestone Payment Approved | -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_APPROVED | - |
+| +Milestone Payment Approved | -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_APPROVED | - |
 | +Milestone Payment Complete | -Ready For ZCG Review; | - | NOTIFY_GRANT_MILESTONE_PAYMENT_COMPLETE | +Milestone 1 Complete |
