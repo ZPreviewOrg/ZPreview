@@ -223,14 +223,40 @@ The system processes applications differently based on their current status:
 | Values | Requires Value Sync | - | List of Frontmatter values not matching | - |
 
 ### 4.2 Payment Processing
-#### 4.2.1 Initial Grant Payment
-- Verification requirements
-- Approval workflow
-- Payment execution
-- Status updates
 
-#### 4.2.2 Milestone Payments
-- Progress verification
-- Documentation review
-- Payment approval
-- Distribution process
+#### 4.2.1 Initial Grant Payment Workflow
+The system manages initial grant payments through a structured workflow with automated actions and status tracking.
+
+##### Initial Payment Request Processing
+When a new payment request is submitted:
+
+| Check | Label Updates | Assignment Updates | Status Updates |
+|-------|---------------|-------------------|----------------|
+| - | - | +Admin | - |
+| Sender == Grant Assignee | - | Close | - |
+
+##### Payment Request Status Workflow
+| Current Labels | Label Updates | Assignment Updates | Issues Comments |
+|----------------|---------------|-------------------|-----------------|
+| +Ready For ZCG Review | +Grant Milestone | +ZCG | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_UNDER_REVIEW |
+| +Milestone Payment Approved | -Ready For ZCG Review | - | NOTIFY_GRANT_MILESTONE_PAYMENT_APPROVED |
+| +Milestone Payment Complete | -Ready For ZCG Review | - | NOTIFY_GRANT_MILESTONE_PAYMENT_COMPLETE |
+
+#### 4.2.2 Milestone Payment Workflow
+Milestone payments follow a specific verification and approval process:
+
+##### Initial Milestone Payment Request Processing
+When a milestone payment request is submitted:
+
+| Check | Label Updates | Issues Comments | Assignment Updates |
+|-------|---------------|-----------------|-------------------|
+| - | -Pending Grant Milestone | - | +Admin |
+
+##### Milestone Payment Status Workflow
+| Current Labels | Label Updates | Assignment Updates | Issues Comments | Grant Updates |
+|----------------|---------------|-------------------|-----------------|---------------|
+| +Ready For ZCG Review | - | +ZCG | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_UNDER_REVIEW | Milestone Payment Requests |
+| +Milestone Payment Approved | -Ready For ZCG Review | - | NOTIFY_GRANT_MILESTONE_PAYMENT_APPROVED | - |
+| +Milestone Payment Complete | -Ready For ZCG Review | - | NOTIFY_GRANT_MILESTONE_PAYMENT_COMPLETE | +Milestone 1 Complete |
+
+Note: PRs and merges are currently not supported for "Pending Grant Milestone" or "Grant Milestones".
