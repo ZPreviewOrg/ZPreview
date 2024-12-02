@@ -184,13 +184,42 @@ The system processes applications differently based on their current status:
 
 ###### Terminal Status Workflows
 
-For Cancelled/Declined/Complete statuses, only label updates occur without notifications or status changes.
+***PRs and merges of changes will be automatically pushed into the _grants/{}.md file. Cancelled, Declined, and Complete Grant Applications will not post notifications or update status.***
+
+| Current Labels | Label Updates |
+|----------------|---------------|
+| +Ready For ZCG Review | - |
+| +Grant Approved; KYC Required; | -Ready For ZCG Review |
+| +Grant Approved; !KYC Required; | -Ready For ZCG Review |
+| +Grant Declined | -Ready For ZCG Review |
+| +KYC Required | - |
+| +KYC Verified | -KYC Required |
+| +Forum Post Missing | - |
+| +Progress Update Required | - |
+| +Milestone 1 Complete | - |
+| +Milestones Past Due | - |
+| +Changes Pending Review | - |
+| +Changes Approved | -Changes Pending Review; -Changes Approved; |
+| -Changes Pending Review | - |
 
 ##### File Change Management
-- Changes require review (+Changes Pending Review label)
-- PRs and merges automated for _grants/{}.md files
-- Frontmatter, Issues, and Projects kept in sync
-- Label and value synchronization maintained
+
+###### Grant Application Changes
+***Grant Application Changes Require Review. Any notifications, PR, merging should be handled by the label change events.***
+
+| Label Changes |
+|---------------|
+| +Changes Pending Review |
+
+###### Grant File Push to Main
+***Check Frontmatter, Issues, and Projects are in sync***
+
+| Check  | Label Changes | Issue Changes | Warn | Log |
+|--------|---------------|---------------|------|-----|
+| Row    | - | Create new entry in project | - | - |
+| Fields | - | - | - | List of Frontmatter fields not in project |
+| Labels | Requires Label Sync | - | List of Frontmatter fields not in project | - |
+| Values | Requires Value Sync | - | List of Frontmatter values not matching | - |
 
 ### 4.2 Grant Management Workflow
 
