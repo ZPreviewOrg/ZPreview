@@ -102,7 +102,7 @@ The system uses the following categories of labels to track grants through their
 
 ***Grants will be tracked using a combination of the Grant Application and the Grant Milestone. 🎯 A Grant Milestone is a supertype of a Grant Milestone Payment Request and may be used for more features in the future. Currently it's only utilised for payment requests. ⏱️***
 
-| Label | Description | Required For |  |
+| Label | Description | Required For |
 |-------|-------------|--------------|
 | 📊 Progress Update Required | Status report needed | Grant Application |
 | 🎯 Milestone 1 Complete | Milestone Complete | Grant Applciation |

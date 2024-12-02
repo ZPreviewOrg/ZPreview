@@ -17,7 +17,7 @@ jobs:
           script: |
             try {
               core.info('Starting to get/set issue status');
-              const vars = JSON.parse(`\${{ toJSON(vars) }}`);
+              const vars = context.vars;
               core.info('Parsed vars: ' + JSON.stringify(vars));
               if (!vars.PROJECT_GRANT_APPLICATION_PROJECT_ID) {
                 throw new Error('Required variable PROJECT_GRANT_APPLICATION_PROJECT_ID not found');
