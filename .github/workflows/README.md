@@ -128,7 +128,7 @@ The system uses the following project status to track grants through their lifec
 
 ### Grant Application
 
-#### Active Status
+#### 🟢 Active Status
 
 | Status | Description |
 |-------|-------------|
@@ -149,7 +149,7 @@ The system uses the following project status to track grants through their lifec
 
 The system uses the following Status of labels to track Milestones through their lifecycle:
 
-#### Active Status
+#### 🟢 Active Status
 
 | Status | Description |
 |-------|-------------|
