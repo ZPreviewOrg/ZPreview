@@ -22,6 +22,7 @@ jobs:
               }
 
               core.info('Executing GraphQL query to get project items');
+              const issueId = "${{ github.event.issue.node_id }}";
               core.info('Issue ID: ' + issueId);
 
               const query = `query($issueId: ID!) {
