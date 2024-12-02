@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Get issue status
+      - name: Get/Set issue status
         id: get-status
         uses: actions/github-script@v7
         with:
@@ -20,6 +20,7 @@ jobs:
                 ... on Issue {
                   projectItems(first: 1) {
                     nodes {
+                      id
                       fieldValues(first: 1) {
                         nodes {
                           ... on ProjectV2ItemFieldSingleSelectValue {
@@ -35,8 +36,32 @@ jobs:
             
             const issueId = context.payload.issue.node_id;
             const result = await github.graphql(query, { issueId });
-            const status = result.node.projectItems.nodes[0]?.fieldValues.nodes[0]?.name || 'New';
-            core.setOutput('result', status);
+            
+            // Check if issue is in project
+            if (!result.node.projectItems.nodes.length) {
+              // Add to project if not present
+              const addToProject = `mutation($projectId: ID!, $contentId: ID!) {
+                addProjectV2ItemById(input: {
+                  projectId: $projectId
+                  contentId: $contentId
+                }) {
+                  item {
+                    id
+                  }
+                }
+              }`;
+              
+              await github.graphql(addToProject, {
+                projectId: process.env.PROJECT_GRANT_APPLICATION_PROJECT_ID,
+                contentId: issueId
+              });
+              
+              // Set initial status to New
+              core.setOutput('result', 'New');
+            } else {
+              const status = result.node.projectItems.nodes[0]?.fieldValues.nodes[0]?.name || 'New';
+              core.setOutput('result', status);
+            }
 
       - name: Get all current labels
         id: get-labels
