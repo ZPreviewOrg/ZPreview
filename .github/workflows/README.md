@@ -18,35 +18,53 @@
 - Security considerations
 
 ## 2. Label Management
+The system uses several categories of labels to track grants through their lifecycle. Labels trigger automatic status transitions forward but never backward.
+
 ### 2.1 Grant Review Status Labels
-- Pending Grant Application
-- Grant Application
-- Ready For ZCG Review
-- Grant Approved
-- Grant Declined
-- Does Not Meet Criteria
-- Grant Complete
+| Label | Description | Required For | Status |
+|-------|-------------|--------------|---------|
+| Pending Grant Application | Initial submission state | Grant Application | New |
+| Grant Application | Validated application | Grant Application | New |
+| Ready For ZCG Review | Ready for committee evaluation | Grant Application & Grant Milestone | Under Review |
+| Grant Approved | Application accepted | Grant Application | Approved |
+| Grant Declined | Application rejected | Grant Application | Declined |
+| Does Not Meet Criteria | Failed requirements check | Grant Application | Declined |
+| Grant Complete | All milestones fulfilled | Grant Application | Complete |
 
 ### 2.2 Verification Labels
-- KYC Required
-- KYC Verified
-- Forum Post Missing
-- Changes Pending Review
-- Changes Approved
+These labels track compliance with ZCG and FPF requirements:
+
+| Label | Description | Required For |
+|-------|-------------|--------------|
+| KYC Required | Identity verification needed | Grant Application |
+| KYC Verified | Identity verification passed | Grant Application |
+| Forum Post Missing | Forum post requirement unfulfilled | Grant Application |
+| Changes Pending Review | Modifications need review | Grant Application & Grant Milestone |
+| Changes Approved | Modifications accepted | Grant Application & Grant Milestone |
 
 ### 2.3 Grant and Milestone Tracking Labels
-- Progress Update Required
-- Milestone 1 Complete
-- Milestones Past Due
+Labels for monitoring grant progress and milestone completion:
+
+| Label | Description | Required For |
+|-------|-------------|--------------|
+| Progress Update Required | Status report needed | Grant Application |
+| Milestone 1 Complete | First milestone achieved | Grant Application |
+| Milestones Past Due | Deadlines missed | Grant Application |
 
 ### 2.4 Grant Milestone Payment Request Labels
-- Pending Startup Payment Request
-- Startup Payment Request
-- Pending Grant Milestone Payment Request
-- Grant Milestone Payment Request
-- Ready For ZCG Review
-- Milestone Payment Approved
-- Milestone Payment Complete
+Labels specific to payment processing workflow:
+
+| Label | Description | Status |
+|-------|-------------|---------|
+| Pending Startup Payment Request | Initial funding requested | New |
+| Startup Payment Request | Initial funding under review | Under Review |
+| Pending Grant Milestone Payment Request | Milestone payment requested | New |
+| Grant Milestone Payment Request | Payment request being reviewed | Under Review |
+| Ready For ZCG Review | Ready for committee evaluation | Under Review |
+| Milestone Payment Approved | Payment authorized | In Progress |
+| Milestone Payment Complete | Payment sent | Complete |
+
+Note: Grant Milestone Payment Requests are a specialized type of Grant Milestone currently used exclusively for payment processing.
 
 ## 3. Status Management
 ### 3.1 Grant Application Statuses
