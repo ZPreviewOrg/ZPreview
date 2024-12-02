@@ -48,11 +48,11 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number
             });
-            return labels.map(label => label.name);
+            core.setOutput('result', JSON.stringify(labels.map(label => label.name)));
 
       - name: Process New Status
         if: steps.get-status.outputs.result == 'New'
-        uses: ./.github/actions/grant_application/new
+        uses: ./.github/actions/grant-application/new
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
@@ -64,7 +64,7 @@ jobs:
           
       - name: Process Under Review Status
         if: steps.get-status.outputs.result == 'Under Review' 
-        uses: ./.github/actions/grant_application/under-review
+        uses: ./.github/actions/grant-application/under-review
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
