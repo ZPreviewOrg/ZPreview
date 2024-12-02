@@ -17,7 +17,7 @@ Unless otherwise specific any changes made create a PR which created and merged 
 
 The system uses the following categories of labels to track grant status:
 
-### 1. Application Status
+### 1. Grant Application Status
 These labels indicate the current state of a grant application:
 
 | Label | Description |
@@ -29,7 +29,7 @@ These labels indicate the current state of a grant application:
 | Grant Declined | Application has been declined |
 | Does Not Meet Criteria | Application rejected for not meeting requirements |
 
-### 2. Verification Status  
+### 2. Grant Verification Status  
 Labels related to verification requirements:
 
 | Label | Description |
@@ -40,7 +40,7 @@ Labels related to verification requirements:
 | Changes Pending Review | Application changes need review |
 | Approve_Changes | Changes have been approved |
 
-### 3. Progress Tracking
+### 3. Grant Progress Tracking
 Labels that monitor project progress:
 
 | Label | Description |
@@ -49,7 +49,7 @@ Labels that monitor project progress:
 | Milestone 1 Complete | First milestone achieved |
 | Milestones Past Due | Project milestones overdue |
 
-### 4. Payment Status
+### 4. Grant Payment Status
 Labels related to payment processing:
 
 | Label | Description |
@@ -61,7 +61,7 @@ Labels related to payment processing:
 | Milestone Payment Complete | Payment completed |
 | Milestone Payment Requests | Payment request submitted |
 
-## List of Status
+## Grant Application Status
 
 ### Active States
 - New - Just submitted, initial state
