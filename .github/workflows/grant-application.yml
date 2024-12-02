@@ -17,9 +17,7 @@ jobs:
           script: |
             try {
               core.info('Starting to get/set issue status');
-              const vars = context.vars;
-              core.info('Parsed vars: ' + JSON.stringify(vars));
-              if (!vars.PROJECT_GRANT_APPLICATION_PROJECT_ID) {
+              if (!${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}) {
                 throw new Error('Required variable PROJECT_GRANT_APPLICATION_PROJECT_ID not found');
               }
 
@@ -63,7 +61,7 @@ jobs:
                 }`;
                 
                 const addResult = await github.graphql(addToProject, {
-                  projectId: vars.PROJECT_GRANT_APPLICATION_PROJECT_ID,
+                  projectId: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }},
                   contentId: issueId
                 });
 
@@ -106,7 +104,7 @@ jobs:
           label-name: ${{ github.event.label.name }}
           label-action: ${{ github.event.action }}
           current-labels: ${{ steps.get-labels.outputs.result }}
-          vars: ${{ toJSON(vars) }}
+          vars: ${{ vars }}
           
       - name: Process Under Review Status
         if: steps.get-status.outputs.result == 'Under Review' 
@@ -118,4 +116,4 @@ jobs:
           label-name: ${{ github.event.label.name }}
           label-action: ${{ github.event.action }}
           current-labels: ${{ steps.get-labels.outputs.result }}
-          vars: ${{ toJSON(vars) }}
+          vars: ${{ vars }}
