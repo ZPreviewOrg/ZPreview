@@ -78,13 +78,13 @@ The system uses the following categories of labels to track grants through their
 
 | Label | Description | Required For | Status |
 |-------|-------------|--------------|--------|
-| Pending Grant Application | Initial submission state | Grant Application | New |
-| Grant Application | Validated application | Grant Application | New |
-| Ready For ZCG Review | Ready for committee evaluation | Grant Application & Grant Milestone | Under Review |
-| Grant Approved | Application accepted | Grant Application | Approved |
-| Grant Declined | Application rejected | Grant Application | Declined |
-| Does Not Meet Criteria | Failed requirements check | Grant Application | Declined |
-| Grant Complete | Grant Complete | Grant Application | Complete |
+| 📝 Pending Grant Application | Initial submission state | Grant Application | New |
+| 📋 Grant Application | Validated application | Grant Application | New |
+| 👀 Ready For ZCG Review | Ready for committee evaluation | Grant Application & Grant Milestone | Under Review |
+| ✅ Grant Approved | Application accepted | Grant Application | Approved |
+| ❌ Grant Declined | Application rejected | Grant Application | Declined |
+| ⛔ Does Not Meet Criteria | Failed requirements check | Grant Application | Declined |
+| ✔️ Grant Complete | Grant Complete | Grant Application | Complete |
 
 ### 2. ✅ Verification Requirements 🔐
 
@@ -92,11 +92,11 @@ The system uses the following categories of labels to track grants through their
 
 | Label | Description | Required For |
 |-------|-------------|--------------|
-| KYC Required | Identity verification needed | Grant Application |
-| KYC Verified | Identity verification passed | Grant Application |
-| Forum Post Missing | Forum post requirement unfulfilled | Grant Application |
-| Changes Pending Review | Modifications need review | Grant Application & Grant Milestone |
-| Changes Approved | Modifications accepted | Grant Application & Grant Milestone |
+| 🔐 KYC Required | Identity verification needed | Grant Application |
+| ✅ KYC Verified | Identity verification passed | Grant Application |
+| 📢 Forum Post Missing | Forum post requirement unfulfilled | Grant Application |
+| 🔄 Changes Pending Review | Modifications need review | Grant Application & Grant Milestone |
+| ✔️ Changes Approved | Modifications accepted | Grant Application & Grant Milestone |
 
 ### 3. 📊 Grant and Milestone Tracking 📈
 
@@ -104,9 +104,9 @@ The system uses the following categories of labels to track grants through their
 
 | Label | Description | Required For |  |
 |-------|-------------|--------------|
-| Progress Update Required | Status report needed | Grant Application |
-| Milestone 1 Complete | Milestone Complete | Grant Applciation |
-| Milestones Past Due | Deadlines missed | Grant Application |
+| 📊 Progress Update Required | Status report needed | Grant Application |
+| 🎯 Milestone 1 Complete | Milestone Complete | Grant Applciation |
+| ⏰ Milestones Past Due | Deadlines missed | Grant Application |
 
 ### 4. 💰 Grant Milestone Payment Request 💸
 
@@ -114,13 +114,13 @@ The system uses the following categories of labels to track grants through their
 
 | Label | Description | Status |
 |-------|-------------|-------|
-| Pending Startup Payment Request | Initial funding requested | New |
-| Startup Payment Request | Initial funding requested | Under Review |
-| Pending Grant Milestone Payment Request | Milestone payment requested | New |
-| Grant Milestone Payment Request | Payment request being reviewed | Under Review |
-| Ready For ZCG Review | Ready for committee evaluation | Under Review |
-| Milestone Payment Approved | Payment authorized | In Progress |
-| Milestone Payment Complete | Payment sent | Complete |
+| 💰 Pending Startup Payment Request | Initial funding requested | New |
+| 💸 Startup Payment Request | Initial funding requested | Under Review |
+| 📝 Pending Grant Milestone Payment Request | Milestone payment requested | New |
+| 💳 Grant Milestone Payment Request | Payment request being reviewed | Under Review |
+| 👀 Ready For ZCG Review | Ready for committee evaluation | Under Review |
+| ✅ Milestone Payment Approved | Payment authorized | In Progress |
+| ✔️ Milestone Payment Complete | Payment sent | Complete |
 
 ## 📈 Status Management
 
