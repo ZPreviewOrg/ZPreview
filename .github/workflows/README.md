@@ -132,18 +132,18 @@ The system uses the following project status to track grants through their lifec
 
 | Status | Description |
 |-------|-------------|
-| New ✨ | Just submitted, initial state |
-| Under Review 🔍 | Being evaluated by committee |
-| Approved ✅ | Grant approved and active |
-| In Progress 🚀 | Work actively ongoing |
+| ✨ New  | Just submitted, initial state |
+| 🔍 Under Review | Being evaluated by committee |
+| ✅ Approved  | Grant approved and active |
+| 🚀 In Progress | Work actively ongoing |
 
 #### 🛑 Terminal Status
 
 | Label | Description | Status |
 |-------|-------------|-------|
-| Complete ✨ | All milestones achieved |
-| Declined ❌ | Application not approved |
-| Cancelled 🚫 | Grant terminated early |
+| ✨ Complete | All milestones achieved |
+| ❌ Declined | Application not approved |
+| 🚫 Cancelled | Grant terminated early |
 
 ### 💰 Grant Milestone Payment Request Status
 
