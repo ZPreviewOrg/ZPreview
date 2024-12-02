@@ -40,7 +40,7 @@ runs:
         status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
 
     - name: Process Grant Approved with KYC
-      if: inputs.label-name == 'Grant Approved' && inputs.label-action == 'added' && contains(fromJSON(inputs.current-labels), 'KYC Required')
+      if: inputs.label-name == 'Grant Approved' && inputs.label-action == 'added' && contains(fromJSON(inputs.current-labels).map(label => label.name), 'KYC Required')
       uses: ./.github/actions/grant-application/operations
       with:
         token: ${{ inputs.token }}
@@ -52,7 +52,7 @@ runs:
         status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
 
     - name: Process Grant Approved without KYC
-      if: inputs.label-name == 'Grant Approved' && inputs.label-action == 'added' && !contains(fromJSON(inputs.current-labels), 'KYC Required')
+      if: inputs.label-name == 'Grant Approved' && inputs.label-action == 'added' && !contains(fromJSON(inputs.current-labels).map(label => label.name), 'KYC Required')
       uses: ./.github/actions/grant-application/operations
       with:
         token: ${{ inputs.token }}
