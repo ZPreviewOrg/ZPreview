@@ -126,7 +126,7 @@ The system uses the following categories of labels to track grants through their
 
 The system uses the following project status to track grants through their lifecycle:
 
-### Grant Application
+### 📝 Grant Application
 
 #### 🟢 Active Status
 
