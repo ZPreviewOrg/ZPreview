@@ -141,7 +141,7 @@ The system uses the following project status to track grants through their lifec
 
 | Label | Description | Status |
 |-------|-------------|-------|
-| ✨ Complete | All milestones achieved |
+| ✔️ Complete | All milestones achieved |
 | ❌ Declined | Application not approved |
 | 🚫 Cancelled | Grant terminated early |
 
