@@ -212,6 +212,7 @@ The system processes applications differently based on their current status:
 | +Changes Pending Review |
 
 ###### Grant File Push to Main
+
 ***Check Frontmatter, Issues, and Projects are in sync***
 
 | Check  | Label Changes | Issue Changes | Warn | Log |
