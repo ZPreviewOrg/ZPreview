@@ -60,7 +60,7 @@ jobs:
           label-name: ${{ github.event.label.name }}
           label-action: ${{ github.event.action }}
           current-labels: ${{ steps.get-labels.outputs.result }}
-          vars:
+          vars: ${{ toJSON(vars) }}
           
       - name: Process Under Review Status
         if: steps.get-status.outputs.result == 'Under Review' 
