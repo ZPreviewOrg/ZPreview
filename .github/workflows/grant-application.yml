@@ -21,7 +21,8 @@ jobs:
           installation_retrieval_payload: ${{ vars.ADMIN_APP_INSTALLATION_ID }}
 
       - uses: actions/checkout@v4
-        token: ${{ steps.generate-token.outputs.token }}
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
 
       - name: Get/Set issue status
         id: get-status
