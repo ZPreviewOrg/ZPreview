@@ -55,11 +55,32 @@ jobs:
                 }s
               }
             `;
-                          // Check if issue is in project
-              const projectItems = result.node.projectItems.nodes;
-              const filteredProjectItems = projectItems.filter(item =>  
-                item.fieldValueByName.field.id === statusId
-              );
+            const result = await github.graphql(query, { issueId });
+            const projectItems = result.node.projectItems.nodes;
+            const filteredProjectItems = projectItems.filter(item =>  
+              item.fieldValueByName.field.id === statusId
+            );
+
+            // Set output based on whether the issue is already in the project
+            const isInProject = filteredProjectItems.length > 0;
+            core.setOutput('isInProject', isInProject);
+
+            if (!isInProject) {
+              // Add issue to project if not already there
+              const addIssueMutation = `
+                mutation AddIssueToProject($project_id: ID!, $content_id: ID!) {
+                  addProjectV2ItemById(input: { projectId: $project_id, contentId: $content_id }) {
+                    item {
+                      id
+                    }
+                  }
+                }
+              `;
+              await github.graphql(addIssueMutation, {
+                project_id: projectId,
+                content_id: issueId
+              });
+            }
 
 
       - name: Add issue to GitHub Project
