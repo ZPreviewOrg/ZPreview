@@ -87,7 +87,7 @@ jobs:
         id: add-to-project
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        uses: octokit/graphql-action@8ad880e4d437783ea2ab17010324de1075228110 # v2.3.2
+        uses: octokit/graphql-action
         with:
           query: |
             mutation AddIssueToProject($project_id: ID!, $content_id: ID!) {
