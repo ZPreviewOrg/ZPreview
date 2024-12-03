@@ -61,13 +61,15 @@ jobs:
               item.fieldValueByName.field.id === statusId
             );
 
-            // Set output based on whether the issue is already in the project
+            // Set output based on whether the issue is already in the project and output the status value
             const isInProject = filteredProjectItems.length > 0;
+            const statusValue = isInProject ? filteredProjectItems[0].fieldValueByName.name : 'None';
             core.setOutput('isInProject', isInProject);
+            core.setOutput('statusValue', statusValue);
 
       - name: Add issue to GitHub Project
         id: add-to-project
-        if: steps.get-status.outputs.isInProject == 'false'
+        if: steps.add-to-project.outputs.isInProject == 'false'
         uses: octokit/graphql-action
         with:
           query: |
