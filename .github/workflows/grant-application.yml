@@ -73,7 +73,7 @@ jobs:
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
           script: |
-            const issueId = "${{ github.event.issue.node_id }}";
+            const issueId = "${{ github.event.issue.id }}";
             const projectId = "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}";
             
             // Mutation to add issue
