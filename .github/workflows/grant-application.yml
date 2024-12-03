@@ -78,8 +78,8 @@ jobs:
             
             // Mutation to add issue
             const mutation = `
-              mutation AddIssueToProject($project_id: ID!, $content_id: ID!) {
-                addProjectV2ItemById(input: { projectId: $project_id, contentId: $content_id }) {
+              mutation AddIssueToProject($projectid: ID!, $contentid: ID!) {
+                addProjectV2ItemById(input: { projectId: $projectid, contentId: $contentid }) {
                   item {
                     id
                   }
