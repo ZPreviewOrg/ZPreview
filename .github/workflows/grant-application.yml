@@ -52,54 +52,33 @@ jobs:
                       }
                     }
                   }
-                }
+                }s
               }
             `;
-
-            core.info('1');
-            try {
-              const result = await github.graphql(query, {
-                issueId
-              });
-              core.info('2');
-              // Check if issue is in project
+                          // Check if issue is in project
               const projectItems = result.node.projectItems.nodes;
               const filteredProjectItems = projectItems.filter(item =>  
                 item.fieldValueByName.field.id === statusId
               );
-              core.info('3');
-              if (filteredProjectItems.length === 0) {
-                core.info(`Debug: projectItems = "${JSON.stringify(projectItems)}"`);
-                core.info(`Debug: statusId = "${statusId}"`);
-                // Add issue to project if not present
-                await github.graphql(`
-                  mutation AddIssueToProject($projectId: ID!, $issueId: ID!) {
-                    addProjectV2ItemById(input: {
-                      projectId: $projectId
-                      contentId: $issueId
-                    }) {
-                      item {
-                        id
-                      }
-                    }
-                  }
-                `, {
-                  projectId,
-                  issueId
-                });
-                core.info('4');
-                core.setOutput('status', 'new');
-                return;
-              }
 
-              // Get status value
-              const statusField = filteredProjectItems[0].fieldValueByName;
-              const status = statusField ? statusField.value : 'not_set';
-              core.setOutput('status', status);
-              
-            } catch (error) {
-              core.setFailed(`GraphQL query failed: ${error.message}`);
-            }
+
+      - name: Add issue to GitHub Project
+        id: add-to-project
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        uses: octokit/graphql-action@8ad880e4d437783ea2ab17010324de1075228110 # v2.3.2
+        with:
+          query: |
+            mutation AddIssueToProject($project_id: ID!, $content_id: ID!) {
+              addProjectV2ItemById(input: { projectId: $project_id, contentId: $content_id }) {
+                  item {
+                    id
+                  }
+                }
+              }
+          variables: |
+            project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
+            content_id: ${{ github.event.issue.node_id }}
 
       - name: Get all current labels
         id: get-labels
