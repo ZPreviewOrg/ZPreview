@@ -66,6 +66,75 @@ jobs:
             core.setOutput('isInProject', isInProject);
             core.setOutput('statusValue', statusValue);
 
+      - name: Get/Set issue status
+        id: get-status
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            const issueId = "${{ github.event.issue.node_id }}";
+            const projectId = "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}"; // Replace with your project ID
+            const statusId = "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_ID }}";     // Replace with your status ID
+            
+            // Query to get current status
+            const query = `
+              query GetIssueStatus($issueId: ID!) {
+                node(id: $issueId) {
+                  ... on Issue {
+                    projectItems(first: 10) {
+                      nodes {
+                        fieldValueByName(name: "Status") {
+                          ... on ProjectV2ItemFieldSingleSelectValue {
+                            field {
+                              ... on ProjectV2Field {
+                                id
+                                name
+                              }
+                            }
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `;
+            const result = await github.graphql(query, { issueId });
+            const projectItems = result.node.projectItems.nodes;
+            const filteredProjectItems = projectItems.filter(item =>  
+              item.fieldValueByName.field.id === statusId
+            );
+
+            // Set output based on whether the issue is already in the project and output the status value
+            const isInProject = filteredProjectItems.length > 0;
+            const statusValue = isInProject ? filteredProjectItems[0].fieldValueByName.name : 'New';
+            core.setOutput('isInProject', isInProject);
+            core.setOutput('statusValue', statusValue);
+
+      - name: Add Issue to Project
+        id: add-issue-to-project
+        if: steps.get-status.outputs.isInProject == 'false'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            const issueId = "${{ github.event.issue.node_id }}";
+            const projectId = "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}"; // Replace with your project ID
+            const statusId = "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_ID }}"; // Replace with your status ID
+            
+            // Mutation to add issue
+            const mutation = `
+              mutation AddIssueToProject($project_id: ID!, $content_id: ID!) {
+                addProjectV2ItemById(input: { projectId: $project_id, contentId: $content_id }) {
+                  item {
+                    id
+                  }
+                }
+              }
+            `;
+            const result = await github.graphql(mutation, { projectId, issueId });
+
       - name: Add issue to GitHub Project
         id: add-to-project
         env:
