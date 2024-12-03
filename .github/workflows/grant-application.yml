@@ -27,22 +27,20 @@ jobs:
             
             // Query to get current status
             const query = `
-              query GetIssueStatus($issueId: ID!) {
+              query GetIssueStatus($issueId: ID!, $fieldId: ID!) {
                 node(id: $issueId) {
                   ... on Issue {
-                    projectItems(first: 1) {
+                    projectItems(first: 10) {
                       nodes {
-                        fieldValues(first: 10) {
-                          nodes {
-                            ... on ProjectV2ItemFieldValue {
-                              field {
-                                ... on ProjectV2Field {
-                                  id
-                                  name
-                                }
+                        fieldValueByName(name: "Status") {
+                          ... on ProjectV2ItemFieldValue {
+                            field {
+                              ... on ProjectV2Field {
+                                id
+                                name
                               }
-                              value
                             }
+                            value
                           }
                         }
                       }
