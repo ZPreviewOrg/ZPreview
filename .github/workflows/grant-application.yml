@@ -65,9 +65,6 @@ jobs:
             const isInProject = filteredProjectItems.length > 0;
             core.setOutput('isInProject', isInProject);
 
-            core.setOutput('isInProject', isInProject);
-
-
       - name: Add issue to GitHub Project
         id: add-to-project
         if: steps.get-status.outputs.isInProject == 'false'
@@ -81,13 +78,6 @@ jobs:
                 }
               }
             }
-            mutation AddIssueToProject($project_id: ID!, $content_id: ID!) {
-              addProjectV2ItemById(input: { projectId: $project_id, contentId: $content_id }) {
-                  item {
-                    id
-                  }
-                }
-              }
           variables: |
             project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
             content_id: ${{ github.event.issue.node_id }}
