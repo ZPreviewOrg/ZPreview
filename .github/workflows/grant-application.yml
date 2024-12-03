@@ -60,6 +60,8 @@ jobs:
               );
 
               if (filteredProjectItems.length === 0) {
+                core.info(`Debug: projectItems = ${JSON.stringify(projectItems)}`);
+                core.info(`Debug: fieldId = ${fieldId}`);
                 // Add issue to project if not present
                 await github.graphql(`
                   mutation AddIssueToProject($projectId: ID!, $issueId: ID!) {
