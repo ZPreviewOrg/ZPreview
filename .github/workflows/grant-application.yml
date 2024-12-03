@@ -19,6 +19,7 @@ jobs:
         with:
           app-id: ${{ vars.ADMIN_APP_ID }}
           private-key: ${{ secrets.ADMIN_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
 
       - name: Get/Set issue status
         id: get-status
