@@ -33,7 +33,7 @@ runs:
       with:
         token: ${{ inputs.token }}
         issue-number: ${{ inputs.issue-number }}
-        add-assignees: '["ZCG"]'
+        #add-assignees: '["ZCG"]'
         comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_UNDER_REVIEW }}
         status-update: 'Under Review'
         project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
