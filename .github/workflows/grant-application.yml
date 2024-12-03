@@ -102,7 +102,7 @@ jobs:
         if: steps.get-status.outputs.result == 'New'
         uses: ./.github/actions/grant-application/new
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           issue-title: ${{ github.event.issue.title }}
           label-name: ${{ github.event.label.name }}
