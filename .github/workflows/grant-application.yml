@@ -55,12 +55,12 @@ jobs:
               
               // Check if issue is in project
               const projectItems = result.node.projectItems.nodes;
-              const fieldValues = projectItems[0].fieldValues.nodes;
-              const statusField = fieldValues.find(
-                field => field.field?.id === fieldId
+              const filteredProjectItems = projectItems.filter(item => 
+                item.fieldValueByName.name === "Status" && 
+                item.fieldValueByName.field.id === fieldId
               );
 
-              if (!statusField) {
+              if (filteredProjectItems.length === 0) {
                 // Add issue to project if not present
                 await github.graphql(`
                   mutation AddIssueToProject($projectId: ID!, $issueId: ID!) {
@@ -83,11 +83,7 @@ jobs:
               }
 
               // Get status value
-              const fieldValues = projectItems[0].fieldValues.nodes;
-              const statusField = fieldValues.find(
-                field => field.field?.id === fieldId
-              );
-              
+              const statusField = filteredProjectItems[0].fieldValueByName;
               const status = statusField ? statusField.value : 'not_set';
               core.setOutput('status', status);
               
