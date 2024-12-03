@@ -63,12 +63,13 @@ jobs:
 
             // Set output based on whether the issue is already in the project and output the status value
             const isInProject = filteredProjectItems.length > 0;
-            const statusValue = isInProject ? filteredProjectItems[0].fieldValueByName.name : 'None';
+            const statusValue = isInProject ? filteredProjectItems[0].fieldValueByName.name : 'New';
             core.setOutput('isInProject', isInProject);
             core.setOutput('statusValue', statusValue);
 
       - name: Add issue to GitHub Project
         id: add-to-project
+        GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         if: steps.add-to-project.outputs.isInProject == 'false'
         uses: octokit/graphql-action
         with:
