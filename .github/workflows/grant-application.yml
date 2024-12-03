@@ -54,8 +54,8 @@ jobs:
               );
 
               if (filteredProjectItems.length === 0) {
-                core.info(`Debug: projectItems = ${JSON.stringify(projectItems)}`);
-                core.info(`Debug: statusId = ${statusId}`);
+                core.info(`Debug: projectItems = "${JSON.stringify(projectItems)}"`);
+                core.info(`Debug: statusId = "${statusId}"`);
                 // Add issue to project if not present
                 await github.graphql(`
                   mutation AddIssueToProject($projectId: ID!, $issueId: ID!) {
@@ -102,7 +102,7 @@ jobs:
         if: steps.get-status.outputs.result == 'New'
         uses: ./.github/actions/grant-application/new
         with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           issue-title: ${{ github.event.issue.title }}
           label-name: ${{ github.event.label.name }}
