@@ -71,7 +71,7 @@ jobs:
         id: add-to-project
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        if: steps.add-to-project.outputs.isInProject == 'false'
+        if: steps.get-status.outputs.isInProject == 'false'
         uses: octokit/graphql-action@v2.x
         with:
           query: |
