@@ -15,7 +15,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const issueId = "${{ github.event.issue.node_id }}"";
+            const issueId = "${{ github.event.issue.node_id }}";
             const projectId = "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}"; // Replace with your project ID
             const statusId = "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_ID }}";     // Replace with your status ID
             
