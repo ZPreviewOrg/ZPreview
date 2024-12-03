@@ -57,10 +57,7 @@ jobs:
 
             try {
               const result = await github.graphql(query, {
-                issueId,
-                headers: {
-                  authorization: `token ${{ steps.generate-token.outputs.token }}`
-                }
+                issueId
               });
               
               // Check if issue is in project
@@ -86,10 +83,7 @@ jobs:
                   }
                 `, {
                   projectId,
-                  issueId,
-                  headers: {
-                    authorization: `token ${{ steps.generate-token.outputs.token }}`
-                  }
+                  issueId
                 });
                 
                 core.setOutput('status', 'new');
