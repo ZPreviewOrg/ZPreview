@@ -56,17 +56,18 @@ jobs:
               }
             `;
 
+            core.info('1');
             try {
               const result = await github.graphql(query, {
                 issueId
               });
-              
+              core.info('2');
               // Check if issue is in project
               const projectItems = result.node.projectItems.nodes;
               const filteredProjectItems = projectItems.filter(item =>  
                 item.fieldValueByName.field.id === statusId
               );
-
+              core.info('3');
               if (filteredProjectItems.length === 0) {
                 core.info(`Debug: projectItems = "${JSON.stringify(projectItems)}"`);
                 core.info(`Debug: statusId = "${statusId}"`);
@@ -86,7 +87,7 @@ jobs:
                   projectId,
                   issueId
                 });
-                
+                core.info('4');
                 core.setOutput('status', 'new');
                 return;
               }
