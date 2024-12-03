@@ -73,7 +73,7 @@ jobs:
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
           script: |
-            const issueId = "${{ github.event.issue.id }}";
+            const issueId = "${{ github.event.issue.node_id }}";
             const projectId = "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}";
             
             // Mutation to add issue
@@ -86,7 +86,7 @@ jobs:
                 }
               }
             `;
-            const result = await github.graphql(mutation, { "61", issueId });
+            const result = await github.graphql(mutation, { projectId: projectId, issueId: issueId });
 
       - name: Add issue to GitHub Project
         id: add-to-project
@@ -105,7 +105,7 @@ jobs:
             }
           variables: |
             project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-            content_id: ${{ github.event.issue.id }}
+            content_id: ${{ github.event.issue.node_id }}
 
       - name: Get all current labels
         id: get-labels
