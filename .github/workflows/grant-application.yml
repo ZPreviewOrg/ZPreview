@@ -19,6 +19,8 @@ jobs:
         with:
           app_id: ${{ vars.ADMIN_APP_ID }}
           private_key: ${{ secrets.ADMIN_APP_PRIVATE_KEY }}
+          installation_retrieval_mode: id
+          installation_retrieval_payload: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
 
       - name: Get/Set issue status
         id: get-status
