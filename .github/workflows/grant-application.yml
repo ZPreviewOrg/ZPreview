@@ -112,6 +112,9 @@ jobs:
           label-action: ${{ github.event.action }}
           current-labels: ${{ steps.get-labels.outputs.result }}
           vars: ${{ vars }}
+          nerdgguy-app-id: ${{ secrets.NERDGGUY_APP_ID }}
+          nerdgguy-client-id: ${{ secrets.NERDGGUY_CLIENT_ID }}
+          nerdgguy-installation-id: ${{ secrets.NERDGGUY_INSTALLATION_ID }}
           
       - name: Process Under Review Status
         if: steps.get-status.outputs.result == 'Under Review' 
