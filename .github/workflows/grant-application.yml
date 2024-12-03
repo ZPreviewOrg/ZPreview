@@ -13,6 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.NERDGGUY_APP_ID }}
+          private-key: ${{ secrets.NERDGGUY_APP_PRIVATE_KEY }}
+
       - name: Get/Set issue status
         id: get-status
         uses: actions/github-script@v7
@@ -48,7 +55,12 @@ jobs:
             `;
 
             try {
-              const result = await github.graphql(query, { issueId });
+              const result = await github.graphql(query, {
+                issueId,
+                headers: {
+                  authorization: `token ${{ steps.generate-token.outputs.token }}`
+                }
+              });
               
               // Check if issue is in project
               const projectItems = result.node.projectItems.nodes;
@@ -73,7 +85,10 @@ jobs:
                   }
                 `, {
                   projectId,
-                  issueId
+                  issueId,
+                  headers: {
+                    authorization: `token ${{ steps.generate-token.outputs.token }}`
+                  }
                 });
                 
                 core.setOutput('status', 'new');
@@ -97,7 +112,10 @@ jobs:
             const { data: labels } = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number
+              issue_number: context.issue.number,
+              headers: {
+                authorization: `token ${{ steps.generate-token.outputs.token }}`
+              }
             });
             core.setOutput('result', JSON.stringify(labels.map(label => label.name)));
 
