@@ -50,12 +50,12 @@ jobs:
               // Check if issue is in project
               const projectItems = result.node.projectItems.nodes;
               const filteredProjectItems = projectItems.filter(item =>  
-                item.fieldValueByName.field.id === fieldId
+                item.fieldValueByName.field.id === statusId
               );
 
               if (filteredProjectItems.length === 0) {
                 core.info(`Debug: projectItems = ${JSON.stringify(projectItems)}`);
-                core.info(`Debug: fieldId = ${fieldId}`);
+                core.info(`Debug: statusId = ${statusId}`);
                 // Add issue to project if not present
                 await github.graphql(`
                   mutation AddIssueToProject($projectId: ID!, $issueId: ID!) {
