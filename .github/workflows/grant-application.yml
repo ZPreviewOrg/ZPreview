@@ -20,21 +20,28 @@ jobs:
               if (!${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}) {
                 throw new Error('Required variable PROJECT_GRANT_APPLICATION_PROJECT_ID not found');
               }
-
-              core.info('Executing GraphQL query to get project items');
-              const issueId = "${{ github.event.issue.node_id }}";
-              core.info('Issue ID: ' + issueId);
-
-              const query = `query($issueId: ID!) {
+          script: |
+            const issueId = ${{ github.event.issue.node_id }};
+            const projectId = ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}; // Replace with your project ID
+            const fieldId = ${{ vars.PROJECT_GRANT_APPLICATION_FIELD_ID }};     // Replace with your field ID
+            
+            // Query to get current status
+            const query = `
+              query GetIssueStatus($issueId: ID!) {
                 node(id: $issueId) {
                   ... on Issue {
                     projectItems(first: 1) {
                       nodes {
-                        id
-                        fieldValues(first: 1) {
+                        fieldValues(first: 10) {
                           nodes {
-                            ... on ProjectV2ItemFieldSingleSelectValue {
-                              name
+                            ... on ProjectV2ItemFieldValue {
+                              field {
+                                ... on ProjectV2Field {
+                                  id
+                                  name
+                                }
+                              }
+                              value
                             }
                           }
                         }
@@ -42,44 +49,47 @@ jobs:
                     }
                   }
                 }
-              }`;
-              
+              }
+            `;
+
+            try {
               const result = await github.graphql(query, { issueId });
-              core.info('GraphQL query result: ' + JSON.stringify(result));
-              if (!result.node.projectItems.nodes.length) {
-                // Add to project if not present
-                core.info('Issue not in project, adding to project');
-                const addToProject = `mutation($projectId: ID!, $contentId: ID!) {
-                  addProjectV2ItemById(input: {
-                    projectId: $projectId
-                    contentId: $contentId
-                  }) {
-                    item {
-                      id
+              
+              // Check if issue is in project
+              const projectItems = result.node.projectItems.nodes;
+              if (projectItems.length === 0) {
+                // Add issue to project if not present
+                await github.graphql(`
+                  mutation AddIssueToProject($projectId: ID!, $issueId: ID!) {
+                    addProjectV2ItemById(input: {
+                      projectId: $projectId
+                      contentId: $issueId
+                    }) {
+                      item {
+                        id
+                      }
                     }
                   }
-                }`;
-                
-                const addResult = await github.graphql(addToProject, {
-                  projectId: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }},
-                  contentId: issueId
+                `, {
+                  projectId,
+                  issueId
                 });
-
-                core.info('Add to project result: ' + JSON.stringify(addResult));
-                if (!addResult.addProjectV2ItemById?.item?.id) {
-                  throw new Error('Failed to add issue to project');
-                }
                 
-                // Set initial status to New
-                core.setOutput('result', 'New');
-              } else {
-                const status = result.node.projectItems.nodes[0]?.fieldValues.nodes[0]?.name || 'New';
-                core.info('Current status: ' + status);
-                core.setOutput('result', status);
+                core.setOutput('status', 'added_to_project');
+                return;
               }
+
+              // Get status value
+              const fieldValues = projectItems[0].fieldValues.nodes;
+              const statusField = fieldValues.find(
+                field => field.field?.id === fieldId
+              );
+              
+              const status = statusField ? statusField.value : 'not_set';
+              core.setOutput('status', status);
+              
             } catch (error) {
-              core.setFailed(`Failed to get/set issue status: ${error.message}`);
-              throw error;
+              core.setFailed(`GraphQL query failed: ${error.message}`);
             }
 
       - name: Get all current labels
