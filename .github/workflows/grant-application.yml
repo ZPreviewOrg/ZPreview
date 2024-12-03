@@ -70,27 +70,28 @@ jobs:
             core.setOutput('isInProject', isInProject);
             core.setOutput('statusValue', statusValue);
 
-      - name: Add Issue to Project
-        id: add-issue-to-project
-        if: steps.get-status.outputs.isInProject == 'false'
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ steps.generate-token.outputs.token }}
-          script: |
-            const issueId = "${{ github.event.issue.node_id }}";
-            const projectId = "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}";
-            
-            // Mutation to add issue
-            const mutation = `
-              mutation AddIssueToProject($projectId: ID!, $contentId: ID!) {
-                addProjectV2ItemById(input: { projectId: $projectId, contentId: $contentId }) {
-                  item {
-                    id
-                  }
-                }
-              }
-            `;
-            const result = await github.graphql(mutation, { projectId: projectId, contentId: issueId });
+ 
+ #     - name: Add Issue to Project
+ #      id: add-issue-to-project
+ #      if: steps.get-status.outputs.isInProject == 'false'
+ #      uses: actions/github-script@v7
+ #      with:
+ #        github-token: ${{ steps.generate-token.outputs.token }}
+ #        script: |
+ #          const issueId = "${{ github.event.issue.node_id }}";
+ #          const projectId = "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}";
+ #          
+ #          // Mutation to add issue
+ #          const mutation = `
+ #            mutation AddIssueToProject($projectId: ID!, $contentId: ID!) {
+ #              addProjectV2ItemById(input: { projectId: $projectId, contentId: $contentId }) {
+ #                item {
+ #                  id
+ #                }
+ #              }
+ #            }
+ #          `;
+ #          const result = await github.graphql(mutation, { projectId: projectId, contentId: issueId });
 
       - name: Add issue to GitHub Project
         id: add-to-project
