@@ -65,31 +65,22 @@ jobs:
             const isInProject = filteredProjectItems.length > 0;
             core.setOutput('isInProject', isInProject);
 
-            if (!isInProject) {
-              // Add issue to project if not already there
-              const addIssueMutation = `
-                mutation AddIssueToProject($project_id: ID!, $content_id: ID!) {
-                  addProjectV2ItemById(input: { projectId: $project_id, contentId: $content_id }) {
-                    item {
-                      id
-                    }
-                  }
-                }
-              `;
-              await github.graphql(addIssueMutation, {
-                project_id: projectId,
-                content_id: issueId
-              });
-            }
+            core.setOutput('isInProject', isInProject);
 
 
       - name: Add issue to GitHub Project
         id: add-to-project
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        if: steps.get-status.outputs.isInProject == 'false'
         uses: octokit/graphql-action
         with:
           query: |
+            mutation AddIssueToProject($project_id: ID!, $content_id: ID!) {
+              addProjectV2ItemById(input: { projectId: $project_id, contentId: $content_id }) {
+                item {
+                  id
+                }
+              }
+            }
             mutation AddIssueToProject($project_id: ID!, $content_id: ID!) {
               addProjectV2ItemById(input: { projectId: $project_id, contentId: $content_id }) {
                   item {
