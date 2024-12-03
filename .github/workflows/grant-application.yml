@@ -55,8 +55,7 @@ jobs:
               
               // Check if issue is in project
               const projectItems = result.node.projectItems.nodes;
-              const filteredProjectItems = projectItems.filter(item => 
-                item.fieldValueByName.name === "Status" && 
+              const filteredProjectItems = projectItems.filter(item =>  
                 item.fieldValueByName.field.id === fieldId
               );
 
