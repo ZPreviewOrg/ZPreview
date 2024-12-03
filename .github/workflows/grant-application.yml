@@ -52,7 +52,7 @@ jobs:
                       }
                     }
                   }
-                }s
+                }
               }
             `;
             const result = await github.graphql(query, { issueId });
