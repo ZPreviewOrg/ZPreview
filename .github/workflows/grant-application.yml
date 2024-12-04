@@ -37,10 +37,13 @@ jobs:
                     projectItems(first: 10) {
                       nodes {
                         fieldValueByName(name: "Status") {
-                          field {
-                            id
-                          }
                           ... on ProjectV2ItemFieldSingleSelectValue {
+                            field {
+                              ... on ProjectV2SingleSelectField {
+                                id
+                                name
+                              }
+                            }
                             name
                           }
                         }
