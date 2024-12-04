@@ -128,6 +128,8 @@ jobs:
 
       - name: Get all current labels
         id: get-labels
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         uses: actions/github-script@v7
         with:
           script: |
@@ -145,7 +147,7 @@ jobs:
         if: steps.get-status.outputs.result == 'New'
         uses: ./.github/actions/grant-application/new
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.generate-token.outputs.token }}
           issue-number: ${{ github.event.issue.number }}
           issue-title: ${{ github.event.issue.title }}
           label-name: ${{ github.event.label.name }}
