@@ -82,11 +82,11 @@ jobs:
               core.setOutput('result', "New");
             } else if (!filteredProjectItemsWithStatus || filteredProjectItemsWithStatus.length === 0) {
               core.info('Grant Application issue found in project but no status found: (vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID: "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}")');
-              core.setOutput('itemid', true);
+              core.setOutput('itemid', filteredProjectItems[0].id);
               core.setOutput('settonew', true);
               core.setOutput('result', "New");
             } else {
-              core.setOutput('result', filteredProjectItems[0].fieldValueByName.name);
+              core.setOutput('result', filteredProjectItemsWithStatus[0].fieldValueByName.name);
             }
 
       - name: Add Issue to GitHub Project
