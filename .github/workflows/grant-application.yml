@@ -92,7 +92,7 @@ jobs:
         id: add-to-project
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        if: steps.get-grant-application-status.outputs.addtoproject == 'true'
+        if: ${{ steps.get-grant-application-status.outputs.addtoproject == 'true' }}
         uses: octokit/graphql-action@v2.x
         with:
           query: |
@@ -108,10 +108,10 @@ jobs:
             content_id: ${{ github.event.issue.id }}
 
       - name: 'Add Issue to GitHub Project: Set Status to "New"'
-        id: new-issue-status
+        id: set-to-new
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        if: steps.add-to-project.outcome == 'success'
+        if: ${{ steps.get-grant-application-status.outputs.settonew == 'true' }}
         uses: octokit/graphql-action@v2.x
         with:
           query: |
