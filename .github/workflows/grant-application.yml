@@ -47,6 +47,9 @@ jobs:
                             name
                           }
                         }
+                        project {
+                          id
+                        }
                       }
                     }
                   }
@@ -65,12 +68,21 @@ jobs:
             const data = ${{ steps.get-status-list.outputs.data }};
             const projectItems = data.node.projectItems.nodes;
             const filteredProjectItems = projectItems.filter(item => 
+              item.project?.id === '${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}'
+            );
+            const filteredProjectItemsWithStatus = filteredProjectItems.filter(item => 
               item.fieldValueByName?.field?.id === '${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}'
             );
 
+
             if (!filteredProjectItems || filteredProjectItems.length === 0) {
-              core.info('Grant Application status not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}")');
+              core.info('Grant Application issue not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}")');
               core.setOutput('addtoproject', true);
+              core.setOutput('settonew', true);
+              core.setOutput('result', "New");
+            }  {
+              core.info('Grant Application issue found in project but no status found: (vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID: "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}")');
+              core.setOutput('settonew', true);
               core.setOutput('result', "New");
             } else {
               core.setOutput('result', filteredProjectItems[0].fieldValueByName.name);
