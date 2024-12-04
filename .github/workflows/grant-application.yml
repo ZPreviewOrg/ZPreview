@@ -35,6 +35,7 @@ jobs:
                 node(id: $issueId) {
                   ... on Issue {
                     projectItems(first: 10) {
+                      id
                       nodes {
                         fieldValueByName(name: "Status") {
                           ... on ProjectV2ItemFieldSingleSelectValue {
