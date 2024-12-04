@@ -35,8 +35,8 @@ jobs:
                 node(id: $issueId) {
                   ... on Issue {
                     projectItems(first: 10) {
-                      id
                       nodes {
+                        id
                         fieldValueByName(name: "Status") {
                           ... on ProjectV2ItemFieldSingleSelectValue {
                             field {
@@ -83,6 +83,7 @@ jobs:
               core.setOutput('result', "New");
             } else if (!filteredProjectItemsWithStatus || filteredProjectItemsWithStatus.length === 0) {
               core.info('Grant Application issue found in project but no status found: (vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID: "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}")');
+              core.setOutput('itemid', true);
               core.setOutput('settonew', true);
               core.setOutput('result', "New");
             } else {
@@ -93,7 +94,7 @@ jobs:
         id: add-to-project
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        if: ${{ steps.get-grant-application-status.outputs.addtoproject == 'true' }}
+        if: ${{ steps.get-grant-application-status.outputs.addtoproject }}
         uses: octokit/graphql-action@v2.x
         with:
           query: |
@@ -112,7 +113,7 @@ jobs:
         id: set-to-new
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        if: ${{ steps.get-grant-application-status.outputs.settonew == 'true' }}
+        if: ${{ steps.get-grant-application-status.outputs.settonew }}
         uses: octokit/graphql-action@v2.x
         with:
           query: |
@@ -141,7 +142,7 @@ jobs:
             {
               "project_id": "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}",
               "status_id": "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}",
-              "item_id": "${{ steps.add-to-project.outputs.result.item.id }}",
+              "item_id": "${{ steps.get-grant-application-status.outputs.addtoproject && steps.get-grant-application-status.outputs.addtoproject || steps.add-to-project.outputs.result.item.id }}",
               "value": ${{vars.PROJECT_GRANT_APPLICATION_STATUS_NEW_ID}}
             }
 
