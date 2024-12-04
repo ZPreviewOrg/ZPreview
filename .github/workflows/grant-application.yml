@@ -24,19 +24,14 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
 
-      - name: Get/Set issue status
-        id: get-status
-        uses: actions/github-script@v7
+      - name: Get Issue "Status" for All Projects
+        id: get-status-list
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        uses: octokit/graphql-action@v2.x
         with:
-          github-token: ${{ steps.generate-token.outputs.token }}
-          script: |
-            const issueId = "${{ github.event.issue.node_id }}";
-            const projectId = "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}";
-            const statusId = "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_ID }}";
-            
-            // Query to get current status
-            const query = `
-              query GetIssueStatus($issueId: ID!) {
+          query: |
+            query GetIssueStatus($issueId: ID!) {
                 node(id: $issueId) {
                   ... on Issue {
                     projectItems(first: 10) {
@@ -57,20 +52,29 @@ jobs:
                   }
                 }
               }
-            `;
-            const result = await github.graphql(query, { issueId });
-            const projectItems = result.node.projectItems.nodes;
+          variables: |
+            issueId: ${{ github.event.issue.node_id }}
+
+      - name: Get Grant Application Status
+        id: get-grant-application-status
+        if: ${{steps.get-status-list.outputs.data}}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            const projectItems = ${{ steps.get-status-list.outputs.data.node.projectItems.nodes };
             const filteredProjectItems = projectItems.filter(item =>  
               item.fieldValueByName.field.id === statusId
             );
 
-            // Set output based on whether the issue is already in the project and output the status value
-            const isInProject = filteredProjectItems.length > 0;
-            const statusValue = isInProject ? filteredProjectItems[0].fieldValueByName.name : 'New';
-            core.setOutput('isInProject', isInProject);
-            core.setOutput('statusValue', statusValue);
+            if(filteredProjectItems.length == 0) {
+              core.info('Grant Applcation status not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }})')
+              core.setOutput('result', "New");
+            } else {
+              core.setOutput('result', filteredProjectItems[0].fieldValueByName.name);
+            }
 
-      - name: Add issue to GitHub Project
+      - name: Add Issue to GitHub Project
         id: add-to-project
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
@@ -86,14 +90,14 @@ jobs:
               }
             }
           variables: |
-            project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-            content_id: ${{ github.event.issue.node_id }}
+            project_id: ${{vars.PROJECT_GRANT_APPLICATION_PROJECT_ID}}
+            content_id: ${{ github.event.issue.id }}
 
-      - name: Set GitHub Project issue status to "New"
+      - name: 'Add Issue to GitHub Project": Set Status to "New"'
         id: new-issue-status
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        if: steps.add-to-project.outcome == 'success'  # Only run if add-to-project step was executed and successful
+        if: steps.add-to-project.outcome == 'success'
         uses: octokit/graphql-action@v2.x
         with:
           query: |
@@ -121,9 +125,9 @@ jobs:
           variables: |
             {
               "project_id": "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}",
-              "status_id": "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_ID }}",
+              "status_id": "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}",
               "item_id": "${{ steps.add-to-project.outputs.result.item.id }}",
-              "value": "New"
+              "value": ${{vars.PROJECT_GRANT_APPLICATION_STATUS_NEW_ID}}
             }
 
       - name: Get all current labels
@@ -142,6 +146,8 @@ jobs:
               }
             });
             core.setOutput('result', JSON.stringify(labels.map(label => label.name)));
+
+
 
       - name: Process New Status
         if: steps.get-status.outputs.result == 'New'
