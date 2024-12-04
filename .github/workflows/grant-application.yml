@@ -75,7 +75,6 @@ jobs:
               item.fieldValueByName?.field?.id === '${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}'
             );
 
-
             if (!filteredProjectItems || filteredProjectItems.length === 0) {
               core.info('Grant Application issue not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}")');
               core.setOutput('addtoproject', true);
@@ -142,7 +141,7 @@ jobs:
             {
               "project_id": "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}",
               "status_id": "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}",
-              "item_id": "${{ steps.get-grant-application-status.outputs.addtoproject && steps.get-grant-application-status.outputs.addtoproject || steps.add-to-project.outputs.result.item.id }}",
+              "item_id": "${{ steps.get-grant-application-status.outputs.addtoproject && steps.add-to-project.outputs.result.item.id || steps.add-to-project.outputs.data.addProjectV2ItemById.item.id }}",
               "value": ${{vars.PROJECT_GRANT_APPLICATION_STATUS_NEW_ID}}
             }
 
