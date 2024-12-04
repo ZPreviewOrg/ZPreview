@@ -62,13 +62,13 @@ jobs:
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
           script: |
-            const projectItems = ${{ steps.get-status-list.outputs.data.node.projectItems.nodes };
+            const projectItems = ${{ steps.get-status-list.outputs.data.node.projectItems.nodes }};
             const filteredProjectItems = projectItems.filter(item =>  
               item.fieldValueByName.field.id === statusId
             );
 
             if(filteredProjectItems.length == 0) {
-              core.info('Grant Applcation status not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }})')
+              core.info('Grant Application status not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }})')
               core.setOutput('result', "New");
             } else {
               core.setOutput('result', filteredProjectItems[0].fieldValueByName.name);
@@ -150,7 +150,7 @@ jobs:
 
 
       - name: Process New Status
-        if: steps.get-status.outputs.result == 'New'
+        if: steps.get-grant-application-status.outputs.result == 'New'
         uses: ./.github/actions/grant-application/new
         with:
           token: ${{ steps.generate-token.outputs.token }}
@@ -165,7 +165,7 @@ jobs:
           nerdgguy-installation-id: ${{ secrets.NERDGGUY_INSTALLATION_ID }}
           
       - name: Process Under Review Status
-        if: steps.get-status.outputs.result == 'Under Review' 
+        if: steps.get-grant-application-status.outputs.result == 'Under Review' 
         uses: ./.github/actions/grant-application/under-review
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
