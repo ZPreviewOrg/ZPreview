@@ -147,32 +147,13 @@ jobs:
               }
             });
             core.setOutput('result', JSON.stringify(labels.map(label => label.name)));
-
-
-
+            
       - name: Process New Status
         if: steps.get-grant-application-status.outputs.result == 'New'
         uses: ./.github/actions/grant-application/new
         with:
-          token: ${{ steps.generate-token.outputs.token }}
-          issue-number: ${{ github.event.issue.number }}
-          issue-title: ${{ github.event.issue.title }}
-          label-name: ${{ github.event.label.name }}
-          label-action: ${{ github.event.action }}
-          current-labels: ${{ steps.get-labels.outputs.result }}
-          vars: ${{ vars }}
-          nerdgguy-app-id: ${{ secrets.NERDGGUY_APP_ID }}
-          nerdgguy-client-id: ${{ secrets.NERDGGUY_CLIENT_ID }}
-          nerdgguy-installation-id: ${{ secrets.NERDGGUY_INSTALLATION_ID }}
           
       - name: Process Under Review Status
         if: steps.get-grant-application-status.outputs.result == 'Under Review' 
         uses: ./.github/actions/grant-application/under-review
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.issue.number }}
-          issue-title: ${{ github.event.issue.title }}
-          label-name: ${{ github.event.label.name }}
-          label-action: ${{ github.event.action }}
-          current-labels: ${{ steps.get-labels.outputs.result }}
-          vars: ${{ vars }}
