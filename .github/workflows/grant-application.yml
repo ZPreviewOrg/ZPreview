@@ -97,10 +97,34 @@ jobs:
         uses: octokit/graphql-action@v2.x
         with:
           query: |
-            mutation
+            mutation UpdateProjectV2ItemFieldValue(
+              $project_id: ID!
+              $status_id: ID!
+              $item_id: ID!
+              $value: String!
+            ) {
+              updateProjectV2ItemFieldValue(
+                input: {
+                  projectId: $project_id
+                  fieldId: $status_id
+                  itemId: $item_id
+                  value: { 
+                    singleSelectOptionId: $value
+                  }
+                }
+              ) {
+                projectV2Item {
+                  id
+                }
+              }
+            }
           variables: |
-            project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-            content_id: ${{ github.event.issue.node_id }}
+            {
+              "project_id": "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}",
+              "status_id": "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_ID }}",
+              "item_id": "${{ steps.add-to-project.outputs.result.item.id }}",
+              "value": "New"
+            }
 
       - name: Get all current labels
         id: get-labels
