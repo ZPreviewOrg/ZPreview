@@ -131,31 +131,6 @@ jobs:
               "value": ${{vars.PROJECT_GRANT_APPLICATION_STATUS_NEW_ID}}
             }
 
-      - name: Get all current labels
-        id: get-labels
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        uses: octokit/graphql-action@v2.x
-        with:
-          query: |
-            query GetIssueLabels($owner: String!, $repo: String!, $number: Int!) {
-              repository(owner: $owner, name: $repo) {
-                issue(number: $number) {
-                  labels(first: 100) {
-                    nodes {
-                      name
-                    }
-                  }
-                }
-              }
-            }
-          variables: |
-            {
-              "owner": "${{ github.repository_owner }}",
-              "repo": "${{ github.event.repository.name }}",
-              "number": ${{ github.event.issue.number }}
-            }
-            
       - name: Process New Status
         if: steps.get-grant-application-status.outputs.result == 'New'
         uses: ./.github/actions/grant-application/new
@@ -163,7 +138,7 @@ jobs:
           token: ${{ steps.generate-token.outputs.token }}
           project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
           status_field_id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}
-          labels: ${{ steps.get-labels.outputs.data }}
+          labels: ${{ toJSON(github.event.issue.labels) }}
           
       - name: Process Under Review Status
         if: steps.get-grant-application-status.outputs.result == 'Under Review' 
@@ -172,4 +147,4 @@ jobs:
           token: ${{ steps.generate-token.outputs.token }}
           project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
           status_field_id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}
-          labels: ${{ steps.get-labels.outputs.data }}
+          labels: ${{ toJSON(github.event.issue.labels) }}
