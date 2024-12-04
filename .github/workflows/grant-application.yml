@@ -93,7 +93,7 @@ jobs:
         id: new-issue-status
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        if: steps.add-to-project #only run if run and successful
+        if: steps.add-to-project.outcome == 'success'  # Only run if add-to-project step was executed and successful
         uses: octokit/graphql-action@v2.x
         with:
           query: |
