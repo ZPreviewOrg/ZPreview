@@ -68,7 +68,7 @@ jobs:
             );
 
             if(filteredProjectItems.length == 0) {
-              core.info('Grant Application status not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}"")');
+              core.info('Grant Application status not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}")');
               core.setOutput('result', "New");
             } else {
               core.setOutput('result', filteredProjectItems[0].fieldValueByName.name);
