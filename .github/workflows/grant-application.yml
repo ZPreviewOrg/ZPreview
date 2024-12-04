@@ -70,6 +70,7 @@ jobs:
 
             if (!filteredProjectItems || filteredProjectItems.length === 0) {
               core.info('Grant Application status not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}")');
+              core.setOutput('addtoproject', true);
               core.setOutput('result', "New");
             } else {
               core.setOutput('result', filteredProjectItems[0].fieldValueByName.name);
@@ -79,7 +80,7 @@ jobs:
         id: add-to-project
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-        if: steps.get-status.outputs.isInProject == 'false'
+        if: steps.get-grant-application-status.outputs.addtoproject == 'true'
         uses: octokit/graphql-action@v2.x
         with:
           query: |
@@ -94,7 +95,7 @@ jobs:
             project_id: ${{vars.PROJECT_GRANT_APPLICATION_PROJECT_ID}}
             content_id: ${{ github.event.issue.id }}
 
-      - name: 'Add Issue to GitHub Project": Set Status to "New"'
+      - name: 'Add Issue to GitHub Project: Set Status to "New"'
         id: new-issue-status
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
