@@ -70,29 +70,6 @@ jobs:
             core.setOutput('isInProject', isInProject);
             core.setOutput('statusValue', statusValue);
 
- 
- #     - name: Add Issue to Project
- #      id: add-issue-to-project
- #      if: steps.get-status.outputs.isInProject == 'false'
- #      uses: actions/github-script@v7
- #      with:
- #        github-token: ${{ steps.generate-token.outputs.token }}
- #        script: |
- #          const issueId = "${{ github.event.issue.node_id }}";
- #          const projectId = "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}";
- #          
- #          // Mutation to add issue
- #          const mutation = `
- #            mutation AddIssueToProject($projectId: ID!, $contentId: ID!) {
- #              addProjectV2ItemById(input: { projectId: $projectId, contentId: $contentId }) {
- #                item {
- #                  id
- #                }
- #              }
- #            }
- #          `;
- #          const result = await github.graphql(mutation, { projectId: projectId, contentId: issueId });
-
       - name: Add issue to GitHub Project
         id: add-to-project
         env:
@@ -108,6 +85,19 @@ jobs:
                 }
               }
             }
+          variables: |
+            project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
+            content_id: ${{ github.event.issue.node_id }}
+
+      - name: Set GitHub Project issue status to "New"
+        id: new-issue-status
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        if: steps.add-to-project #only run if run and successful
+        uses: octokit/graphql-action@v2.x
+        with:
+          query: |
+            mutation
           variables: |
             project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
             content_id: ${{ github.event.issue.node_id }}
