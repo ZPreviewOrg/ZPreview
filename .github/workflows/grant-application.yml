@@ -65,7 +65,7 @@ jobs:
             const data = ${{ steps.get-status-list.outputs.data }};
             const projectItems = data.node.projectItems.nodes;
             const filteredProjectItems = projectItems.filter(item => 
-              item.fieldValueByName?.field?.id === statusId
+              item.fieldValueByName?.field?.id === '${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}'
             );
 
             if (!filteredProjectItems || filteredProjectItems.length === 0) {
