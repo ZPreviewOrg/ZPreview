@@ -99,7 +99,7 @@ body:
       Role:
       Background:
       Responsibilities:
-  reader: yaml
+    render: yaml
   validations:
     required: true
 
