@@ -24,6 +24,14 @@ body:
   validations:
     required: true
 
+- type: input
+  id: assignees
+  attributes:
+    label: Application Owners (@Octocat, @Octocat1)
+    description: GitHub usernames of all individuals responsible for this application
+  validations:
+    required: true
+
 - type: markdown
   attributes:
     value: '## Organization Details'
@@ -33,14 +41,6 @@ body:
   attributes:
     label: Organization Name
     description: Name of the organization or individual applying for the grant
-  validations:
-    required: true
-
-- type: input
-  id: organization_details_owners
-  attributes:
-    label: Application Owners (@Octocat, @Octocat1)
-    description: GitHub usernames of all individuals responsible for this application
   validations:
     required: true
 
@@ -108,30 +108,31 @@ body:
     label: Additional Team Members
     description: List all other team members and their roles in the project. Please delete the additional pre-filled text after you have listed all your team members. E.g. if you only have 2 additional members you can delete the prefilled text for 3-6. If you are the only individual for the project please write “None or N/A.
     value: |
-      1. Name:
+      - Name:
          Role:
          Background:
          Responsibilities:
-      2. Name:
+      - Name:
          Role:
          Background:
          Responsibilities:
-      3. Name:
+      - Name:
          Role:
          Background:
          Responsibilities:
-      4. Name:
+      - Name:
          Role:
          Background:
          Responsibilities:
-      5. Name:
+      - Name:
          Role:
          Background:
          Responsibilities:
-      6. Name:
+      - Name:
          Role:
          Background:
          Responsibilities:
+  render: yaml
   validations:
     required: true
 
@@ -290,7 +291,7 @@ body:
     label: Previous Funding Details
     description: If you received previous funding, provide details about past grants and their outcomes
   validations:
-    required: true
+    required: false
 
 - type: dropdown
   id: budget_other_sources
@@ -309,7 +310,7 @@ body:
     label: Other Funding Sources Details
     description: If you have of plan to recieve funding from other sources, provide details
   validations:
-    required: true
+    required: false
 
 - type: markdown
   attributes:
@@ -366,54 +367,55 @@ body:
     label: Milestone Details
     description: Break down the project into specific milestones with associated deliverables and timelines. Please complete the details for all milestones of your grant and leave the text after your last milestone. E.g. if you only have 3 milestones in your grant, complete the details for 3 milestones and then delete the prefilled text for milestones 4-12.
     value: |
-      1. Milestone 1
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      2. Milestone 2
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      3. Milestone 3
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      4. Milestone 4
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      5. Milestone 5
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      6. Milestone 6
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      7. Milestone 7
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      8. Milestone 8
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      9. Milestone 9
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      10. Milestone 10
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      11. Milestone 11
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
-      12. Milestone 12
-      - Amount (USD): $
-      - Expected Completion Date: (YYYY-MM-DD)
-      - Deliverables: (Provide a brief summary)
+      - Milestone: 1
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 2
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 3
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 4
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 5
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 6
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 7
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 8
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 9
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 10
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 11
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+      - Milestone: 12
+        Amount (USD): 0
+        Expected Completion Date: YYYY-MM-DD
+        Deliverables: Provide a brief summary
+  render: yaml
   validations:
     required: true
 
@@ -425,5 +427,6 @@ body:
     value: |
       - File Name 1: Brief description of the file contents
       - File Name 2: Brief description of the file contents
+  render: yaml
   validations:
     required: false
