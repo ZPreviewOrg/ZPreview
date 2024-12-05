@@ -5,6 +5,7 @@ inputs:
   markdown-content:
     description: 'The markdown content to parse'
     required: true
+    default: ''
 
 outputs:
   yaml:

@@ -146,8 +146,10 @@ jobs:
             }
 
       - name: Parse YAML Blocks
-        if: 
+        id: parse-yaml
         uses: ./.github/actions/shared/markdown/yamlblocks
+        with:
+          markdown-content: ${{ github.event.issue.body }}
       
       - name: Process New Status
         if: steps.get-grant-application-status.outputs.result == 'New'
