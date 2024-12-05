@@ -8,12 +8,18 @@ inputs:
     default: ''
 
 outputs:
-  yaml:
-    description: 'The extracted and combined YAML content'
-  json:
-    description: 'The extracted YAML formatted as JSON array'
-  failed_blocks:
+  named_yaml:
+    description: 'YAML blocks with filenames as markers'
+  unnamed_yaml:
+    description: 'YAML blocks without filenames'
+  failed_yaml:
     description: 'YAML blocks that failed to parse'
+  named_json:
+    description: 'Named YAML blocks as JSON'
+  unnamed_json:
+    description: 'Unnamed YAML blocks as JSON'
+  failed_json:
+    description: 'Failed blocks as JSON'
   
 runs:
   using: 'composite'
@@ -29,26 +35,52 @@ runs:
           const yaml = require('js-yaml');
           const markdown = core.getInput('markdown-content');
           
-          // Regular expression to match headings and YAML code blocks
-          const sections = markdown.split(/(?=^#{1,6}\s+)/m);
-          
-          // Store blocks by heading
-          const blocksByHeading = {};
+          // Store blocks by type
+          const namedBlocks = {};
+          const unnamedBlocks = [];
           const failedBlocks = {};
+
+          // Match named blocks like ```filename.yaml
+          const namedBlockRegex = /```([a-zA-Z0-9_\-\.]+\.ya?ml)\n([\s\S]*?)```/g;
+          let namedMatches = [...markdown.matchAll(namedBlockRegex)];
           
-          sections.forEach(section => {
-            // Extract heading
-            const headingMatch = section.match(/^(#{1,6})\s+(.+)$/m);
-            if (!headingMatch) return;
-            
-            const heading = headingMatch[2].trim();
-            
-            // Find YAML blocks in this section
-            const yamlBlockRegex = /```ya?ml\n([\s\S]*?)```/g;
-            let matches = [...section.matchAll(yamlBlockRegex)];
-            
-            if (matches.length > 0) {
-              blocksByHeading[heading] = matches.map(match => {
+          namedMatches.forEach(match => {
+            const filename = match[1];
+            try {
+              const yamlContent = match[2].trim();
+              if (!namedBlocks[filename]) {
+                namedBlocks[filename] = [];
+              }
+              namedBlocks[filename].push(yaml.load(yamlContent));
+            } catch (error) {
+              core.warning(`Failed to parse named YAML block "${filename}": ${error.message}`);
+              if (!failedBlocks[filename]) {
+                failedBlocks[filename] = [];
+              }
+              failedBlocks[filename].push({
+                content: yamlContent,
+                error: error.message
+              });
+            }
+          });
+
+          // Match unnamed blocks ```yaml
+          const unnamedBlockRegex = /```ya?ml\n([\s\S]*?)```/g;
+          let unnamedMatches = [...markdown.matchAll(unnamedBlockRegex)];
+          
+          unnamedMatches.forEach(match => {
+            try {
+              const yamlContent = match[1].trim();
+              unnamedBlocks.push(yaml.load(yamlContent));
+            } catch (error) {
+              core.warning(`Failed to parse unnamed YAML block: ${error.message}`);
+              failedBlocks['unnamed'] = failedBlocks['unnamed'] || [];
+              failedBlocks['unnamed'].push({
+                content: yamlContent,
+                error: error.message
+              });
+            }
+          });
                 try {
                   const yamlContent = match[1].trim();
                   return yaml.load(yamlContent);
@@ -67,29 +99,28 @@ runs:
             }
           });
           
-          if (Object.keys(blocksByHeading).length === 0) {
-            core.notice('No YAML blocks found in the markdown content');
-            return;
-          }
-          
-          // Convert to final YAML and JSON formats
-          const yamlOutput = yaml.dump(blocksByHeading);
-          console.log('YAML output:');
-          console.log(yamlOutput);
-          
-          const jsonOutput = JSON.stringify(blocksByHeading, null, 2);
-          console.log('\nJSON output:');
-          console.log(jsonOutput);
-          
-          // Set outputs
-          core.setOutput('yaml', yamlOutput);
-          core.setOutput('json', jsonOutput);
-          
+          // Convert and output named blocks
+          const namedYaml = yaml.dump(namedBlocks);
+          const namedJson = JSON.stringify(namedBlocks, null, 2);
+          console.log('Named blocks YAML:');
+          console.log(namedYaml);
+          core.setOutput('named_yaml', namedYaml);
+          core.setOutput('named_json', namedJson);
+
+          // Convert and output unnamed blocks
+          const unnamedYaml = yaml.dump(unnamedBlocks);
+          const unnamedJson = JSON.stringify(unnamedBlocks, null, 2);
+          console.log('\nUnnamed blocks YAML:');
+          console.log(unnamedYaml);
+          core.setOutput('unnamed_yaml', unnamedYaml);
+          core.setOutput('unnamed_json', unnamedJson);
+
+          // Convert and output failed blocks
+          const failedYaml = yaml.dump(failedBlocks);
+          const failedJson = JSON.stringify(failedBlocks, null, 2);
           if (Object.keys(failedBlocks).length > 0) {
-            const failedYaml = yaml.dump(failedBlocks);
             console.log('\nFailed blocks:');
             console.log(failedYaml);
-            core.setOutput('failed_blocks', failedYaml);
-          } else {
-            core.setOutput('failed_blocks', '');
           }
+          core.setOutput('failed_yaml', failedYaml);
+          core.setOutput('failed_json', failedJson);
