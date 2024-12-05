@@ -106,7 +106,7 @@ jobs:
             }
           variables: |
             project_id: ${{vars.PROJECT_GRANT_APPLICATION_PROJECT_ID}}
-            content_id: ${{ github.event.issue.id }}
+            content_id: ${{ github.event.issue.node_id }}
 
       - name: 'Add Issue to GitHub Project: Set Status to "New"'
         id: set-to-new
