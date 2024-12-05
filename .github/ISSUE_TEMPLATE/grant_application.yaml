@@ -133,7 +133,7 @@ body:
          Role:
          Background:
          Responsibilities:
-  render: yaml
+    render: yaml
   validations:
     required: true
 
@@ -416,7 +416,7 @@ body:
         Amount (USD): 0
         Expected Completion Date: YYYY-MM-DD
         Deliverables: Provide a brief summary
-  render: yaml
+    render: yaml
   validations:
     required: true
 
@@ -428,6 +428,6 @@ body:
     value: |
       - File Name 1: Brief description of the file contents
       - File Name 2: Brief description of the file contents
-  render: yaml
+    render: yaml
   validations:
     required: false
