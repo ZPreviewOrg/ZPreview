@@ -1,0 +1,71 @@
+name: Parse YAML from Markdown
+description: 'Extracts YAML code blocks from markdown and outputs as YAML and JSON, using markdown headings as keys'
+
+inputs:
+  markdown-content:
+    description: 'The markdown content to parse'
+    required: true
+
+outputs:
+  yaml:
+    description: 'The extracted and combined YAML content'
+  json:
+    description: 'The extracted YAML formatted as JSON array'
+  
+runs:
+  using: 'composite'
+  steps:
+    - name: Parse YAML from Markdown
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const yaml = require('js-yaml');
+          const markdown = core.getInput('markdown-content');
+          
+          // Regular expression to match headings and YAML code blocks
+          const sections = markdown.split(/(?=^#{1,6}\s+)/m);
+          
+          // Store blocks by heading
+          const blocksByHeading = {};
+          
+          sections.forEach(section => {
+            // Extract heading
+            const headingMatch = section.match(/^(#{1,6})\s+(.+)$/m);
+            if (!headingMatch) return;
+            
+            const heading = headingMatch[2].trim();
+            
+            // Find YAML blocks in this section
+            const yamlBlockRegex = /```ya?ml\n([\s\S]*?)```/g;
+            let matches = [...section.matchAll(yamlBlockRegex)];
+            
+            if (matches.length > 0) {
+              blocksByHeading[heading] = matches.map(match => {
+                try {
+                  const yamlContent = match[1].trim();
+                  return yaml.load(yamlContent);
+                } catch (error) {
+                  core.warning(`Failed to parse YAML block under "${heading}": ${error.message}`);
+                  return null;
+                }
+              }).filter(Boolean);
+            }
+          });
+          
+          if (Object.keys(blocksByHeading).length === 0) {
+            core.notice('No YAML blocks found in the markdown content');
+            return;
+          }
+          
+          // Convert to final YAML and JSON formats
+          const yamlOutput = yaml.dump(blocksByHeading);
+          console.log('YAML output:');
+          console.log(yamlOutput);
+          
+          const jsonOutput = JSON.stringify(blocksByHeading, null, 2);
+          console.log('\nJSON output:');
+          console.log(jsonOutput);
+          
+          // Set outputs
+          core.setOutput('yaml', yamlOutput);
+          core.setOutput('json', jsonOutput);
