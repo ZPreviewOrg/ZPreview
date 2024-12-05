@@ -11,6 +11,8 @@ outputs:
     description: 'The extracted and combined YAML content'
   json:
     description: 'The extracted YAML formatted as JSON array'
+  failed_blocks:
+    description: 'YAML blocks that failed to parse'
   
 runs:
   using: 'composite'
@@ -27,6 +29,7 @@ runs:
           
           // Store blocks by heading
           const blocksByHeading = {};
+          const failedBlocks = {};
           
           sections.forEach(section => {
             // Extract heading
@@ -46,6 +49,13 @@ runs:
                   return yaml.load(yamlContent);
                 } catch (error) {
                   core.warning(`Failed to parse YAML block under "${heading}": ${error.message}`);
+                  if (!failedBlocks[heading]) {
+                    failedBlocks[heading] = [];
+                  }
+                  failedBlocks[heading].push({
+                    content: yamlContent,
+                    error: error.message
+                  });
                   return null;
                 }
               }).filter(Boolean);
@@ -69,3 +79,12 @@ runs:
           // Set outputs
           core.setOutput('yaml', yamlOutput);
           core.setOutput('json', jsonOutput);
+          
+          if (Object.keys(failedBlocks).length > 0) {
+            const failedYaml = yaml.dump(failedBlocks);
+            console.log('\nFailed blocks:');
+            console.log(failedYaml);
+            core.setOutput('failed_blocks', failedYaml);
+          } else {
+            core.setOutput('failed_blocks', '');
+          }
