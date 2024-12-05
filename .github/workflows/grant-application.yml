@@ -141,7 +141,7 @@ jobs:
             {
               "project_id": "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}",
               "status_id": "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}",
-              "item_id": ${{ steps.get-grant-application-status.outputs.addtoproject && steps.add-to-project.outputs.data || steps.get-grant-application-status.outputs.itemid }},
+              "item_id": "${{ steps.get-grant-application-status.outputs.addtoproject && steps.add-to-project.outputs || steps.get-grant-application-status.outputs.itemid }}",
               "value": ${{vars.PROJECT_GRANT_APPLICATION_STATUS_NEW_ID}}
             }
 
