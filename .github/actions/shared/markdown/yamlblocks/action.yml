@@ -33,7 +33,7 @@ runs:
       with:
         script: |
           const yaml = require('js-yaml');
-          const markdown = core.getInput('markdown-content');
+          const markdown = `${core.getInput('markdown-content')}`;
           
           // Debug input
           console.log('DEBUG: Input markdown length:', markdown.length);
