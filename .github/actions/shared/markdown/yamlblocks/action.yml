@@ -35,6 +35,10 @@ runs:
           const yaml = require('js-yaml');
           const markdown = core.getInput('markdown-content');
           
+          // Debug input
+          console.log('DEBUG: Input markdown length:', markdown.length);
+          console.log('DEBUG: First 500 chars of input:', markdown.substring(0, 500));
+          
           // Store blocks by type
           const namedBlocks = {};
           const unnamedBlocks = [];
@@ -43,6 +47,12 @@ runs:
           // Match named blocks like ```filename.yaml
           const namedBlockRegex = /```([a-zA-Z0-9_\-\.]+\.ya?ml)\n([\s\S]*?)```/g;
           let namedMatches = [...markdown.matchAll(namedBlockRegex)];
+          
+          // Debug named matches
+          console.log('DEBUG: Named matches found:', namedMatches.length);
+          if (namedMatches.length > 0) {
+            console.log('DEBUG: First named match:', namedMatches[0]);
+          }
           
           namedMatches.forEach(match => {
             const filename = match[1];
@@ -67,6 +77,12 @@ runs:
           // Match unnamed blocks ```yaml
           const unnamedBlockRegex = /```ya?ml\n([\s\S]*?)```/g;
           let unnamedMatches = [...markdown.matchAll(unnamedBlockRegex)];
+          
+          // Debug unnamed matches
+          console.log('DEBUG: Unnamed matches found:', unnamedMatches.length);
+          if (unnamedMatches.length > 0) {
+            console.log('DEBUG: First unnamed match:', unnamedMatches[0]);
+          }
           
           unnamedMatches.forEach(match => {
             try {
