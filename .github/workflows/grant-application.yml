@@ -145,6 +145,10 @@ jobs:
               "value": ${{vars.PROJECT_GRANT_APPLICATION_STATUS_NEW_ID}}
             }
 
+      - name: Parse YAML Blocks
+        if: 
+        uses: ./.github/actions/shared/markdown/yamlblocks
+      
       - name: Process New Status
         if: steps.get-grant-application-status.outputs.result == 'New'
         uses: ./.github/actions/grant-application/new
