@@ -1,8 +1,7 @@
 name: ZCG Grant Application
 description: Submit a grant application to Zcash Community Grants
 title: Grant Application - {Application Name}
-labels:
-  - Pending Grant Application
+labels: ["Pending Grant Application"]
 body:
 
 - type: markdown
