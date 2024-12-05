@@ -115,7 +115,7 @@ jobs:
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
           script: |
-              core.info('${{ steps.get-grant-application-status.outputs.addtoproject && steps.add-to-project.outputs.data || steps.get-grant-application-status.outputs.itemid }}');
+              core.info('${{ steps.get-grant-application-status.outputs.addtoproject && steps.add-to-project.outputs.data.addProjectV2ItemById.item.id || steps.get-grant-application-status.outputs.itemid }}');
 
       - name: 'Add Issue to GitHub Project: Set Status to "New"'
         id: set-to-new
