@@ -37,14 +37,29 @@ runs:
             return;
           }
 
-          // Find matching configuration based on labeled/unlabeled trigger
+          // Find matching configuration based on labeled/unlabeled trigger and required labels
           const matchingConfig = config.find(c => {
+            // First check if the trigger matches
+            let triggerMatches = false;
             if (eventAction === 'labeled') {
-              return c.trigger.labeled === eventLabel;
+              triggerMatches = c.trigger.labeled === eventLabel;
             } else if (eventAction === 'unlabeled') {
-              return c.trigger.unlabeled === eventLabel;
+              triggerMatches = c.trigger.unlabeled === eventLabel;
             }
-            return false;
+            
+            // If trigger doesn't match, no need to check required labels
+            if (!triggerMatches) return false;
+            
+            // If there are required labels, check if they all exist
+            if (c.trigger.requiredExistingLabels?.length > 0) {
+              const issueLabels = context.payload.issue.labels.map(l => l.name);
+              return c.trigger.requiredExistingLabels.every(required => 
+                issueLabels.includes(required)
+              );
+            }
+            
+            // If no required labels specified, just use the trigger match
+            return triggerMatches;
           });
           
           if (!matchingConfig) {
