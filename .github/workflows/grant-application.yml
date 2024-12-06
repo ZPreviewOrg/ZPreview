@@ -167,7 +167,7 @@ jobs:
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
           vars: ${{ vars }}
-          event: ${{ event }}
+          event: ${{ github.event }}
           issue: ${{ github.event.issue }}
 
           
