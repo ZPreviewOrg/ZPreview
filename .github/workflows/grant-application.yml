@@ -167,8 +167,7 @@ jobs:
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
           vars: ${{ toJSON(vars) }}
-          #event: ${{ toJSON(github.event) }}
-          #issue: ${{ toJSON(github.event.issue) }}
+          event: ${{ toJSON(github.event) }}
           
       - name: Process Under Review Status
         if: ${{ steps.get-grant-application-status.outputs.status == 'Under Review' }}
