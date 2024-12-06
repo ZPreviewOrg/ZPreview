@@ -152,8 +152,8 @@ jobs:
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
           script: |
-              core.info(${{ steps.get-grant-application-status.outputs.result }});
-              core.info(${{ toJSON(steps.get-grant-application-status.outputs.result) }});
+              core.info(${{ steps.get-grant-application-status.outputs }});
+              core.info(${{ toJSON(steps.get-grant-application-status.outputs) }});
               core.info(${{ toJSON(steps.get-grant-application-status.outputs.result) == 'New' }});
 
       - name: Parse YAML Blocks
