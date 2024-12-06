@@ -146,14 +146,17 @@ jobs:
               "value": ${{vars.PROJECT_GRANT_APPLICATION_STATUS_NEW_ID}}
             }
 
- #     - name: Logging Debug
- #       id: logging-debug
- #       if: ${{steps.get-status-list.outputs.data}}
- #       uses: actions/github-script@v7
- #       with:
- #         github-token: ${{ steps.generate-token.outputs.token }}
- #         script: |
- #             core.info(${{ toJson(github) }});
+      - name: Logging Debug
+        id: logging-debug
+        if: ${{steps.get-status-list.outputs.data}}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+              core.info(${{ steps.get-grant-application-status.outputs.result }});
+              core.info(${{ toJSON(steps.get-grant-application-status.outputs.result) }});
+              core.info(${{ toJSON(steps.get-grant-application-status.outputs.result) == 'New' }});
+              core.info(${{ toJSON(steps.get-grant-application-status.outputs.result) == "New" }});
 
       - name: Parse YAML Blocks
         id: parse-yaml
