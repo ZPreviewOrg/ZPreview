@@ -93,7 +93,7 @@ runs:
         id: logging-debug
         uses: actions/github-script@v7
         with:
-          github-token: ${{ inputs.github-token }}
+          github-token: ${{ fromJSON(inputs.github-token) }}
           script: |
             core.info(${{ toJSON(steps.parse-config.outputs) }});
 
