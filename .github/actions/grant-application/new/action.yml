@@ -25,9 +25,9 @@ runs:
           const config = vars.WORKFLOW_PENDING_GRANT_APPLICATION_LABELED_NEW;
           
           // Get the event label name that triggered this workflow
-          const eventLabel = ${{ inputs.event.label }};
-          const eventAction = ${{ inputs.event.action }};
-          const issueLabels = ${{ inputs.issue.labels }}.map(l => l.name);
+          const eventLabel = event.label?.name;
+          const eventAction = event.action;
+          const issueLabels = event.issue.labels.map(l => l.name);
           if (!eventLabel) {
             core.setFailed('No label found in event payload');
             return;
@@ -101,7 +101,7 @@ runs:
             }
           }
         labelIds: ${{ steps.parse-config.outputs.addLabels }}
-        issueId: ${{ inputs.issue.node_id }}
+        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -118,7 +118,7 @@ runs:
             }
           }
         labelIds: ${{ steps.parse-config.outputs.removeLabels }}
-        issueId: ${{ inputs.issue.node_id }}
+        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -135,7 +135,7 @@ runs:
             }
           }
         assigneeIds: ${{ steps.parse-config.outputs.addAssignees }}
-        issueId: ${{ inputs.issue.node_id }}
+        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -152,7 +152,7 @@ runs:
             }
           }
         assigneeIds: ${{ steps.parse-config.outputs.removeAssignees }}
-        issueId: ${{ inputs.issue.node_id }}
+        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -169,7 +169,7 @@ runs:
             }
           }
         body: ${{ steps.parse-config.outputs.notification }}
-        issueId: ${{ inputs.issue.node_id }}
+        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -186,7 +186,7 @@ runs:
             }
           }
         state: ${{ steps.parse-config.outputs.status }}
-        issueId: ${{ inputs.issue.node_id }}
+        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
