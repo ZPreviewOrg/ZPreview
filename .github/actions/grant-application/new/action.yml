@@ -11,9 +11,6 @@ inputs:
   event:
     description: 'GitHub event that triggered the workflow'
     required: true
-  issue:
-    description: 'Issue information'
-    required: true
 
 runs:
   using: "composite"
@@ -23,7 +20,9 @@ runs:
       uses: actions/github-script@v7
       with:
         script: |
-          const config = ${{inputs.vars.WORKFLOW_PENDING_GRANT_APPLICATION_LABELED_NEW}};
+          const vars = ${{fromJSON(inputs.vars)}};
+          const event = ${{fromJSON(inputs.event)}};
+          const config = vars.WORKFLOW_PENDING_GRANT_APPLICATION_LABELED_NEW;
           
           // Get the event label name that triggered this workflow
           const eventLabel = ${{ inputs.event.label }};
