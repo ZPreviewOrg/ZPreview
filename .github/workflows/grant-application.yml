@@ -164,7 +164,7 @@ jobs:
             ${{ toJson(github.event.issue.body) }}
       
       - name: Process New Status
-        if: ${{ toJSON(steps.get-grant-application-status.outputs.status) == 'New' }}
+        if: ${{ steps.get-grant-application-status.outputs.status == 'New' }}
         uses: ./.github/actions/grant-application/new
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
