@@ -88,6 +88,8 @@ jobs:
             } else {
               core.info(`Grant application status result: ${filteredProjectItemsWithStatus[0].fieldValueByName.name}`);
               core.setOutput('result', filteredProjectItemsWithStatus[0].fieldValueByName.name);
+              core.setOutput('one', filteredProjectItemsWithStatus[0].fieldValueByName.name);
+              core.setOutput('two', "New");
             }
             core.info(`Grant application status result: ${filteredProjectItemsWithStatus[0].fieldValueByName.name}`);
 
