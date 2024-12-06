@@ -1,130 +1,212 @@
-name: Process New Grant Application
-description: Handles grant applications in New status
+name: 'Process New Grant Application'
+description: 'Processes a new grant application by applying configured labels, assignments and notifications'
 
 inputs:
-  token:
-    description: GitHub token
-    required: true
-  issue-number:
-    description: Issue number
-    required: true
-  issue-title:
-    description: Issue title
-    required: true  
-  label-name:
-    description: Label that triggered the action
-    required: true
-  label-action:
-    description: Whether label was added or removed
-    required: true
-  current-labels:
-    description: Current labels on the issue (JSON array)
+  github-token:
+    description: 'GitHub token with necessary permissions'
     required: true
   vars:
-    description: Repository variables (JSON)
+    description: 'GitHub Variables containing workflow configuration'
+    required: true
+  event:
+    description: 'GitHub event that triggered the workflow'
+    required: true
+  issue:
+    description: 'Issue information'
     required: true
 
 runs:
-  using: composite
+  using: "composite"
   steps:
-    - name: Process Ready For Review
-      if: inputs.label-name == 'Ready For ZCG Review' && inputs.label-action == 'added'
-      uses: ./.github/actions/grant-application/operations
+    - name: Parse Workflow Configuration
+      id: parse-config
+      uses: actions/github-script@v7
       with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        #add-assignees: '["ZCG"]'
-        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_UNDER_REVIEW }}
-        status-update: 'Under Review'
-        project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-        status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
+        script: |
+          const config = ${{inputs.vars.WORKFLOW_PENDING_GRANT_APPLICATION_LABELED_NEW}};
+          
+          // Get the event label name that triggered this workflow
+          const eventLabel = ${{ toJSON(event.label) }};
+          const eventAction = ${{ toJSON(event.action) }};
+          if (!eventLabel) {
+            core.setFailed('No label found in event payload');
+            return;
+          }
+          if (!eventAction) {
+            core.setFailed('No action found in event payload');
+            return;
+          }
 
-    - name: Process Grant Approved with KYC
-      if: inputs.label-name == 'Grant Approved' && inputs.label-action == 'added' && contains(fromJSON(inputs.current-labels).map(label => label.name), 'KYC Required')
-      uses: ./.github/actions/grant-application/operations
-      with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        remove-labels: '["Ready For ZCG Review"]'
-        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED }}
-        status-update: 'Approved'
-        project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-        status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
+          // Find matching configuration based on labeled/unlabeled trigger
+          const matchingConfig = config.find(c => {
+            if (eventAction === 'labeled') {
+              return c.trigger.labeled === eventLabel;
+            } else if (eventAction === 'unlabeled') {
+              return c.trigger.unlabeled === eventLabel;
+            }
+            return false;
+          });
+          
+          if (!matchingConfig) {
+            core.setFailed(`No configuration found for label: ${eventLabel}`);
+            return;
+          }
 
-    - name: Process Grant Approved without KYC
-      if: inputs.label-name == 'Grant Approved' && inputs.label-action == 'added' && !contains(fromJSON(inputs.current-labels).map(label => label.name), 'KYC Required')
-      uses: ./.github/actions/grant-application/operations
-      with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        remove-labels: '["Ready For ZCG Review"]'
-        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC }}
-        status-update: 'Approved'
-        project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-        status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
+          // Check for required existing labels if specified
+          if (matchingConfig.trigger.requiredExistingLabels?.length > 0) {
+            const issueLabels = context.payload.issue.labels.map(l => l.name);
+            const missingLabels = matchingConfig.trigger.requiredExistingLabels.filter(
+              required => !issueLabels.includes(required)
+            );
+            
+            if (missingLabels.length > 0) {
+              core.setFailed(`Missing required labels: ${missingLabels.join(', ')}`);
+              return;
+            }
+          }
+          
+          // Set outputs for subsequent steps
+          core.setOutput('addLabels', JSON.stringify(matchingConfig.actions.addLabels || []));
+          core.setOutput('removeLabels', JSON.stringify(matchingConfig.actions.removeLabels || []));
+          core.setOutput('addAssignees', JSON.stringify(matchingConfig.actions.assignments.add || []));
+          core.setOutput('removeAssignees', JSON.stringify(matchingConfig.actions.assignments.remove || []));
+          
+          // Handle special notification values
+          let notification = matchingConfig.actions.notification;
+          if (notification === '-') {
+            notification = '';
+          } else if (notification.includes('or')) {
+            // For cases like "- or ADMIN_NOTIFY...", take the second option
+            notification = notification.split('or').pop().trim();
+          }
+          core.setOutput('notification', notification);
+          
+          // Handle special status values
+          let status = matchingConfig.actions.status;
+          if (status === '-') {
+            status = '';
+          }
+          core.setOutput('status', status);
 
-    - name: Process Grant Declined
-      if: inputs.label-name == 'Grant Declined' && inputs.label-action == 'added'
-      uses: ./.github/actions/grant-application/operations
+    - name: Apply Labels
+      id: add-labels
+      if: steps.parse-config.outputs.addLabels != '[]'
+      uses: octokit/graphql-action@v2.x
       with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        remove-labels: '["Ready For ZCG Review"]'
-        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_DECLINED }}
-        status-update: 'Declined'
-        project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-        status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
+        query: |
+          mutation addLabels($labelIds: [ID!]!, $issueId: ID!) {
+            addLabelsToLabelable(input: {labelableId: $issueId, labelIds: $labelIds}) {
+              clientMutationId
+            }
+          }
+        labelIds: ${{ steps.parse-config.outputs.addLabels }}
+        issueId: ${{ inputs.issue.node_id }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      continue-on-error: true
 
-    - name: Process Does Not Meet Criteria
-      if: inputs.label-name == 'Does Not Meet Criteria' && inputs.label-action == 'added'
-      uses: ./.github/actions/grant-application/operations
+    - name: Remove Labels
+      id: remove-labels
+      if: steps.parse-config.outputs.removeLabels != '[]'
+      uses: octokit/graphql-action@v2.x
       with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        remove-labels: '["Ready For ZCG Review"]'
-        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_DOES_NOT_MEET_CRITERIA }}
-        status-update: 'Declined'
-        project-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-        status-field-id: ${{ fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_ID }}
+        query: |
+          mutation removeLabels($labelIds: [ID!]!, $issueId: ID!) {
+            removeLabelsFromLabelable(input: {labelableId: $issueId, labelIds: $labelIds}) {
+              clientMutationId
+            }
+          }
+        labelIds: ${{ steps.parse-config.outputs.removeLabels }}
+        issueId: ${{ inputs.issue.node_id }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      continue-on-error: true
 
-    - name: Process Forum Post Missing
-      if: inputs.label-name == 'Forum Post Missing' && inputs.label-action == 'added'
-      uses: ./.github/actions/grant-application/operations
+    - name: Add Assignees
+      id: add-assignees
+      if: steps.parse-config.outputs.addAssignees != '[]'
+      uses: octokit/graphql-action@v2.x
       with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_FORUM_POST_MISSING }}
+        query: |
+          mutation addAssignees($assigneeIds: [ID!]!, $issueId: ID!) {
+            addAssigneesToAssignable(input: {assignableId: $issueId, assigneeIds: $assigneeIds}) {
+              clientMutationId
+            }
+          }
+        assigneeIds: ${{ steps.parse-config.outputs.addAssignees }}
+        issueId: ${{ inputs.issue.node_id }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      continue-on-error: true
 
-    - name: Process Progress Update Required
-      if: inputs.label-name == 'Progress Update Required' && inputs.label-action == 'added'
-      uses: ./.github/actions/grant-application/operations
+    - name: Remove Assignees
+      id: remove-assignees
+      if: steps.parse-config.outputs.removeAssignees != '[]'
+      uses: octokit/graphql-action@v2.x
       with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_PROGRESS_UPDATE_REQUIRED }}
+        query: |
+          mutation removeAssignees($assigneeIds: [ID!]!, $issueId: ID!) {
+            removeAssigneesFromAssignable(input: {assignableId: $issueId, assigneeIds: $assigneeIds}) {
+              clientMutationId
+            }
+          }
+        assigneeIds: ${{ steps.parse-config.outputs.removeAssignees }}
+        issueId: ${{ inputs.issue.node_id }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      continue-on-error: true
 
-    - name: Process Changes Pending Review
-      if: inputs.label-name == 'Changes Pending Review' && inputs.label-action == 'added'
-      uses: ./.github/actions/grant-application/operations
+    - name: Create Comment Notification
+      id: create-comment
+      if: steps.parse-config.outputs.notification != ''
+      uses: octokit/graphql-action@v2.x
       with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_CHANGES_REQUIRE_REVIEW }}
+        query: |
+          mutation addComment($body: String!, $issueId: ID!) {
+            addComment(input: {body: $body, subjectId: $issueId}) {
+              clientMutationId
+            }
+          }
+        body: ${{ steps.parse-config.outputs.notification }}
+        issueId: ${{ inputs.issue.node_id }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      continue-on-error: true
 
-    - name: Process Changes Approved
-      if: inputs.label-name == 'Changes Approved' && inputs.label-action == 'added'
-      uses: ./.github/actions/grant-application/operations
+    - name: Update Status
+      id: update-status
+      if: steps.parse-config.outputs.status != ''
+      uses: octokit/graphql-action@v2.x
       with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        remove-labels: '["Changes Pending Review", "Changes Approved"]'
-        comment: ${{ fromJSON(inputs.vars).NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED }}
+        query: |
+          mutation updateStatus($state: IssueState!, $issueId: ID!) {
+            updateIssue(input: {state: $state, id: $issueId}) {
+              clientMutationId
+            }
+          }
+        state: ${{ steps.parse-config.outputs.status }}
+        issueId: ${{ inputs.issue.node_id }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      continue-on-error: true
 
-    - name: Process Changes Pending Review Removed
-      if: inputs.label-name == 'Changes Pending Review' && inputs.label-action == 'removed'
-      uses: ./.github/actions/grant-application/operations
+    - name: Check for Errors
+      if: |
+        steps.add-labels.outcome == 'failure' ||
+        steps.remove-labels.outcome == 'failure' ||
+        steps.add-assignees.outcome == 'failure' ||
+        steps.remove-assignees.outcome == 'failure' ||
+        steps.create-comment.outcome == 'failure' ||
+        steps.update-status.outcome == 'failure'
+      uses: actions/github-script@v7
       with:
-        token: ${{ inputs.token }}
-        issue-number: ${{ inputs.issue-number }}
-        add-labels: '["Changes Pending Review"]'
-        comment: ${{ fromJSON(inputs.vars).ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH }}
+        script: |
+          const errors = [];
+          if ('${{ steps.add-labels.outcome }}' === 'failure') errors.push('Failed to add labels');
+          if ('${{ steps.remove-labels.outcome }}' === 'failure') errors.push('Failed to remove labels');
+          if ('${{ steps.add-assignees.outcome }}' === 'failure') errors.push('Failed to add assignees');
+          if ('${{ steps.remove-assignees.outcome }}' === 'failure') errors.push('Failed to remove assignees');
+          if ('${{ steps.create-comment.outcome }}' === 'failure') errors.push('Failed to create comment');
+          if ('${{ steps.update-status.outcome }}' === 'failure') errors.push('Failed to update status');
+          
+          core.setFailed(`Some operations failed: ${errors.join(', ')}`);
