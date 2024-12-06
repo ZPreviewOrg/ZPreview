@@ -181,12 +181,13 @@ The "Pending Grant Application" label is set when a Grant Application is submitt
 | - | - | NOTIFY_GRANT_APPLICATION_RECEIVED |
 | -Changes Pending Review | +Admin | - |
 
-### 📝 "Pending Grant Application" Workflow when Issue Labelled
+### 📝 "Pending Grant Application" Workflow with "*" Status when Issue Labeled
 
 ***PRs and merges will not occur for "Pending Grant Applications" as they are not official Grant Applications yet.***
 
 | Current Labels | Label Updates | Assignment Updates | Issues Comments | Status Updates |
 |----------------|---------------|--------------------|-----------------|----------------|
+| +Pending Grant Applications | - | - | NOTIFY_GRANT_APPLICATION_RECEIVED | - |
 | +Ready For ZCG Review | +Grant Application | +ZCG | NOTIFY_GRANT_APPLICATION_UNDER_REVIEW | Under Review |
 | +Grant Approved; KYC Required; | +Grant Application; -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_KYC_REQUIRED | Approved |
 | +Grant Approved; !KYC Required; | +Grant Application; -Ready For ZCG Review | - | NOTIFY_GRANT_APPLICATION_APPROVED_NO_KYC | Approved |
@@ -216,7 +217,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 |---------------|--------------------|-----------------|
 | -Changes Pending Review; -Pending Grant Application;  | +Admin | +_grants/a{issue_number:05d}+title\[:50\].md |
 
-### 🏷️ "Grant Application" Workflow with "New" Status when Labelled
+### 🏷️ "Grant Application" Workflow with "New" Status when Issue Labeled
 
 ***PRs and merges of changes will be automatically pushed into the _grants/{}.md file.***
 
@@ -234,7 +235,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 | +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
 | -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
-### 🔍 "Grant Application" Workflow with "Under Review" Status when Issue Labelled
+### 🔍 "Grant Application" Workflow with "Under Review" Status when Issue Labeled
 
 ***PRs and merges of changes will be automatically pushed into the _grants/{}.md file.***
 
@@ -252,7 +253,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 | +Changes Approved | -Changes Pending Review; - Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
 | -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
-### ✅ "Grant Application" Workflow with "Approved" Status when Issue Labelled
+### ✅ "Grant Application" Workflow with "Approved" Status when Issue Labeled
 
 ***PRs and merges of changes will be automatically pushed into the _grants/{}.md file.***
 
@@ -272,7 +273,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 | +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
 | -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
-### ⏳ "Grant Application" Workflow with "In Progress" Status when Issue Labelled
+### ⏳ "Grant Application" Workflow with "In Progress" Status when Issue Labeled
 
 ***PRs and merges of changes will be automatically pushed into the _grants/{}.md file.***
 
@@ -291,7 +292,7 @@ When the "Grant Application" label is added to an issue the system will remove -
 | +Changes Approved | -Changes Pending Review; -Changes Approved; | - | NOTIFY_GRANT_APPLICATION_CHANGES_APPROVED | - |
 | -Changes Pending Review | - or Changes Pending Review | - | - or ADMIN_NOTIFY_GRANT_APPLICATION_ISSUE_MISMATCH | - |
 
-### 🔚 "Grant Application" with "Cancelled/Declined/Complete" Status when Issue Labelled
+### 🔚 "Grant Application" Workflow with "Cancelled/Declined/Complete" Status when Issue Labeled
 
 ***PRs and merges of changes will be automatically pushed into the _grants/{}.md file. Cancelled, Declined, and Complete Grant Applications will not post notifications or update status.***
 
@@ -347,7 +348,7 @@ When the "Pending Startup Payment Request" label is added to an issue the system
 | - | - | - | +Admin | - |
 | Sender == Grant Assignee | - | NOTIFY_GRANT_STARTUP_PAYMENT_REQUEST_SENDER_NOT_AUTHORISED | Close |
 
-### 🏷️ "Pending Startup Payment Request" Workflow when Issue Labelled
+### 🏷️ "Pending Startup Payment Request" Workflow when Issue Labeled
 
 ***PRs and merges are currently not supported for "Pending Startup Payment Request".***
 
@@ -374,7 +375,7 @@ When the "Pending Grant Milestone" label is added to an issue the system does a 
 | - | - | - | +Admin | - |
 | Sender == Grant Assignee | - | NOTIFY_GRANT_MILESTONE_PAYMENT_REQUEST_SENDER_NOT_AUTHORISED | Close |
 
-### 🏷️ "Pending Grant Milestone" Workflow when Issue Labelled
+### 🏷️ "Pending Grant Milestone" Workflow when Issue Labeled
 
 ***PRs and merges are currently not supported for "Pending Grant Milestone" or "Grant Milestones".***
 
@@ -394,7 +395,7 @@ When the "Grant Milestone" label is added to an issue the system must does a few
 |-------|---------------|-----------------|--------------------|----------------|
 | - | -Pending Grant Milestone | - | +Admin | - |
 
-### 🏷️ "Grant Milestone" + "Milestone Payment Request" Workflow when Issue Labelled
+### 🏷️ "Grant Milestone" + "Milestone Payment Request" Workflow when Issue Labeled
 
 ***PRs and merges are currently not supported for "Pending Grant Milestone" or "Grant Milestones".***
 

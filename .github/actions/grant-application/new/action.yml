@@ -28,6 +28,7 @@ runs:
           // Get the event label name that triggered this workflow
           const eventLabel = ${{ toJSON(event.label) }};
           const eventAction = ${{ toJSON(event.action) }};
+          const issueLabels = ${{ toJSON(issue.labels) }}.map(l => l.name);
           if (!eventLabel) {
             core.setFailed('No label found in event payload');
             return;
@@ -52,7 +53,6 @@ runs:
             
             // If there are required labels, check if they all exist
             if (c.trigger.requiredExistingLabels?.length > 0) {
-              const issueLabels = context.payload.issue.labels.map(l => l.name);
               return c.trigger.requiredExistingLabels.every(required => 
                 issueLabels.includes(required)
               );
@@ -63,21 +63,8 @@ runs:
           });
           
           if (!matchingConfig) {
-            core.setFailed(`No configuration found for label: ${eventLabel}`);
+            core.info(`No configuration found for label: ${eventLabel}`);
             return;
-          }
-
-          // Check for required existing labels if specified
-          if (matchingConfig.trigger.requiredExistingLabels?.length > 0) {
-            const issueLabels = context.payload.issue.labels.map(l => l.name);
-            const missingLabels = matchingConfig.trigger.requiredExistingLabels.filter(
-              required => !issueLabels.includes(required)
-            );
-            
-            if (missingLabels.length > 0) {
-              core.setFailed(`Missing required labels: ${missingLabels.join(', ')}`);
-              return;
-            }
           }
           
           // Set outputs for subsequent steps

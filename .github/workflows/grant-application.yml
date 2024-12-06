@@ -165,10 +165,11 @@ jobs:
         if: steps.get-grant-application-status.outputs.result == 'New'
         uses: ./.github/actions/grant-application/new
         with:
-          token: ${{ steps.generate-token.outputs.token }}
-          project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-          status_field_id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}
-          labels: ${{ github.event.issue.labels }}
+          github-token: ${{ steps.generate-token.outputs.token }}
+          vars: ${{ vars }}
+          event: ${{ event }}
+          issue: ${{ github.event.issue }}
+
           
       - name: Process Under Review Status
         if: steps.get-grant-application-status.outputs.result == 'Under Review' 
