@@ -79,17 +79,14 @@ jobs:
               core.info('Grant Application issue not found for ${{ github.event.issue.id }}: (vars.PROJECT_GRANT_APPLICATION_PROJECT_ID: "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}")');
               core.setOutput('addtoproject', true);
               core.setOutput('settonew', true);
-              core.setOutput('result', "New");
+              core.setOutput('status', "New");
             } else if (!filteredProjectItemsWithStatus || filteredProjectItemsWithStatus.length === 0) {
               core.info('Grant Application issue found in project but no status found: (vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID: "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}")');
               core.setOutput('itemid', filteredProjectItems[0].id);
               core.setOutput('settonew', true);
-              core.setOutput('result', "New");
+              core.setOutput('status', "New");
             } else {
-              core.info(`Grant application status result: ${filteredProjectItemsWithStatus[0].fieldValueByName.name}`);
-              core.setOutput('result', filteredProjectItemsWithStatus[0].fieldValueByName.name);
-              core.setOutput('one', filteredProjectItemsWithStatus[0].fieldValueByName.name);
-              core.setOutput('two', "New");
+              core.setOutput('status', filteredProjectItemsWithStatus[0].fieldValueByName.name);
             }
             core.info(`Grant application status result: ${filteredProjectItemsWithStatus[0].fieldValueByName.name}`);
 
@@ -167,7 +164,7 @@ jobs:
             ${{ toJson(github.event.issue.body) }}
       
       - name: Process New Status
-        if: ${{ toJSON(steps.get-grant-application-status.outputs.result) == 'New' }}
+        if: ${{ toJSON(steps.get-grant-application-status.outputs.status) == 'New' }}
         uses: ./.github/actions/grant-application/new
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
@@ -177,7 +174,7 @@ jobs:
 
           
       - name: Process Under Review Status
-        if: ${{ steps.get-grant-application-status.outputs.result == 'Under Review' }}
+        if: ${{ steps.get-grant-application-status.outputs.status == 'Under Review' }}
         uses: ./.github/actions/grant-application/under-review
         with:
           token: ${{ steps.generate-token.outputs.token }}
