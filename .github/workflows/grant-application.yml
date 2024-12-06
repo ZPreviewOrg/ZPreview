@@ -153,9 +153,7 @@ jobs:
           github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             core.info(${{ steps.generate-token.outputs.token }});
-            core.info(${{ toJSON(vars) }});
-            core.info(${{ toJSON(github.event) }});
-            core.info(${{ toJSON(github.event.issue) }});
+            core.info(${{ github.event.issue }});
 
       - name: Parse YAML Blocks
         id: parse-yaml
