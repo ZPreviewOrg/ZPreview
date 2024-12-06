@@ -99,7 +99,7 @@ runs:
 
     - name: Apply Labels
       id: add-labels
-      if: ${{ steps.parse-config.outputs.addLabels != '[]' }}
+      if: ${{ steps.parse-config.outputs.addLabels }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -119,7 +119,7 @@ runs:
 
     - name: Remove Labels
       id: remove-labels
-      if: ${{ steps.parse-config.outputs.removeLabels != '[]' }}
+      if: ${{ steps.parse-config.outputs.removeLabels }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -139,7 +139,7 @@ runs:
 
     - name: Add Assignees
       id: add-assignees
-      if: ${{ steps.parse-config.outputs.addAssignees != '[]' }}
+      if: ${{ steps.parse-config.outputs.addAssignees }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
