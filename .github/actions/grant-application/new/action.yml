@@ -100,8 +100,11 @@ runs:
               clientMutationId
             }
           }
-        labelIds: ${{ steps.parse-config.outputs.addLabels }}
-        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
+        variables: |
+          {
+            "labelIds": ${{ toJSON(steps.parse-config.outputs.addLabels) }},
+            "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
+          }
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -117,8 +120,11 @@ runs:
               clientMutationId
             }
           }
-        labelIds: ${{ steps.parse-config.outputs.removeLabels }}
-        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
+        variables: |
+          {
+            "labelIds": ${{ toJSON(steps.parse-config.outputs.removeLabels) }},
+            "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
+          }
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -134,8 +140,11 @@ runs:
               clientMutationId
             }
           }
-        assigneeIds: ${{ steps.parse-config.outputs.addAssignees }}
-        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
+        variables: |
+          {
+            "assigneeIds": ${{ toJSON(steps.parse-config.outputs.addAssignees) }},
+            "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
+          }
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -151,8 +160,12 @@ runs:
               clientMutationId
             }
           }
-        assigneeIds: ${{ steps.parse-config.outputs.removeAssignees }}
-        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
+        variables: |
+          {
+            "assigneeIds": ${{ toJSON(steps.parse-config.outputs.removeAssignees) }},
+            "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
+          }
+
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -168,8 +181,11 @@ runs:
               clientMutationId
             }
           }
-        body: ${{ steps.parse-config.outputs.notification }}
-        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
+        variables: |
+          {
+            "body": ${{ toJSON(steps.parse-config.outputs.notification) }},
+            "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
+          }
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
@@ -185,8 +201,11 @@ runs:
               clientMutationId
             }
           }
-        state: ${{ steps.parse-config.outputs.status }}
-        issueId: ${{ fromJSON(inputs.event).issue.node_id }}
+        variables: |
+          {
+            "state": ${{ toJSON(steps.parse-config.outputs.status) }},
+            "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
+          }
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
