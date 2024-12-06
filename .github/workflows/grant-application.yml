@@ -86,7 +86,7 @@ jobs:
               core.setOutput('settonew', true);
               core.setOutput('result', "New");
             } else {
-              core.setOutput('result', filteredProjectItemsWithStatus[0].fieldValueByName.name);
+              core.setOutput('result', JSON.stringify(filteredProjectItemsWithStatus[0].fieldValueByName.name));
             }
             core.info(`Grant application status result: ${JSON.stringify(filteredProjectItemsWithStatus[0].fieldValueByName.name)}`);
 
