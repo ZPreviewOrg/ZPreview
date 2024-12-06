@@ -152,9 +152,10 @@ jobs:
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
           script: |
-              core.info(${{ steps.get-grant-application-status.outputs }});
-              core.info(${{ toJSON(steps.get-grant-application-status.outputs) }});
-              core.info(${{ toJSON(steps.get-grant-application-status.outputs.result) == 'New' }});
+            core.info(${{ steps.generate-token.outputs.token }});
+            core.info(${{ toJSON(vars) }});
+            core.info(${{ toJSON(github.event) }});
+            core.info(${{ toJSON(github.event.issue) }});
 
       - name: Parse YAML Blocks
         id: parse-yaml
