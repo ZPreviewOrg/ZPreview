@@ -159,7 +159,7 @@ runs:
 
     - name: Remove Assignees
       id: remove-assignees
-      if: ${{ steps.parse-config.outputs.removeAssignees != '[]' }}
+      if: ${{ steps.parse-config.outputs.removeAssignees }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
