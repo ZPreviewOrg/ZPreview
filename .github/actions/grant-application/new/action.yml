@@ -22,7 +22,7 @@ runs:
         script: |
           const vars = ${{toJSON(fromJSON(inputs.vars))}};
           const event = ${{toJSON(fromJSON(inputs.event))}};
-          const config = vars.WORKFLOW_PENDING_GRANT_APPLICATION_LABELED_NEW;
+          const config = JSON.parse(vars.WORKFLOW_PENDING_GRANT_APPLICATION_LABELED_NEW);
           
           // Get the event label name that triggered this workflow
           const eventLabel = event.label?.name;
