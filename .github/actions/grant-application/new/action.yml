@@ -138,8 +138,8 @@ runs:
             return ids;
           }
 
-          const addLabels = ${{ steps.parse-config.outputs.addLabels }} || '[]');
-          const removeLabels = ${{ steps.parse-config.outputs.removeLabels }} || '[]');
+          const addLabels = ${{ steps.parse-config.outputs.addLabels }} || '[]';
+          const removeLabels = ${{ steps.parse-config.outputs.removeLabels }} || '[]';
 
           const addLabelIds = await getLabelIds(addLabels);
           const removeLabelIds = await getLabelIds(removeLabels);
