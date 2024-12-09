@@ -352,9 +352,9 @@ runs:
           }
         variables: |
           {
-            "projectId": "${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}",
+            "projectId": ${{ toJSON(fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID) }},
             "itemId": ${{ steps.get-project-item-id.outputs.projectItemId }},
-            "fieldId": "${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}",
+            "fieldId": ${{ toJSON(fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID) }},
             "statusOptionId": ${{ steps.parse-config.outputs.status }}
           }
       env:
