@@ -106,7 +106,7 @@ runs:
           }
 
           core.info("123123");
-          ore.info(addLabels);
+          core.info(addLabels);
 
           core.setOutput('addLabels', addLabels);
           core.setOutput('removeLabels', removeLabels);
