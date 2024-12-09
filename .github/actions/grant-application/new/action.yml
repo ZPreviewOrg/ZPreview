@@ -121,6 +121,7 @@ runs:
           core.setOutput('removeAssignees', removeAssignees);
           core.setOutput('notification', notification);
           core.setOutput('status', status);
+          core.setOutput('statusid, vars['PROJECT_GRANT_APPLICATION_STATUS_' status '_ID']);
 
     # Convert label names into IDs (if any)
     - name: Convert Label Names to IDs
