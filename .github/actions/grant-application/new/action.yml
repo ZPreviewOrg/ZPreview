@@ -20,8 +20,8 @@ runs:
       uses: actions/github-script@v7
       with:
         script: |
-          //const event = JSON.parse(core.getInput('event'));
-          //const vars = JSON.parse(core.getInput('vars'));
+          const event1 = core.getInput('event');
+          const vars1 = core.getInput('vars');
           const vars = ${{toJSON(fromJSON(inputs.vars))}};
           const event = ${{toJSON(fromJSON(inputs.event))}};
 
@@ -113,13 +113,6 @@ runs:
           core.setOutput('removeAssignees', JSON.stringify(removeAssignees));
           core.setOutput('notification', notification);
           core.setOutput('status', status);
-
-    - name: Logging Debug
-      id: logging-debug
-      uses: actions/github-script@v7
-      with:
-        script: |
-          core.info(JSON.stringify(steps.parse-config.outputs, null, 2));
 
     # Convert label names into IDs (if any)
     - name: Convert Label Names to IDs
