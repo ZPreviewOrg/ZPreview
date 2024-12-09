@@ -163,7 +163,7 @@ runs:
       with:
         github-token: ${{ inputs.github-token }}
         script: |
-          const event = JSON.parse(inputs.event);
+          const event = ${{toJSON(fromJSON(inputs.event))}};
           const issueNodeId = event.issue.node_id;
 
           // Example GraphQL query to find the project item associated with the issue:
