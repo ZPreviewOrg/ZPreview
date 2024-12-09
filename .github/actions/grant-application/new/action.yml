@@ -358,7 +358,7 @@ runs:
             "projectId": ${{ toJSON(fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID) }},
             "itemId": ${{ steps.process-project-item.outputs.projectItemId }},
             "fieldId": ${{ toJSON(fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID) }},
-            "statusOptionId": ${{ steps.parse-config.outputs.status }}
+            "statusOptionId": ${{ fromJSON(inputs.vars)[steps.parse-config.outputs.status] }}
           }
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
