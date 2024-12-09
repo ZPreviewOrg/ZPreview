@@ -109,6 +109,11 @@ runs:
 
           core.info("123123");
           core.info(addLabels);
+          core.info(removeLabels);
+          core.info(addAssignees);
+          core.info(removeAssignees);
+          core.info(notification);
+          core.info(status);
 
           core.setOutput('addLabels', addLabels);
           core.setOutput('removeLabels', removeLabels);
