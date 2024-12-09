@@ -159,7 +159,7 @@ runs:
         github-token: ${{ inputs.github-token }}
         script: |
           const addAssignees = ${{ steps.parse-config.outputs.addAssignees }};
-          const removeAssignees = JSON.parse( ${{ steps.parse-config.outputs.removeAssignees }} || '[]');
+          const removeAssignees = ${{ steps.parse-config.outputs.removeAssignees }};
 
           async function getUserIds(logins) {
             const ids = [];
