@@ -37,7 +37,7 @@ runs:
           }
 
           // Gather all WORKFLOW_ keys
-          const workflowKeys = Object.keys(vars).filter(k => k.startsWith("WORKFLOW_"));
+          const workflowKeys = Object.keys(vars).filter(k => k.startsWith("WORKFLOW_GRANT_APPLICATION_LABELED_NEW"));
 
           let matchingConfig = null;
           for (const key of workflowKeys) {
