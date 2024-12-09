@@ -105,6 +105,9 @@ runs:
             status = '';
           }
 
+          core.info("123123");
+          ore.info(addLabels);
+
           core.setOutput('addLabels', addLabels);
           core.setOutput('removeLabels', removeLabels);
           core.setOutput('addAssignees', addAssignees);
@@ -144,8 +147,8 @@ runs:
           const addLabelIds = await getLabelIds(addLabels);
           const removeLabelIds = await getLabelIds(removeLabels);
 
-          core.setOutput('addLabelIds', JSON.stringify(addLabelIds));
-          core.setOutput('removeLabelIds', JSON.stringify(removeLabelIds));
+          core.setOutput('addLabelIds', addLabelIds);
+          core.setOutput('removeLabelIds', removeLabelIds);
 
     # Convert assignee logins into user IDs (if any)
     - name: Convert Assignee Logins to IDs
