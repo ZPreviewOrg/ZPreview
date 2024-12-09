@@ -20,14 +20,13 @@ runs:
       uses: actions/github-script@v7
       with:
         script: |
-          const vars = ${{toJSON(fromJSON(inputs.vars))}};
-          const event = ${{toJSON(fromJSON(inputs.event))}};
-          const config = JSON.parse(vars.WORKFLOW_PENDING_GRANT_APPLICATION_LABELED_NEW);
-          
-          // Get the event label name that triggered this workflow
+          const event = JSON.parse(inputs.event);
+          const vars = JSON.parse(inputs.vars);
+
           const eventLabel = event.label?.name;
           const eventAction = event.action;
           const issueLabels = event.issue.labels.map(l => l.name);
+
           if (!eventLabel) {
             core.setFailed('No label found in event payload');
             return;
@@ -37,69 +36,158 @@ runs:
             return;
           }
 
-          // Find matching configuration based on labeled/unlabeled trigger and required labels
-          const matchingConfig = config.find(c => {
-            // First check if the trigger matches
-            let triggerMatches = false;
-            if (eventAction === 'labeled') {
-              triggerMatches = c.trigger.labeled === eventLabel;
-            } else if (eventAction === 'unlabeled') {
-              triggerMatches = c.trigger.unlabeled === eventLabel;
+          // Gather all WORKFLOW_ keys
+          const workflowKeys = Object.keys(vars).filter(k => k.startsWith("WORKFLOW_"));
+
+          let matchingConfig = null;
+          for (const key of workflowKeys) {
+            let config;
+            try {
+              config = JSON.parse(vars[key]);
+            } catch (e) {
+              core.warning(`Failed to parse JSON for ${key}: ${e.message}`);
+              continue;
             }
-            
-            // If trigger doesn't match, no need to check required labels
-            if (!triggerMatches) return false;
-            
-            // If there are required labels, check if they all exist
-            if (c.trigger.requiredExistingLabels?.length > 0) {
-              return c.trigger.requiredExistingLabels.every(required => 
-                issueLabels.includes(required)
-              );
+
+            if (!Array.isArray(config)) {
+              core.warning(`Configuration under ${key} is not an array, skipping.`);
+              continue;
             }
-            
-            // If no required labels specified, just use the trigger match
-            return triggerMatches;
-          });
-          
+
+            const found = config.find(c => {
+              // Determine if this config matches the trigger
+              let triggerMatches = false;
+              if (eventAction === 'labeled' && c.trigger?.labeled) {
+                triggerMatches = (c.trigger.labeled === eventLabel);
+              } else if (eventAction === 'unlabeled' && c.trigger?.unlabeled) {
+                triggerMatches = (c.trigger.unlabeled === eventLabel);
+              }
+
+              if (!triggerMatches) return false;
+
+              // If required labels specified, ensure all are present
+              if (Array.isArray(c.trigger?.requiredExistingLabels) && c.trigger.requiredExistingLabels.length > 0) {
+                return c.trigger.requiredExistingLabels.every(required => issueLabels.includes(required));
+              }
+
+              return true;
+            });
+
+            if (found) {
+              matchingConfig = found;
+              break;
+            }
+          }
+
           if (!matchingConfig) {
-            core.info(`No configuration found for label: ${eventLabel}`);
+            core.info(`No configuration found for label: ${eventLabel} and action: ${eventAction}`);
             return;
           }
+
+          // Extract actions
+          const addLabels = matchingConfig.actions?.addLabels || [];
+          const removeLabels = matchingConfig.actions?.removeLabels || [];
+          const addAssignees = matchingConfig.actions?.assignments?.add || [];
+          const removeAssignees = matchingConfig.actions?.assignments?.remove || [];
           
-          // Set outputs for subsequent steps
-          core.setOutput('addLabels', JSON.stringify(matchingConfig.actions.addLabels || []));
-          core.setOutput('removeLabels', JSON.stringify(matchingConfig.actions.removeLabels || []));
-          core.setOutput('addAssignees', JSON.stringify(matchingConfig.actions.assignments.add || []));
-          core.setOutput('removeAssignees', JSON.stringify(matchingConfig.actions.assignments.remove || []));
-          
-          // Handle special notification values
-          let notification = matchingConfig.actions.notification;
+          // Notifications
+          let notification = matchingConfig.actions?.notification || '';
           if (notification === '-') {
             notification = '';
           } else if (notification.includes('or')) {
-            // For cases like "- or ADMIN_NOTIFY...", take the second option
+            // For cases like "- or ADMIN_NOTIFY...", take the second part
             notification = notification.split('or').pop().trim();
           }
-          core.setOutput('notification', notification);
-          
-          // Handle special status values
-          let status = matchingConfig.actions.status;
+
+          // Status
+          let status = matchingConfig.actions?.status || '';
           if (status === '-') {
             status = '';
           }
+
+          core.setOutput('addLabels', JSON.stringify(addLabels));
+          core.setOutput('removeLabels', JSON.stringify(removeLabels));
+          core.setOutput('addAssignees', JSON.stringify(addAssignees));
+          core.setOutput('removeAssignees', JSON.stringify(removeAssignees));
+          core.setOutput('notification', notification);
           core.setOutput('status', status);
 
     - name: Logging Debug
       id: logging-debug
       uses: actions/github-script@v7
       with:
+        script: |
+          core.info(JSON.stringify(steps.parse-config.outputs, null, 2));
+
+    # Convert label names into IDs (if any)
+    - name: Convert Label Names to IDs
+      id: convert-labels
+      uses: actions/github-script@v7
+      if: ${{ steps.parse-config.outputs.addLabels != '[]' || steps.parse-config.outputs.removeLabels != '[]' }}
+      with:
         github-token: ${{ inputs.github-token }}
         script: |
-          core.info(${{ toJSON(steps.parse-config.outputs) }});
+          const event = JSON.parse(inputs.event);
+          const owner = event.repository.owner.login;
+          const repo = event.repository.name;
+
+          async function getLabelIds(labelNames) {
+            const ids = [];
+            for (const name of labelNames) {
+              if (!name || name === '-') continue;
+              const labelData = await github.rest.issues.getLabel({ owner, repo, name });
+              if (labelData && labelData.data && labelData.data.node_id) {
+                ids.push(labelData.data.node_id);
+              } else {
+                core.warning(`Could not find label ID for ${name}`);
+              }
+            }
+            return ids;
+          }
+
+          const addLabels = JSON.parse(steps.parse-config.outputs.addLabels || '[]');
+          const removeLabels = JSON.parse(steps.parse-config.outputs.removeLabels || '[]');
+
+          const addLabelIds = await getLabelIds(addLabels);
+          const removeLabelIds = await getLabelIds(removeLabels);
+
+          core.setOutput('addLabelIds', JSON.stringify(addLabelIds));
+          core.setOutput('removeLabelIds', JSON.stringify(removeLabelIds));
+
+    # Convert assignee logins into user IDs (if any)
+    - name: Convert Assignee Logins to IDs
+      id: convert-assignees
+      uses: actions/github-script@v7
+      if: ${{ steps.parse-config.outputs.addAssignees != '[]' || steps.parse-config.outputs.removeAssignees != '[]' }}
+      with:
+        github-token: ${{ inputs.github-token }}
+        script: |
+          const addAssignees = JSON.parse(steps.parse-config.outputs.addAssignees || '[]');
+          const removeAssignees = JSON.parse(steps.parse-config.outputs.removeAssignees || '[]');
+
+          async function getUserIds(logins) {
+            const ids = [];
+            for (const login of logins) {
+              if (!login || login === '-') continue;
+              const userData = await github.rest.users.getByUsername({ username: login });
+              if (userData && userData.data && userData.data.node_id) {
+                ids.push(userData.data.node_id);
+              } else {
+                core.warning(`Could not find user ID for ${login}`);
+              }
+            }
+            return ids;
+          }
+
+          const addAssigneeIds = await getUserIds(addAssignees);
+          const removeAssigneeIds = await getUserIds(removeAssignees);
+
+          core.setOutput('addAssigneeIds', JSON.stringify(addAssigneeIds));
+          core.setOutput('removeAssigneeIds', JSON.stringify(removeAssigneeIds));
 
     - name: Apply Labels
       id: add-labels
-      if: ${{ steps.parse-config.outputs.addLabels }}
+      if: ${{ steps.convert-labels.outputs.addLabelIds && steps.convert-labels.outputs.addLabelIds != '[]' }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -110,7 +198,7 @@ runs:
           }
         variables: |
           {
-            "labelIds": ${{ toJSON(steps.parse-config.outputs.addLabels) }},
+            "labelIds": ${{ steps.convert-labels.outputs.addLabelIds }},
             "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
           }
       env:
@@ -119,7 +207,7 @@ runs:
 
     - name: Remove Labels
       id: remove-labels
-      if: ${{ steps.parse-config.outputs.removeLabels }}
+      if: ${{ steps.convert-labels.outputs.removeLabelIds && steps.convert-labels.outputs.removeLabelIds != '[]' }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -130,7 +218,7 @@ runs:
           }
         variables: |
           {
-            "labelIds": ${{ toJSON(steps.parse-config.outputs.removeLabels) }},
+            "labelIds": ${{ steps.convert-labels.outputs.removeLabelIds }},
             "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
           }
       env:
@@ -139,7 +227,7 @@ runs:
 
     - name: Add Assignees
       id: add-assignees
-      if: ${{ steps.parse-config.outputs.addAssignees }}
+      if: ${{ steps.convert-assignees.outputs.addAssigneeIds && steps.convert-assignees.outputs.addAssigneeIds != '[]' }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -150,7 +238,7 @@ runs:
           }
         variables: |
           {
-            "assigneeIds": ${{ toJSON(steps.parse-config.outputs.addAssignees) }},
+            "assigneeIds": ${{ steps.convert-assignees.outputs.addAssigneeIds }},
             "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
           }
       env:
@@ -159,7 +247,7 @@ runs:
 
     - name: Remove Assignees
       id: remove-assignees
-      if: ${{ steps.parse-config.outputs.removeAssignees }}
+      if: ${{ steps.convert-assignees.outputs.removeAssigneeIds && steps.convert-assignees.outputs.removeAssigneeIds != '[]' }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -170,10 +258,9 @@ runs:
           }
         variables: |
           {
-            "assigneeIds": ${{ toJSON(steps.parse-config.outputs.removeAssignees) }},
+            "assigneeIds": ${{ steps.convert-assignees.outputs.removeAssigneeIds }},
             "issueId": ${{ toJSON(fromJSON(inputs.event).issue.node_id) }}
           }
-
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       continue-on-error: true
