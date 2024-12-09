@@ -20,8 +20,8 @@ runs:
       uses: actions/github-script@v7
       with:
         script: |
-          core.info(core.getInput('event'));
-          core.info(core.getInput('vars'));
+          core.info("ONEONEONE::\n" + core.getInput('event'));
+          core.info("TWOTWOTWO::\n" + core.getInput('vars'));
           const event = JSON.parse(core.getInput('event'));
           const vars = JSON.parse(core.getInput('vars'));
 
