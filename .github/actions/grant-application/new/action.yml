@@ -22,6 +22,10 @@ runs:
         script: |
           const event1 = core.getInput('event');
           const vars1 = core.getInput('vars');
+          core.info("123123");
+          core.info(event1);
+          core.info(vars1);
+          core.info("123123");
           const vars = ${{toJSON(fromJSON(inputs.vars))}};
           const event = ${{toJSON(fromJSON(inputs.event))}};
 
