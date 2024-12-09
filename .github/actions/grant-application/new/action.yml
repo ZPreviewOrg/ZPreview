@@ -97,7 +97,11 @@ runs:
           } else if (notification.includes('or')) {
             // For cases like "- or ADMIN_NOTIFY...", take the second part
             notification = notification.split('or').pop().trim();
+            notification = vars[notification] || '';
+          } else {
+            notification = vars[notification] || '';
           }
+          
 
           // Status
           let status = matchingConfig.actions?.status || '';
