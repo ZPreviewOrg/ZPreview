@@ -41,3 +41,11 @@ body:
     description: Enter the Grant Milestone name
   validations:
     required: true
+
+- type: input
+  id: organization_details_name2
+  attributes:
+    label: Address
+    description: Enter Address
+  validations:
+    required: true
