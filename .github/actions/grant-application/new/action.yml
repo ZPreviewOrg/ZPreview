@@ -121,7 +121,8 @@ runs:
           core.setOutput('removeAssignees', removeAssignees);
           core.setOutput('notification', notification);
           core.setOutput('status', status);
-          core.setOutput('statusid, vars['PROJECT_GRANT_APPLICATION_STATUS_' status '_ID']);
+          const formattedStatus = status.toUpperCase().replace(/\s+/g, '_');
+          core.setOutput('statusid', vars[`PROJECT_GRANT_APPLICATION_STATUS_${formattedStatus}_ID`]);
 
     # Convert label names into IDs (if any)
     - name: Convert Label Names to IDs
