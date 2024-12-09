@@ -162,10 +162,10 @@ runs:
       uses: octokit/graphql-action@v2.x
       with:
         query: |
-          query getProjectItem($projectId: ID!, $issueId: ID!) {
+          query getProjectItem($projectId: ID!) {
             node(id: $projectId) {
               ... on ProjectV2 {
-                items(first: 100, query: "") {
+                items(first: 100) {
                   nodes {
                     id
                     content {
@@ -178,6 +178,7 @@ runs:
               }
             }
           }
+
         variables: |
           {
             "projectId": ${{ toJSON(fromJSON(inputs.vars).PROJECT_GRANT_APPLICATION_PROJECT_ID) }},
