@@ -105,10 +105,10 @@ runs:
             status = '';
           }
 
-          core.setOutput('addLabels', JSON.stringify(addLabels));
-          core.setOutput('removeLabels', JSON.stringify(removeLabels));
-          core.setOutput('addAssignees', JSON.stringify(addAssignees));
-          core.setOutput('removeAssignees', JSON.stringify(removeAssignees));
+          core.setOutput('addLabels', addLabels);
+          core.setOutput('removeLabels', removeLabels);
+          core.setOutput('addAssignees', addAssignees);
+          core.setOutput('removeAssignees', removeAssignees);
           core.setOutput('notification', notification);
           core.setOutput('status', status);
 
@@ -138,8 +138,8 @@ runs:
             return ids;
           }
 
-          const addLabels = JSON.parse(steps.parse-config.outputs.addLabels || '[]');
-          const removeLabels = JSON.parse(steps.parse-config.outputs.removeLabels || '[]');
+          const addLabels = ${{ steps.parse-config.outputs.addLabels }} || '[]');
+          const removeLabels = ${{ steps.parse-config.outputs.removeLabels }} || '[]');
 
           const addLabelIds = await getLabelIds(addLabels);
           const removeLabelIds = await getLabelIds(removeLabels);
@@ -155,7 +155,7 @@ runs:
       with:
         github-token: ${{ inputs.github-token }}
         script: |
-          const addAssignees = JSON.parse( ${{ steps.parse-config.outputs.addAssignees }} || '[]');
+          const addAssignees = ${{ steps.parse-config.outputs.addAssignees }};
           const removeAssignees = JSON.parse( ${{ steps.parse-config.outputs.removeAssignees }} || '[]');
 
           async function getUserIds(logins) {
@@ -175,8 +175,8 @@ runs:
           const addAssigneeIds = await getUserIds(addAssignees);
           const removeAssigneeIds = await getUserIds(removeAssignees);
 
-          core.setOutput('addAssigneeIds', JSON.stringify(addAssigneeIds));
-          core.setOutput('removeAssigneeIds', JSON.stringify(removeAssigneeIds));
+          core.setOutput('addAssigneeIds', addAssigneeIds);
+          core.setOutput('removeAssigneeIds', removeAssigneeIds);
 
     - name: Apply Labels
       id: add-labels
