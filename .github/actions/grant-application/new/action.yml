@@ -119,7 +119,7 @@ runs:
     - name: Convert Label Names to IDs
       id: convert-labels
       uses: actions/github-script@v7
-      if: ${{ steps.parse-config.outputs.addLabels != '[]' || steps.parse-config.outputs.removeLabels != '[]' }}
+      if: ${{ steps.parse-config.outputs.addLabels || steps.parse-config.outputs.removeLabels }}
       with:
         github-token: ${{ inputs.github-token }}
         script: |
@@ -154,7 +154,7 @@ runs:
     - name: Convert Assignee Logins to IDs
       id: convert-assignees
       uses: actions/github-script@v7
-      if: ${{ steps.parse-config.outputs.addAssignees != '[]' || steps.parse-config.outputs.removeAssignees != '[]' }}
+      if: ${{ steps.parse-config.outputs.addAssignees || steps.parse-config.outputs.removeAssignees }}
       with:
         github-token: ${{ inputs.github-token }}
         script: |
@@ -183,7 +183,7 @@ runs:
 
     - name: Apply Labels
       id: add-labels
-      if: ${{ steps.convert-labels.outputs.addLabelIds && steps.convert-labels.outputs.addLabelIds != '[]' }}
+      if: ${{ steps.convert-labels.outputs.addLabelIds }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -203,7 +203,7 @@ runs:
 
     - name: Remove Labels
       id: remove-labels
-      if: ${{ steps.convert-labels.outputs.removeLabelIds && steps.convert-labels.outputs.removeLabelIds != '[]' }}
+      if: ${{ steps.convert-labels.outputs.removeLabelIds }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -223,7 +223,7 @@ runs:
 
     - name: Add Assignees
       id: add-assignees
-      if: ${{ steps.convert-assignees.outputs.addAssigneeIds && steps.convert-assignees.outputs.addAssigneeIds != '[]' }}
+      if: ${{ steps.convert-assignees.outputs.addAssigneeIds }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -243,7 +243,7 @@ runs:
 
     - name: Remove Assignees
       id: remove-assignees
-      if: ${{ steps.convert-assignees.outputs.removeAssigneeIds && steps.convert-assignees.outputs.removeAssigneeIds != '[]' }}
+      if: ${{ steps.convert-assignees.outputs.removeAssigneeIds }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -263,7 +263,7 @@ runs:
 
     - name: Create Comment Notification
       id: create-comment
-      if: ${{ steps.parse-config.outputs.notification != '' }}
+      if: ${{ steps.parse-config.outputs.notification }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
@@ -283,7 +283,7 @@ runs:
 
     - name: Update Status
       id: update-status
-      if: ${{ steps.parse-config.outputs.status != '' }}
+      if: ${{ steps.parse-config.outputs.status }}
       uses: octokit/graphql-action@v2.x
       with:
         query: |
