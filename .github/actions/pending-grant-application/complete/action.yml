@@ -1,0 +1,25 @@
+name: 'Process Complete Pending Grant Application'
+description: 'Processes a complete pending grant application by applying configured labels, assignments and notifications'
+
+inputs:
+  github-token:
+    description: 'GitHub token with necessary permissions'
+    required: true
+  vars:
+    description: 'GitHub Variables containing workflow configuration'
+    required: true
+  event:
+    description: 'GitHub event that triggered the workflow'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Process Workflow
+      uses: ./.github/actions/shared/process-workflow
+      with:
+        github-token: ${{ inputs.github-token }}
+        vars: ${{ toJSON(fromJSON(inputs.vars)) }}
+        event: ${{ toJSON(fromJSON(inputs.event)) }}
+        workflow-type: 'Pending Grant Application'
+        workflow-status: 'Complete'
