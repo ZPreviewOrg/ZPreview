@@ -49,7 +49,9 @@ runs:
           const workflowStatus = workflow_status.replace(/\s+/g, '_');
 
           // Gather all WORKFLOW_ keys
-          const workflowKeys = Object.keys(vars).filter(k => k.startsWith(`WORKFLOW_${workflowType}_${event.action.toUpperCase()}_${workflowStatus}`));
+          const workflowFilter = `WORKFLOW_${workflowType..toUpperCase()}_${event.action.toUpperCase()}_${workflowStatus.toUpperCase()}`;
+          core.info(workflowFilter);
+          const workflowKeys = Object.keys(vars).filter(k => k.startsWith(`WORKFLOW_${workflowType..toUpperCase()}_${event.action.toUpperCase()}_${workflowStatus.toUpperCase()}`));
 
           let matchingConfig = null;
           for (const key of workflowKeys) {
