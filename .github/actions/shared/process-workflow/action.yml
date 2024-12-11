@@ -1,5 +1,5 @@
-name: 'Process New Grant Application'
-description: 'Processes a new grant application by applying configured labels, assignments and notifications'
+name: 'Process Workflow'
+description: 'Processes workflow events by applying configured labels, assignments and notifications'
 
 inputs:
   github-token:
@@ -10,6 +10,12 @@ inputs:
     required: true
   event:
     description: 'GitHub event that triggered the workflow'
+    required: true
+  workflow-type:
+    description: 'Type of workflow being processed'
+    required: true
+  workflow-status:
+    description: 'Status of the workflow'
     required: true
 
 runs:
@@ -37,7 +43,7 @@ runs:
           }
 
           // Gather all WORKFLOW_ keys
-          const workflowKeys = Object.keys(vars).filter(k => k.startsWith("WORKFLOW_GRANT_APPLICATION_LABELED_NEW"));
+          const workflowKeys = Object.keys(vars).filter(k => k.startsWith(`WORKFLOW_${inputs.workflow-type}_${event.action.toUpperCase()}_${inputs.workflow-status}`));
 
           let matchingConfig = null;
           for (const key of workflowKeys) {
