@@ -4,9 +4,6 @@ on:
   issues:
     types: [labeled, unlabeled]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-
 permissions:
   issues: write
 
