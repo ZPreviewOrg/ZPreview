@@ -19,7 +19,7 @@ runs:
       uses: ./.github/actions/shared/process-workflow
       with:
         github-token: ${{ inputs.github-token }}
-        vars: ${{ inputs.vars }}
-        event: ${{ inputs.event }}
+        vars: ${{ toJSON(inputs.vars) }}
+        event: ${{ toJSON(inputs.event) }}
         workflow-type: 'Grant Application'
         workflow-status: 'New'
