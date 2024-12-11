@@ -15,3 +15,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Process Workflow
+      uses: ./.github/actions/shared/process-workflow
+      with:
+        github-token: ${{ inputs.github-token }}
+        vars: ${{ inputs.vars }}
+        event: ${{ inputs.event }}
+        workflow-type: 'Grant Application'
+        workflow-status: 'New'
