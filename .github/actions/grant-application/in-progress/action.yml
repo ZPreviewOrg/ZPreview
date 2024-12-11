@@ -1,5 +1,5 @@
 name: 'Process In Progress Grant Application'
-description: 'Processes a new grant application by applying configured labels, assignments and notifications'
+description: 'Processes a in progresss grant application by applying configured labels, assignments and notifications'
 
 inputs:
   github-token:
