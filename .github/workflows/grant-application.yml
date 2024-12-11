@@ -168,12 +168,51 @@ jobs:
           github-token: ${{ steps.generate-token.outputs.token }}
           vars: ${{ toJSON(vars) }}
           event: ${{ toJSON(github.event) }}
-          
+
       - name: Process Under Review Status
         if: ${{ steps.get-grant-application-status.outputs.status == 'Under Review' }}
         uses: ./.github/actions/grant-application/under-review
         with:
-          token: ${{ steps.generate-token.outputs.token }}
-          project_id: ${{ vars.PROJECT_GRANT_APPLICATION_PROJECT_ID }}
-          status_field_id: ${{ vars.PROJECT_GRANT_APPLICATION_STATUS_FIELD_ID }}
-          labels: ${{ github.event.issue.labels }}
+          github-token: ${{ steps.generate-token.outputs.token }}
+          vars: ${{ toJSON(vars) }}
+          event: ${{ toJSON(github.event) }}
+
+      - name: Process Approved Status
+        if: ${{ steps.get-grant-application-status.outputs.status == 'Approved' }}
+        uses: ./.github/actions/grant-application/approved
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          vars: ${{ toJSON(vars) }}
+          event: ${{ toJSON(github.event) }}
+
+      - name: Process In Progress Status
+        if: ${{ steps.get-grant-application-status.outputs.status == 'In Progress' }}
+        uses: ./.github/actions/grant-application/in-progress
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          vars: ${{ toJSON(vars) }}
+          event: ${{ toJSON(github.event) }}
+
+      - name: Process Complete Status
+        if: ${{ steps.get-grant-application-status.outputs.status == 'Complete' }}
+        uses: ./.github/actions/grant-application/complete
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          vars: ${{ toJSON(vars) }}
+          event: ${{ toJSON(github.event) }}
+      
+      - name: Process Declined Status
+        if: ${{ steps.get-grant-application-status.outputs.status == 'Declined' }}
+        uses: ./.github/actions/grant-application/declined
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          vars: ${{ toJSON(vars) }}
+          event: ${{ toJSON(github.event) }}
+
+      - name: Process Cancelled Status
+        if: ${{ steps.get-grant-application-status.outputs.status == 'Cancelled' }}
+        uses: ./.github/actions/grant-application/cancelled
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          vars: ${{ toJSON(vars) }}
+          event: ${{ toJSON(github.event) }}
