@@ -10,6 +10,7 @@ permissions:
 jobs:
   process-grant-application:
     runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'Pending Grant Application')
     steps:
       - name: Generate a token
         id: generate-token
