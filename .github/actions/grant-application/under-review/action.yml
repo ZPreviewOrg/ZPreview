@@ -1,5 +1,5 @@
 name: 'Process Under Review Grant Application'
-description: 'Processes a new grant application by applying configured labels, assignments and notifications'
+description: 'Processes an under review grant application by applying configured labels, assignments and notifications'
 
 inputs:
   github-token:
