@@ -28,8 +28,8 @@ runs:
         script: |
           const vars = ${{toJSON(fromJSON(inputs.vars))}};
           const event = ${{toJSON(fromJSON(inputs.event))}};
-          const workflow_type = ${{toJSON(fromJSON(inputs.workflow-type))}};
-          const workflow_status = ${{toJSON(fromJSON(inputs.workflow-status))}};
+          const workflow_type = "${{inputs.workflow-type}}";
+          const workflow_status = "${{inputs.workflow-status}}";
 
           const eventLabel = event.label?.name;
           const eventAction = event.action;
@@ -49,7 +49,7 @@ runs:
           const workflowStatus = workflow_status.replace(/\s+/g, '_');
 
           // Gather all WORKFLOW_ keys
-          const workflowKeys = Object.keys(vars).filter(k => k.startsWith(`WORKFLOW_${workflowType}_${event.action.toUpperCase()}_${workflowStatus}`));
+          const workflowKeys = Object.keys(vars).filter(k => k.startsWith(`WORKFLOW_${workflowType}_${event.action.toUpperCase()}_${workflowStatus}`);
 
           let matchingConfig = null;
           for (const key of workflowKeys) {
