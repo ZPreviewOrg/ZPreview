@@ -43,8 +43,8 @@ runs:
           }
 
           // Preprocess workflow type and status by replacing spaces with underscores
-          const workflowType = ${{toJSON(fromJSON(inputs.vars.workflow-type))}}.replace(/\s+/g, '_');
-          const workflowStatus = ${{toJSON(fromJSON(inputs.vars.workflow-status))}}.replace(/\s+/g, '_');
+          const workflowType = vars[workflow-type].replace(/\s+/g, '_');
+          const workflowStatus = vars[workflow-status].replace(/\s+/g, '_');
 
           // Gather all WORKFLOW_ keys
           const workflowKeys = Object.keys(vars).filter(k => k.startsWith(`WORKFLOW_${workflowType}_${event.action.toUpperCase()}_${workflowStatus}`));
