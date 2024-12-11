@@ -42,8 +42,12 @@ runs:
             return;
           }
 
+          // Preprocess workflow type and status by replacing spaces with underscores
+          const workflowType = inputs['workflow-type'].replace(/\s+/g, '_');
+          const workflowStatus = inputs['workflow-status'].replace(/\s+/g, '_');
+
           // Gather all WORKFLOW_ keys
-          const workflowKeys = Object.keys(vars).filter(k => k.startsWith(`WORKFLOW_${inputs.workflow-type}_${event.action.toUpperCase()}_${inputs.workflow-status}`));
+          const workflowKeys = Object.keys(vars).filter(k => k.startsWith(`WORKFLOW_${workflowType}_${event.action.toUpperCase()}_${workflowStatus}`));
 
           let matchingConfig = null;
           for (const key of workflowKeys) {
